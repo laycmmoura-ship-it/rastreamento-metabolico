@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rastreamento Metabólico | Layane Moura Nutricionista</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#2D6A4F;--verde-claro:#52B788;--verde-bg:#F0F7F4;--verde-light:#D8F3DC;--texto:#1B2D27;--texto-muted:#5A7268;--borda:#B7D9C8;--branco:#FAFFFE;--radius:14px;--shadow:0 2px 20px rgba(45,106,79,0.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--texto);min-height:100vh;padding-bottom:4rem}
+.hero{background:var(--verde);padding:3rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(82,183,136,0.15)}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:140px;height:140px;border-radius:50%;background:rgba(82,183,136,0.10)}
+.logo-circle{width:70px;height:70px;border-radius:50%;background:var(--verde-claro);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative;z-index:1}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(22px,5vw,34px);color:#fff;margin-bottom:8px;position:relative;z-index:1}
+.hero p{font-size:14px;color:rgba(255,255,255,0.75);position:relative;z-index:1;max-width:400px;margin:0 auto;line-height:1.6}
+.crn{display:inline-block;margin-top:12px;font-size:12px;background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.85);padding:4px 14px;border-radius:20px;position:relative;z-index:1}
+.instrucao-bar{background:var(--verde-light);border-bottom:1px solid var(--borda);padding:12px 1.5rem;text-align:center;font-size:13px;color:var(--verde);font-weight:500}
+.container{max-width:680px;margin:0 auto;padding:1.5rem 1rem}
+.paciente-card{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow)}
+.paciente-card h2{font-family:'DM Serif Display',serif;font-size:18px;color:var(--verde);margin-bottom:1rem}
+.field-group{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;font-weight:500;color:var(--texto-muted);text-transform:uppercase;letter-spacing:0.5px}
+.field input,.field select{font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 14px;border:1.5px solid var(--borda);border-radius:10px;color:var(--texto);background:var(--branco);outline:none;transition:border-color 0.2s}
+.field input:focus,.field select:focus{border-color:var(--verde-claro)}
+.sistema-card{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);margin-bottom:1rem;box-shadow:var(--shadow);overflow:hidden}
+.sistema-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;user-select:none;transition:background 0.15s}
+.sistema-header:hover,.sistema-header.active{background:var(--verde-bg)}
+.sistema-esq{display:flex;align-items:center;gap:10px}
+.sistema-icon{width:36px;height:36px;border-radius:10px;background:var(--verde-light);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sistema-nome{font-weight:500;font-size:15px;color:var(--texto)}
+.sistema-count{font-size:11px;color:var(--texto-muted);margin-top:1px}
+.sistema-dir{display:flex;align-items:center;gap:8px}
+.badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--verde-light);color:var(--verde);min-width:28px;text-align:center}
+.badge.zero{background:#f1f1f1;color:#999}
+.badge.mid{background:#FFF3CD;color:#856404}
+.badge.high{background:#F8D7DA;color:#842029}
+.chevron-icon{width:20px;height:20px;border-radius:50%;background:var(--verde-light);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--verde);transition:transform 0.2s;flex-shrink:0}
+.chevron-icon.open{transform:rotate(180deg)}
+.sistema-body{display:none;padding:0 1.25rem 1rem;border-top:1px solid var(--verde-light)}
+.sistema-body.open{display:block}
+.sintoma-item{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--verde-bg);cursor:pointer}
+.sintoma-item:last-child{border-bottom:none}
+.sintoma-check{width:20px;height:20px;border:2px solid var(--borda);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;background:var(--branco)}
+.sintoma-check.checked{background:var(--verde);border-color:var(--verde);color:white;font-size:11px}
+.sintoma-label{font-size:14px;color:var(--texto);line-height:1.4;flex:1}
+.sintoma-item input[type=checkbox]{display:none}
+.escala-section{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.escala-section h2{font-family:'DM Serif Display',serif;font-size:18px;color:var(--verde);margin-bottom:4px}
+.escala-section .sub{font-size:13px;color:var(--texto-muted);margin-bottom:1.25rem}
+.escala-item{margin-bottom:1.25rem}
+.escala-pergunta{font-size:14px;font-weight:500;color:var(--texto);margin-bottom:8px}
+.escala-opcoes{display:flex;gap:6px;flex-wrap:wrap}
+.escala-btn{flex:1;min-width:44px;padding:8px 4px;border:1.5px solid var(--borda);border-radius:8px;background:var(--branco);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-align:center;color:var(--texto-muted);transition:all 0.15s}
+.escala-btn:hover{border-color:var(--verde-claro)}
+.escala-btn.sel{background:var(--verde);border-color:var(--verde);color:white}
+.escala-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--texto-muted);margin-top:4px;padding:0 2px}
+.obs-section{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow)}
+.obs-section h2{font-family:'DM Serif Display',serif;font-size:18px;color:var(--verde);margin-bottom:1rem}
+.obs-section textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 14px;border:1.5px solid var(--borda);border-radius:10px;color:var(--texto);background:var(--branco);outline:none;resize:vertical;min-height:90px;line-height:1.5;transition:border-color 0.2s}
+.obs-section textarea:focus{border-color:var(--verde-claro)}
+.obs-section label{display:block;font-size:13px;font-weight:500;color:var(--texto);margin-bottom:6px}
+.obs-section label span{color:var(--texto-muted);font-weight:400}
+.btn-enviar{width:100%;padding:16px;background:var(--verde);color:white;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;cursor:pointer;transition:background 0.2s,transform 0.1s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-enviar:hover{background:#245c43}
+.btn-enviar:active{transform:scale(0.99)}
+.progresso-bar{position:sticky;top:0;z-index:100;background:var(--branco);border-bottom:1px solid var(--borda);padding:10px 1.5rem;display:flex;align-items:center;gap:12px}
+.prog-label{font-size:12px;color:var(--texto-muted);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--verde-light);border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;background:var(--verde-claro);border-radius:10px;transition:width 0.3s;width:0%}
+.prog-num{font-size:13px;font-weight:500;color:var(--verde);white-space:nowrap}
+.resultado-overlay{display:none;position:fixed;inset:0;background:rgba(27,45,39,0.6);z-index:999;align-items:center;justify-content:center;padding:1rem}
+.resultado-overlay.show{display:flex}
+.resultado-modal{background:var(--branco);border-radius:20px;padding:2rem 1.5rem;max-width:500px;width:100%;text-align:center;animation:popIn 0.3s ease;max-height:90vh;overflow-y:auto}
+@keyframes popIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+.resultado-icon{font-size:48px;margin-bottom:1rem}
+.resultado-modal h2{font-family:'DM Serif Display',serif;font-size:26px;color:var(--verde);margin-bottom:8px}
+.resultado-modal p{font-size:14px;color:var(--texto-muted);line-height:1.6;margin-bottom:1.5rem}
+.resultado-dados{background:var(--verde-bg);border-radius:12px;padding:1rem;text-align:left;margin-bottom:1.25rem}
+.dado-linha{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;font-size:13px;border-bottom:1px solid var(--verde-light)}
+.dado-linha:last-child{border:none}
+.dado-key{color:var(--texto-muted)}
+.dado-val{font-weight:500;color:var(--texto)}
+.btn-copiar{width:100%;padding:13px;background:var(--verde);color:white;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;margin-bottom:8px}
+.btn-fechar{width:100%;padding:11px;background:transparent;color:var(--texto-muted);border:1px solid var(--borda);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer}
+.rodape{text-align:center;font-size:12px;color:var(--texto-muted);padding:2rem 1rem 1rem}
+.rodape strong{color:var(--verde)}
+@media(max-width:480px){.field-group{grid-template-columns:1fr}.hero{padding:2rem 1rem 1.5rem}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="logo-circle">🌿</div>
+  <h1>Rastreamento Metabólico</h1>
+  <p>Preencha com atenção. Suas respostas ajudam a entender o que seu corpo está sinalizando.</p>
+  <span class="crn">Layane Moura · Nutricionista · CRN 18985</span>
+</div>
+<div class="instrucao-bar">Marque todos os sintomas que você sentiu nos últimos 30 dias</div>
+<div class="progresso-bar">
+  <span class="prog-label">Progresso</span>
+  <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+  <span class="prog-num" id="progNum">0 sintomas</span>
+</div>
+<div class="container">
+  <div class="paciente-card">
+    <h2>Seus dados</h2>
+    <div class="field-group">
+      <div class="field"><label>Nome completo</label><input type="text" id="nome" placeholder="Como prefere ser chamada"></div>
+      <div class="field"><label>Idade</label><input type="number" id="idade" placeholder="Ex: 32" min="10" max="100"></div>
+    </div>
+    <div class="field-group" style="margin-top:10px">
+      <div class="field"><label>WhatsApp</label><input type="tel" id="whats" placeholder="(00) 00000-0000"></div>
+      <div class="field"><label>Data de hoje</label><input type="date" id="dataHoje"></div>
+    </div>
+  </div>
+  <div id="sistemasContainer"></div>
+  <div class="escala-section">
+    <h2>Como você avalia...</h2>
+    <p class="sub">Dê uma nota de 0 (nenhum problema) a 5 (muito intenso)</p>
+    <div class="escala-item">
+      <div class="escala-pergunta">Sua qualidade de sono</div>
+      <div class="escala-opcoes" id="esc_sono"></div>
+      <div class="escala-labels"><span>Durmo bem</span><span>Não durmo nada</span></div>
+    </div>
+    <div class="escala-item">
+      <div class="escala-pergunta">Seu nível de estresse no dia a dia</div>
+      <div class="escala-opcoes" id="esc_estresse"></div>
+      <div class="escala-labels"><span>Tranquila</span><span>Muito estressada</span></div>
+    </div>
+    <div class="escala-item">
+      <div class="escala-pergunta">Sua disposição e energia ao longo do dia</div>
+      <div class="escala-opcoes" id="esc_energia"></div>
+      <div class="escala-labels"><span>Sempre com energia</span><span>Sem energia alguma</span></div>
+    </div>
+    <div class="escala-item">
+      <div class="escala-pergunta">Sua relação com a alimentação</div>
+      <div class="escala-opcoes" id="esc_alim"></div>
+      <div class="escala-labels"><span>Muito tranquila</span><span>Muito difícil</span></div>
+    </div>
+  </div>
+  <div class="obs-section">
+    <h2>Observações</h2>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div>
+        <label>O que te motivou a buscar acompanhamento nutricional? <span>(opcional)</span></label>
+        <textarea id="motivacao" placeholder="Pode ser bem simples, escreva com suas palavras..."></textarea>
+      </div>
+      <div>
+        <label>Algum sintoma que queira destacar ou explicar melhor? <span>(opcional)</span></label>
+        <textarea id="obs" placeholder="Qualquer detalhe que achar importante..."></textarea>
+      </div>
+    </div>
+  </div>
+  <button class="btn-enviar" onclick="enviar()">Enviar rastreamento</button>
+  <div class="rodape">
+    Formulário exclusivo de <strong>Layane Moura</strong><br>
+    Nutricionista CRN 18985 · Santarém, PA<br><br>
+    Suas informações são confidenciais e usadas apenas para fins clínicos.
+  </div>
+</div>
+<div class="resultado-overlay" id="overlay">
+  <div class="resultado-modal">
+    <div class="resultado-icon">🌿</div>
+    <h2>Recebido!</h2>
+    <p>Obrigada por preencher com cuidado. Layane vai analisar suas respostas antes da consulta.</p>
+    <div class="resultado-dados" id="resumoModal"></div>
+    <button class="btn-copiar" onclick="copiarResumo()">Copiar resumo para WhatsApp</button>
+    <button class="btn-fechar" onclick="fecharModal()">Fechar</button>
+  </div>
+</div>
+<script>
+var SISTEMAS=[{id:"cabeca",nome:"Cabeca e sono",icon:"🧠",sintomas:["Dor de cabeca frequente","Sensacao de desmaio","Tontura","Insonia ou sono nao reparador","Dificuldade em descansar e relaxar"]},{id:"olhos",nome:"Olhos",icon:"👁️",sintomas:["Lacrimejantes ou cocando","Inchados, vermelhos ou cilios colando","Bolsas ou olheiras","Vista cansada ou imagem borrada"]},{id:"ouvidos",nome:"Ouvidos",icon:"👂",sintomas:["Coceira nos ouvidos","Dores ou infeccoes auditivas","Fluido purulento","Zunido ou perda da audicao"]},{id:"nariz",nome:"Nariz e mucosa",icon:"🌬️",sintomas:["Nariz entupido","Sinusite","Corrimento nasal ou espirros frequentes","Ataques de espirros","Excesso de muco"]},{id:"boca",nome:"Boca e garganta",icon:"🗣️",sintomas:["Tosse cronica","Necessidade frequente de limpar a garganta","Dor de garganta ou rouquidao","Lingua ou labios inchados","Aftas frequentes"]},{id:"pele",nome:"Pele, cabelo e unhas",icon:"✨",sintomas:["Acne","Pele seca, erupcoes ou feridas que cocam","Queda de cabelo","Vermelhidao ou calorees","Suor excessivo","Unhas quebradicas e fracas","Manchas nas unhas"]},{id:"coracao",nome:"Coracao e pulmao",icon:"❤️",sintomas:["Batidas irregulares ou falhando","Batidas rapidas demais","Dor no peito","Bronquite ou asma","Falta de ar"]},{id:"digestivo",nome:"Trato digestivo",icon:"🫃",sintomas:["Nauseas ou vomito","Diarreia","Constipacao ou intestino alternado","Inchaco abdominal","Gases ou arrotos frequentes","Azia ou refluxo","Dor estomacal ou intestinal"]},{id:"articulacoes",nome:"Articulacoes e musculos",icon:"🦴",sintomas:["Dores articulares","Artrite ou artrose","Rigidez ou limitacao dos movimentos","Dores musculares","Fraqueza ou cansaco muscular"]},{id:"energia",nome:"Energia e disposicao",icon:"⚡",sintomas:["Fadiga constante ou moleza","Apatia ou letargia","Hiperatividade","Dificuldade em descansar"]},{id:"mente",nome:"Mente e cognicao",icon:"🧩",sintomas:["Memoria ruim","Confusao mental","Concentracao ruim","Dificuldade em tomar decisoes","Problemas de aprendizagem"]},{id:"emocoes",nome:"Emocoes",icon:"💭",sintomas:["Mudancas de humor frequentes","Ansiedade ou nervosismo","Raiva ou irritabilidade","Depressao"]},{id:"outros",nome:"Outros sintomas",icon:"📌",sintomas:["Fico doente com frequencia","Vontade urgente de urinar com frequencia","Coceira genital ou corrimento","Inchaco nos pes, pernas ou maos"]}];
+var escalaSel={};var totalSintomas=0;
+function criarSistemas(){
+var cont=document.getElementById("sistemasContainer");
+SISTEMAS.forEach(function(s,idx){
+var card=document.createElement("div");card.className="sistema-card";
+var sintomasHTML=s.sintomas.map(function(sint,i){return'<div class="sintoma-item" onclick="toggleSintoma(\''+s.id+'\','+i+')"><div class="sintoma-check" id="chk_'+s.id+'_'+i+'"></div><span class="sintoma-label">'+sint+'</span><input type="checkbox" id="inp_'+s.id+'_'+i+'"></div>';}).join('');
+card.innerHTML='<div class="sistema-header" id="hdr_'+s.id+'" onclick="toggleSistema(\''+s.id+'\')"><div class="sistema-esq"><div class="sistema-icon">'+s.icon+'</div><div><div class="sistema-nome">'+s.nome+'</div><div class="sistema-count" id="cnt_'+s.id+'">0 de '+s.sintomas.length+' sintomas</div></div></div><div class="sistema-dir"><span class="badge zero" id="bdg_'+s.id+'">0</span><div class="chevron-icon" id="chv_'+s.id+'">▼</div></div></div><div class="sistema-body" id="bdy_'+s.id+'">'+sintomasHTML+'</div>';
+cont.appendChild(card);
+});
+document.getElementById("dataHoje").value=new Date().toISOString().split('T')[0];
+var escalas=["esc_sono","esc_estresse","esc_energia","esc_alim"];
+escalas.forEach(function(id){
+escalaSel[id]=null;
+var c=document.getElementById(id);
+for(var i=0;i<=5;i++){var btn=document.createElement("button");btn.type="button";btn.className="escala-btn";btn.textContent=i;btn.setAttribute("data-id",id);btn.setAttribute("data-val",i);btn.onclick=function(){selecionarEscala(this.getAttribute("data-id"),parseInt(this.getAttribute("data-val")));};c.appendChild(btn);}
+});
+if(SISTEMAS.length>0)toggleSistema(SISTEMAS[0].id);
+}
+function toggleSistema(id){
+var body=document.getElementById("bdy_"+id);var chv=document.getElementById("chv_"+id);var hdr=document.getElementById("hdr_"+id);
+var isOpen=body.classList.contains("open");
+document.querySelectorAll('.sistema-body').forEach(function(b){b.classList.remove("open");});
+document.querySelectorAll('.chevron-icon').forEach(function(c){c.classList.remove("open");});
+document.querySelectorAll('.sistema-header').forEach(function(h){h.classList.remove("active");});
+if(!isOpen){body.classList.add("open");chv.classList.add("open");hdr.classList.add("active");}
+}
+function toggleSintoma(sId,idx){
+var inp=document.getElementById("inp_"+sId+"_"+idx);var chk=document.getElementById("chk_"+sId+"_"+idx);
+inp.checked=!inp.checked;
+if(inp.checked){chk.classList.add("checked");chk.textContent="✓";}else{chk.classList.remove("checked");chk.textContent="";}
+atualizarBadge(sId);atualizarProgresso();
+}
+function atualizarBadge(sId){
+var s=SISTEMAS.find(function(x){return x.id===sId;});
+var n=s.sintomas.filter(function(_,i){var el=document.getElementById("inp_"+sId+"_"+i);return el&&el.checked;}).length;
+var badge=document.getElementById("bdg_"+sId);var cnt=document.getElementById("cnt_"+sId);
+badge.textContent=n;badge.className="badge "+(n===0?"zero":n<=2?"":n<=4?"mid":"high");
+cnt.textContent=n+" de "+s.sintomas.length+" sintomas";
+}
+function atualizarProgresso(){
+var total=0;
+SISTEMAS.forEach(function(s){s.sintomas.forEach(function(_,i){var el=document.getElementById("inp_"+s.id+"_"+i);if(el&&el.checked)total++;});});
+totalSintomas=total;
+var max=SISTEMAS.reduce(function(a,s){return a+s.sintomas.length;},0);
+var pct=Math.min(100,Math.round(total/max*100));
+document.getElementById("progFill").style.width=pct+"%";
+document.getElementById("progNum").textContent=total+" sintoma"+(total!==1?"s":"");
+}
+function selecionarEscala(id,val){
+escalaSel[id]=val;
+var cont=document.getElementById(id);
+cont.querySelectorAll(".escala-btn").forEach(function(btn,i){btn.classList.toggle("sel",i===val);});
+}
+function getSintomas(){
+var result={};
+SISTEMAS.forEach(function(s){
+var lista=s.sintomas.filter(function(_,i){var el=document.getElementById("inp_"+s.id+"_"+i);return el&&el.checked;});
+if(lista.length>0)result[s.nome]=lista;
+});
+return result;
+}
+function enviar(){
+var nome=document.getElementById("nome").value.trim();
+if(!nome){alert("Por favor, informe seu nome para continuar.");return;}
+var sintomas=getSintomas();var sistemas=Object.keys(sintomas);var total=totalSintomas;
+var html='<div class="dado-linha"><span class="dado-key">Paciente</span><span class="dado-val">'+nome+'</span></div><div class="dado-linha"><span class="dado-key">Total de sintomas</span><span class="dado-val">'+total+'</span></div><div class="dado-linha"><span class="dado-key">Sistemas afetados</span><span class="dado-val">'+sistemas.length+'</span></div><div class="dado-linha"><span class="dado-key">Sono</span><span class="dado-val">'+(escalaSel["esc_sono"]!==null?escalaSel["esc_sono"]+"/5":"–")+'</span></div><div class="dado-linha"><span class="dado-key">Estresse</span><span class="dado-val">'+(escalaSel["esc_estresse"]!==null?escalaSel["esc_estresse"]+"/5":"–")+'</span></div><div class="dado-linha"><span class="dado-key">Energia</span><span class="dado-val">'+(escalaSel["esc_energia"]!==null?escalaSel["esc_energia"]+"/5":"–")+'</span></div><div class="dado-linha"><span class="dado-key">Relacao c/ alimentacao</span><span class="dado-val">'+(escalaSel["esc_alim"]!==null?escalaSel["esc_alim"]+"/5":"–")+'</span></div>';
+document.getElementById("resumoModal").innerHTML=html;
+document.getElementById("overlay").classList.add("show");
+var data=new Date().toLocaleDateString("pt-BR");
+var txt="RASTREAMENTO METABOLICO\nPaciente: "+nome+" | Data: "+data+"\nTotal de sintomas: "+total+"\n\n";
+if(sistemas.length>0){txt+="Sintomas por sistema:\n";Object.entries(sintomas).forEach(function(e){txt+="- "+e[0]+": "+e[1].join(", ")+"\n";});}
+txt+="\nEscalas:\n- Sono: "+(escalaSel["esc_sono"]!==null?escalaSel["esc_sono"]+"/5":"–")+"\n- Estresse: "+(escalaSel["esc_estresse"]!==null?escalaSel["esc_estresse"]+"/5":"–")+"\n- Energia: "+(escalaSel["esc_energia"]!==null?escalaSel["esc_energia"]+"/5":"–")+"\n- Relacao c/ alimentacao: "+(escalaSel["esc_alim"]!==null?escalaSel["esc_alim"]+"/5":"–");
+var mot=document.getElementById("motivacao").value.trim();var obs=document.getElementById("obs").value.trim();
+if(mot)txt+="\n\nMotivacao: "+mot;if(obs)txt+="\nObservacoes: "+obs;
+txt+="\n\n- Layane Moura | Nutricionista CRN 18985";
+window._resumoTexto=txt;
+}
+function copiarResumo(){
+if(navigator.clipboard){navigator.clipboard.writeText(window._resumoTexto).then(function(){var btn=document.querySelector(".btn-copiar");btn.textContent="Copiado!";setTimeout(function(){btn.textContent="Copiar resumo para WhatsApp";},2000);});}
+}
+function fecharModal(){document.getElementById("overlay").classList.remove("show");}
+criarSistemas();
+</script>
+</body>
+</html>
