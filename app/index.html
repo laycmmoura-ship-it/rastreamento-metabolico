@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lay IA | Layane Moura Nutricionista</title>
+<meta name="theme-color" content="#2D6A4F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lay IA">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#2D6A4F;--verde-claro:#52B788;--verde-bg:#F0F7F4;--verde-light:#D8F3DC;--texto:#1B2D27;--texto-muted:#5A7268;--borda:#B7D9C8;--branco:#FAFFFE;--radius:16px;--shadow:0 2px 20px rgba(45,106,79,0.08);
+  --chef:#B5651D;--chef-bg:#FBEFE3;--rest:#2A7F8F;--rest-bg:#E2F3F5;--merc:#C0567A;--merc-bg:#FBE8EF;--duv:#2D6A4F;--duv-bg:#D8F3DC}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--texto);display:flex;justify-content:center}
+.app{width:100%;max-width:520px;height:100dvh;display:flex;flex-direction:column;background:var(--verde-bg);position:relative}
+
+/* topo */
+.topo{background:var(--branco);border-bottom:1px solid var(--borda);padding:calc(12px + env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.btn-icone{width:38px;height:38px;border-radius:50%;border:none;background:var(--verde-bg);color:var(--verde);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.btn-icone[hidden]{display:none}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--verde);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 0 0 3px var(--verde-light)}
+.topo-txt{flex:1;min-width:0}
+.topo-txt h1{font-family:'DM Serif Display',serif;font-size:21px;color:var(--verde);line-height:1.1}
+.status{font-size:12px;color:var(--texto-muted);display:flex;align-items:center;gap:5px;margin-top:2px}
+.status::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--verde-claro)}
+
+.aviso-demo{background:#FFF3CD;color:#6b5100;font-size:12px;text-align:center;padding:7px 12px;flex-shrink:0}
+
+/* área rolável */
+.conteudo{flex:1;overflow-y:auto;padding:18px 16px 12px;scroll-behavior:smooth}
+
+/* início */
+.saudacao{margin-bottom:18px}
+.saudacao h2{font-family:'DM Serif Display',serif;font-size:26px;color:var(--texto);line-height:1.15}
+.saudacao h2 em{color:var(--verde)}
+.saudacao p{font-size:14px;color:var(--texto-muted);margin-top:6px;line-height:1.5}
+.rotulo{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--texto-muted);margin:4px 0 10px}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card-modo{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:14px;text-align:left;cursor:pointer;box-shadow:var(--shadow);font-family:inherit;color:inherit;transition:transform .12s,border-color .15s;display:flex;flex-direction:column;gap:8px;min-height:150px}
+.card-modo:active{transform:scale(.98)}
+.card-modo:hover{border-color:var(--verde-claro)}
+.card-modo .ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px}
+.card-modo strong{font-size:15px;font-weight:600}
+.card-modo span{font-size:12.5px;color:var(--texto-muted);line-height:1.45}
+.dica-escrever{text-align:center;font-size:12.5px;color:var(--texto-muted);margin:18px 0 4px}
+
+/* chat */
+.msg{display:flex;gap:8px;margin-bottom:12px;align-items:flex-end;animation:entra .2s ease}
+@keyframes entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.msg .mini-av{width:28px;height:28px;border-radius:50%;background:var(--verde);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.bolha{max-width:82%;padding:10px 14px;border-radius:18px;font-size:14.5px;line-height:1.5;word-wrap:break-word}
+.msg.ia .bolha{background:var(--branco);border:1px solid var(--borda);border-bottom-left-radius:6px}
+.msg.eu{justify-content:flex-end}
+.msg.eu .bolha{background:var(--verde);color:#fff;border-bottom-right-radius:6px}
+.bolha img{display:block;max-width:100%;border-radius:12px;margin-bottom:6px}
+.bolha p+p,.bolha p+ul,.bolha ul+p{margin-top:8px}
+.bolha ul{padding-left:18px}
+.bolha li{margin:3px 0}
+.hora{font-size:10.5px;opacity:.6;margin-top:4px;text-align:right}
+.chip-modo{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;margin:0 auto 14px;width:fit-content}
+.centro{display:flex;justify-content:center}
+
+.ranking{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.rank-item{display:flex;gap:10px;background:var(--verde-bg);border-radius:12px;padding:10px}
+.rank-pos{width:26px;height:26px;border-radius:50%;background:var(--verde);color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rank-item.evitar .rank-pos{background:#c4a3a3}
+.rank-item strong{font-size:14px;display:block}
+.rank-item small{font-size:12.5px;color:var(--texto-muted);line-height:1.4}
+
+.digitando{display:flex;gap:4px;padding:4px 2px}
+.digitando i{width:7px;height:7px;border-radius:50%;background:var(--verde-claro);animation:pula 1s infinite}
+.digitando i:nth-child(2){animation-delay:.15s}.digitando i:nth-child(3){animation-delay:.3s}
+@keyframes pula{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-4px)}}
+
+.sugestoes{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px 36px}
+.sugestoes button{font-family:inherit;font-size:13px;border:1.5px solid var(--borda);background:var(--branco);color:var(--verde);padding:7px 12px;border-radius:20px;cursor:pointer}
+
+/* rodapé / entrada */
+.entrada{background:var(--branco);border-top:1px solid var(--borda);padding:10px 12px calc(10px + env(safe-area-inset-bottom));flex-shrink:0}
+.preview{display:none;align-items:center;gap:10px;margin-bottom:8px;background:var(--verde-bg);border-radius:12px;padding:6px}
+.preview.show{display:flex}
+.preview img{width:48px;height:48px;object-fit:cover;border-radius:8px}
+.preview span{flex:1;font-size:12.5px;color:var(--texto-muted)}
+.preview button{border:none;background:none;font-size:18px;color:var(--texto-muted);cursor:pointer;padding:4px 8px}
+.linha{display:flex;align-items:flex-end;gap:8px}
+.linha textarea{flex:1;font-family:inherit;font-size:15px;border:1.5px solid var(--borda);border-radius:22px;padding:10px 16px;resize:none;max-height:120px;outline:none;background:var(--branco);color:var(--texto);line-height:1.4}
+.linha textarea:focus{border-color:var(--verde-claro)}
+.btn-enviar{width:44px;height:44px;border-radius:50%;border:none;background:var(--verde);color:#fff;font-size:18px;cursor:pointer;flex-shrink:0}
+.btn-enviar:disabled{opacity:.4;cursor:default}
+.legal{font-size:10.5px;color:var(--texto-muted);text-align:center;margin-top:8px;line-height:1.4}
+
+/* menu lateral */
+.fundo-menu{position:fixed;inset:0;background:rgba(27,45,39,.45);display:none;z-index:50}
+.fundo-menu.show{display:block}
+.menu{position:fixed;top:0;bottom:0;left:0;width:min(300px,85vw);background:var(--branco);z-index:51;transform:translateX(-100%);transition:transform .25s;padding:calc(24px + env(safe-area-inset-top)) 20px 20px;display:flex;flex-direction:column;gap:6px}
+.menu.show{transform:none}
+.menu h3{font-family:'DM Serif Display',serif;color:var(--verde);font-size:20px;margin-bottom:2px}
+.menu .crn{font-size:12px;color:var(--texto-muted);margin-bottom:16px}
+.menu button,.menu a{display:flex;align-items:center;gap:10px;font-family:inherit;font-size:15px;color:var(--texto);background:none;border:none;text-align:left;padding:11px 8px;border-radius:10px;cursor:pointer;text-decoration:none}
+.menu button:hover,.menu a:hover{background:var(--verde-bg)}
+.menu .sep{height:1px;background:var(--borda);margin:8px 0}
+.menu .info{font-size:12px;color:var(--texto-muted);line-height:1.5;margin-top:auto}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topo">
+    <button class="btn-icone" id="btnMenu" aria-label="Abrir menu">☰</button>
+    <button class="btn-icone" id="btnVoltar" aria-label="Voltar ao início" hidden>←</button>
+    <div class="avatar" aria-hidden="true">🌿</div>
+    <div class="topo-txt">
+      <h1>Lay IA</h1>
+      <div class="status">Online · assistente da Layane</div>
+    </div>
+    <button class="btn-icone" id="btnNovo" aria-label="Nova conversa">＋</button>
+  </header>
+
+  <div class="aviso-demo">Protótipo: as respostas ainda são exemplos, sem IA real conectada.</div>
+
+  <main class="conteudo" id="conteudo"></main>
+
+  <footer class="entrada">
+    <div class="preview" id="preview">
+      <img id="previewImg" alt="Foto anexada">
+      <span>Foto anexada</span>
+      <button id="btnTirarFoto" aria-label="Remover foto">✕</button>
+    </div>
+    <div class="linha">
+      <button class="btn-icone" id="btnFoto" aria-label="Enviar foto">📷</button>
+      <input type="file" id="arquivo" accept="image/*" hidden>
+      <textarea id="texto" rows="1" placeholder="Escreva sua mensagem…"></textarea>
+      <button class="btn-enviar" id="btnEnviar" aria-label="Enviar" disabled>➤</button>
+    </div>
+    <div class="legal">A Lay IA é uma assistente virtual e não substitui suas consultas com a nutricionista.</div>
+  </footer>
+</div>
+
+<div class="fundo-menu" id="fundoMenu"></div>
+<nav class="menu" id="menu" aria-label="Menu">
+  <h3>Layane Moura</h3>
+  <div class="crn">Nutricionista · CRN 18985</div>
+  <button data-ir="inicio">🏠 Início</button>
+  <button data-modo="chef">🍳 Chef Lay</button>
+  <button data-modo="restaurante">🍽️ Lay no Restaurante</button>
+  <button data-modo="mercado">🛒 Lay no Mercado</button>
+  <button data-modo="duvidas">💬 Tirar dúvidas</button>
+  <div class="sep"></div>
+  <a href="../index.html">📋 Rastreamento metabólico</a>
+  <div class="info">Em caso de sintomas fortes ou dúvidas sobre medicamentos, fale com a Layane ou com seu médico.</div>
+</nav>
+
+<script>
+// ====== Configuração ======
+// Quando a IA estiver conectada, troque MODO_DEMO para false e aponte API_URL para o servidor.
+const MODO_DEMO = true;
+const API_URL = '/api/chat';
+
+const MODOS = {
+  chef: {
+    nome: 'Chef Lay', ic: '🍳', cor: 'var(--chef)', bg: 'var(--chef-bg)',
+    desc: 'Receitas práticas com o que você tem em casa, sem sair do plano.',
+    abertura: 'Vamos cozinhar! 🍳 Me conta quais ingredientes você tem aí (pode separar por vírgula) e se é para café, almoço, lanche ou jantar.',
+    placeholder: 'Ex.: ovo, abobrinha, queijo, tomate',
+    sugestoes: ['Tenho frango, arroz e brócolis', 'Lanche rápido com iogurte', 'Jantar leve com ovos']
+  },
+  restaurante: {
+    nome: 'Lay no Restaurante', ic: '🍽️', cor: 'var(--rest)', bg: 'var(--rest-bg)',
+    desc: 'Mande a foto do cardápio e eu indico as melhores opções para você.',
+    abertura: 'Saiu para comer? 🍽️ Me manda uma foto ou o PDF do cardápio e me diz o que você quer priorizar (ex.: mais proteína, algo mais leve).',
+    placeholder: 'Ex.: quero algo com mais proteína',
+    sugestoes: ['Mais proteína', 'Algo mais leve', 'Estou com muita fome']
+  },
+  mercado: {
+    nome: 'Lay no Mercado', ic: '🛒', cor: 'var(--merc)', bg: 'var(--merc-bg)',
+    desc: 'Analiso rótulos de whey, barrinhas, iogurtes e outros produtos.',
+    abertura: 'Bora decifrar esse rótulo! 🛒 Tira uma foto da tabela nutricional e da lista de ingredientes do produto.',
+    placeholder: 'Ex.: essa barrinha é boa para o lanche?',
+    sugestoes: ['Como escolher um whey?', 'O que olhar num iogurte?']
+  },
+  duvidas: {
+    nome: 'Tirar dúvidas', ic: '💬', cor: 'var(--duv)', bg: 'var(--duv-bg)',
+    desc: 'Dúvidas sobre seu plano alimentar e sobre nutrição no dia a dia.',
+    abertura: 'Pode perguntar! 💬 Posso te ajudar com dúvidas sobre o seu plano e alimentação no dia a dia. Se for algo sobre remédios, exames ou sintomas fortes, aí é com a Layane ou seu médico, combinado?',
+    placeholder: 'Escreva sua dúvida…',
+    sugestoes: ['Posso trocar o arroz por batata?', 'Esqueci uma refeição, e agora?']
+  }
+};
+
+// ====== Estado ======
+let modoAtual = null;   // null = tela inicial
+let historico = [];     // [{papel:'eu'|'ia', texto, imagem}]
+let fotoPendente = null;
+
+const $ = id => document.getElementById(id);
+const conteudo = $('conteudo'), texto = $('texto'), btnEnviar = $('btnEnviar');
+
+const hora = () => new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// ====== Telas ======
+function telaInicio() {
+  modoAtual = null; historico = [];
+  $('btnVoltar').hidden = true; $('btnMenu').hidden = false;
+  texto.placeholder = 'Ou escreva diretamente aqui…';
+  const h = new Date().getHours();
+  const oi = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+  conteudo.innerHTML = `
+    <div class="saudacao">
+      <h2>${oi}! <em>Como posso te ajudar hoje?</em></h2>
+      <p>Sou a assistente virtual da Layane. Te ajudo a seguir o plano em casa, no restaurante e no mercado.</p>
+    </div>
+    <div class="rotulo">Posso te ajudar com</div>
+    <div class="grade">
+      ${Object.entries(MODOS).map(([k, m]) => `
+        <button class="card-modo" data-modo="${k}">
+          <div class="ic" style="background:${m.bg}">${m.ic}</div>
+          <strong style="color:${m.cor}">${m.nome}</strong>
+          <span>${m.desc}</span>
+        </button>`).join('')}
+    </div>
+    <div class="dica-escrever">ou escreva diretamente abaixo 👇</div>`;
+}
+
+function abrirModo(k) {
+  modoAtual = k; historico = [];
+  const m = MODOS[k];
+  $('btnVoltar').hidden = false; $('btnMenu').hidden = true;
+  texto.placeholder = m.placeholder;
+  conteudo.innerHTML = `<div class="centro"><div class="chip-modo" style="background:${m.bg};color:${m.cor}">${m.ic} ${m.nome}</div></div>`;
+  addMsg('ia', `<p>${m.abertura}</p>`);
+  mostrarSugestoes(m.sugestoes);
+  fecharMenu();
+}
+
+function addMsg(papel, html) {
+  const d = document.createElement('div');
+  d.className = 'msg ' + papel;
+  d.innerHTML = (papel === 'ia' ? '<div class="mini-av">🌿</div>' : '') +
+    `<div class="bolha">${html}<div class="hora">${hora()}</div></div>`;
+  conteudo.appendChild(d);
+  conteudo.scrollTop = conteudo.scrollHeight;
+  return d;
+}
+
+function mostrarSugestoes(lista) {
+  const d = document.createElement('div');
+  d.className = 'sugestoes';
+  lista.forEach(s => {
+    const b = document.createElement('button');
+    b.textContent = s;
+    b.onclick = () => { d.remove(); enviar(s); };
+    d.appendChild(b);
+  });
+  conteudo.appendChild(d);
+}
+
+// ====== Envio ======
+async function enviar(textoForcado) {
+  const msg = (textoForcado ?? texto.value).trim();
+  if (!msg && !fotoPendente) return;
+  if (!modoAtual) abrirModo(adivinharModo(msg));
+  document.querySelectorAll('.sugestoes').forEach(e => e.remove());
+
+  const foto = fotoPendente;
+  addMsg('eu', (foto ? `<img src="${foto}" alt="Foto enviada">` : '') + (msg ? `<p>${esc(msg)}</p>` : ''));
+  historico.push({papel:'eu', texto: msg, imagem: foto});
+  texto.value = ''; limparFoto(); ajustarAltura(); atualizarBotao();
+
+  const pensando = addMsg('ia', '<div class="digitando"><i></i><i></i><i></i></div>');
+  try {
+    const resposta = MODO_DEMO ? await respostaDemo(modoAtual, msg, foto) : await respostaAPI(modoAtual, historico);
+    pensando.remove();
+    addMsg('ia', resposta);
+    historico.push({papel:'ia', texto: resposta});
+  } catch (e) {
+    pensando.remove();
+    addMsg('ia', '<p>Ops, não consegui responder agora. Verifique sua internet e tente de novo.</p>');
+  }
+}
+
+function adivinharModo(msg) {
+  const t = msg.toLowerCase();
+  if (/receita|cozinhar|fazer com|tenho .*(ovo|frango|carne)/.test(t)) return 'chef';
+  if (/restaurante|cardápio|cardapio|pedir/.test(t)) return 'restaurante';
+  if (/rótulo|rotulo|mercado|whey|barrinha|comprar/.test(t)) return 'mercado';
+  return 'duvidas';
+}
+
+// Conexão real (etapa 2): o servidor guarda a chave da IA e as orientações da Layane.
+async function respostaAPI(modo, hist) {
+  const r = await fetch(API_URL, {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({modo, mensagens: hist})
+  });
+  if (!r.ok) throw new Error('erro ' + r.status);
+  return (await r.json()).html;
+}
+
+// ====== Respostas de exemplo (somente protótipo) ======
+function respostaDemo(modo, msg, foto) {
+  const espera = 900 + Math.random() * 700;
+  return new Promise(ok => setTimeout(() => ok(gerarDemo(modo, msg, foto)), espera));
+}
+
+function gerarDemo(modo, msg, foto) {
+  if (modo === 'chef') {
+    const ings = msg.toLowerCase().replace(/^(eu )?tenho /, '').split(/,| e /).map(s => s.trim())
+      .filter(s => s && !/quero|receita|para |algo|fazer/.test(s)).slice(0, 5);
+    const lista = ings.length ? ings.map(esc).join(', ') : 'o que você tem aí';
+    return `<p>Com <strong>${lista}</strong> dá para fazer uma opção bem prática:</p>
+      <p><strong>🍳 Exemplo de receita (protótipo)</strong></p>
+      <ul><li>Refogue os vegetais com um fio de azeite e temperos naturais.</li>
+      <li>Adicione a fonte de proteína e finalize com ervas.</li>
+      <li>Monte o prato: metade vegetais, um quarto proteína, um quarto carboidrato.</li></ul>
+      <p>Na versão final, a receita vai respeitar as quantidades do <em>seu</em> plano alimentar.</p>`;
+  }
+  if (modo === 'restaurante') {
+    if (!foto) return `<p>Ótimo! Para te ajudar a analisar as opções, preciso que você me mande uma <strong>foto ou PDF do cardápio</strong> 📷 (é só tocar na câmera aqui embaixo).</p>`;
+    return `<p>Analisei o cardápio pensando no seu objetivo${msg ? ` (<em>${esc(msg)}</em>)` : ''}. <strong>Exemplo de ranking (protótipo):</strong></p>
+      <div class="ranking">
+        <div class="rank-item"><div class="rank-pos">1º</div><div><strong>Peixe grelhado com legumes</strong><small>Boa fonte de proteína, preparo sem fritura e com vegetais.</small></div></div>
+        <div class="rank-item"><div class="rank-pos">2º</div><div><strong>Frango grelhado com salada e arroz</strong><small>Equilibrado. Peça o molho à parte.</small></div></div>
+        <div class="rank-item evitar"><div class="rank-pos">!</div><div><strong>Empanados e pratos com molhos cremosos</strong><small>Costumam ter mais gordura e calorias. Deixe para outra ocasião.</small></div></div>
+      </div>
+      <p>Na versão final, a análise usa o que está escrito no cardápio da foto. Valores de calorias serão sempre estimativas.</p>`;
+  }
+  if (modo === 'mercado') {
+    if (!foto) return `<p>Na hora de escolher, eu olho principalmente:</p>
+      <ul><li><strong>Lista de ingredientes:</strong> vem em ordem do que tem mais para o que tem menos.</li>
+      <li><strong>A “lupa” na frente da embalagem:</strong> avisa se o produto é alto em açúcar adicionado, gordura saturada ou sódio.</li>
+      <li><strong>Proteína e fibras por porção</strong>, e o tamanho da porção.</li></ul>
+      <p>Me manda a foto do rótulo que eu analiso com você 📷</p>`;
+    return `<p><strong>Análise do rótulo (exemplo do protótipo):</strong></p>
+      <ul><li>✅ Proteína: confira se é a primeira fonte da lista de ingredientes.</li>
+      <li>⚠️ Açúcares adicionados: veja se aparecem nos primeiros ingredientes ou na lupa frontal.</li>
+      <li>ℹ️ Porção: compare a porção do rótulo com o quanto você realmente consome.</li></ul>
+      <p>Na versão final, eu leio os números da sua foto e comparo com o seu plano.</p>`;
+  }
+  return `<p>Boa pergunta! No protótipo eu ainda não tenho as respostas reais. Na versão final, vou responder com base nas orientações da Layane e no seu plano.</p>
+    <p>Se for algo sobre medicamentos, exames ou sintomas, sempre fale com a Layane ou com seu médico. 💚</p>`;
+}
+
+// ====== Foto ======
+$('btnFoto').onclick = () => $('arquivo').click();
+$('arquivo').onchange = e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const leitor = new FileReader();
+  leitor.onload = () => reduzirImagem(leitor.result, 1280).then(url => {
+    fotoPendente = url;
+    $('previewImg').src = url;
+    $('preview').classList.add('show');
+    atualizarBotao();
+  });
+  leitor.readAsDataURL(f);
+  e.target.value = '';
+};
+$('btnTirarFoto').onclick = () => { limparFoto(); atualizarBotao(); };
+function limparFoto() { fotoPendente = null; $('preview').classList.remove('show'); }
+
+// Reduz fotos grandes do celular antes de enviar (economiza internet e custo da IA).
+function reduzirImagem(src, max) {
+  return new Promise(ok => {
+    const img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = img.width * k; c.height = img.height * k;
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      ok(c.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = () => ok(src);
+    img.src = src;
+  });
+}
+
+// ====== Entrada de texto ======
+function ajustarAltura() { texto.style.height = 'auto'; texto.style.height = Math.min(texto.scrollHeight, 120) + 'px'; }
+function atualizarBotao() { btnEnviar.disabled = !texto.value.trim() && !fotoPendente; }
+texto.addEventListener('input', () => { ajustarAltura(); atualizarBotao(); });
+texto.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); enviar(); } });
+btnEnviar.onclick = () => enviar();
+
+// ====== Navegação ======
+document.addEventListener('click', e => {
+  const m = e.target.closest('[data-modo]');
+  if (m) abrirModo(m.dataset.modo);
+  if (e.target.closest('[data-ir="inicio"]')) { telaInicio(); fecharMenu(); }
+});
+$('btnVoltar').onclick = telaInicio;
+$('btnNovo').onclick = () => modoAtual ? abrirModo(modoAtual) : telaInicio();
+$('btnMenu').onclick = () => { $('menu').classList.add('show'); $('fundoMenu').classList.add('show'); };
+$('fundoMenu').onclick = fecharMenu;
+function fecharMenu() { $('menu').classList.remove('show'); $('fundoMenu').classList.remove('show'); }
+
+telaInicio();
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>

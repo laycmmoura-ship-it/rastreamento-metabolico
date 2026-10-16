@@ -1,0 +1,14 @@
+{
+  "name": "Lay IA · Layane Moura Nutricionista",
+  "short_name": "Lay IA",
+  "description": "Assistente das pacientes da nutricionista Layane Moura",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F0F7F4",
+  "theme_color": "#2D6A4F",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
