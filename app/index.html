@@ -94,6 +94,70 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .btn-enviar:disabled{opacity:.4;cursor:default}
 .legal{font-size:10.5px;color:var(--texto-muted);text-align:center;margin-top:8px;line-height:1.4}
 
+/* receitas */
+.app.sem-entrada .entrada{display:none}
+.banner-receitas{width:100%;display:flex;align-items:center;gap:14px;background:var(--verde);color:#fff;border:none;border-radius:var(--radius);padding:16px;margin-bottom:18px;cursor:pointer;text-align:left;font-family:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.banner-receitas::after{content:'';position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:rgba(82,183,136,.25)}
+.banner-receitas .ic{font-size:30px;width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.banner-receitas strong{display:block;font-family:'DM Serif Display',serif;font-size:19px;font-weight:400}
+.banner-receitas span{font-size:13px;opacity:.85}
+.banner-receitas .seta{margin-left:auto;font-size:20px;position:relative;z-index:1}
+
+.livro-topo h2{font-family:'DM Serif Display',serif;font-size:25px;line-height:1.15;color:var(--texto)}
+.livro-topo p{font-size:13.5px;color:var(--texto-muted);margin-top:6px;line-height:1.5}
+.livro-topo small{display:block;font-size:12px;color:var(--verde);font-weight:600;margin-top:6px}
+.busca{position:relative;margin:16px 0 12px}
+.busca input{width:100%;font-family:inherit;font-size:15px;border:1.5px solid var(--borda);border-radius:14px;padding:11px 14px 11px 40px;background:var(--branco);color:var(--texto);outline:none}
+.busca input:focus{border-color:var(--verde-claro)}
+.busca::before{content:'🔍';position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.6}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin:0 -16px 10px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex-shrink:0;font-family:inherit;font-size:13px;font-weight:500;border:1.5px solid var(--borda);background:var(--branco);color:var(--texto-muted);padding:7px 13px;border-radius:20px;cursor:pointer;white-space:nowrap}
+.chips button.ativo{background:var(--verde);border-color:var(--verde);color:#fff}
+.cat-titulo{display:flex;flex-direction:column;gap:2px;margin:20px 0 10px}
+.cat-titulo h3{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:var(--verde)}
+.cat-titulo span{font-size:12px;color:var(--texto-muted)}
+.lista-rec{display:flex;flex-direction:column;gap:10px}
+.card-rec{display:flex;gap:12px;align-items:center;background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:12px;cursor:pointer;text-align:left;font-family:inherit;color:inherit;width:100%;box-shadow:var(--shadow)}
+.card-rec:active{transform:scale(.99)}
+.card-rec .emo{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.card-rec .txt{flex:1;min-width:0}
+.card-rec strong{display:block;font-size:15px;font-weight:600;margin-bottom:5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:8px;background:var(--verde-bg);color:var(--verde)}
+.tag.kcal{background:#FFF3CD;color:#7a5b00}
+.card-rec .seta{color:var(--borda);font-size:18px}
+.vazio{text-align:center;color:var(--texto-muted);font-size:14px;padding:40px 16px;line-height:1.6}
+.vazio b{display:block;font-size:34px;margin-bottom:8px}
+
+.rec-hero{border-radius:20px;padding:22px 18px;margin-bottom:16px;position:relative;overflow:hidden}
+.rec-hero .emo{font-size:44px;margin-bottom:6px}
+.rec-hero .cat{font-size:11.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;opacity:.75}
+.rec-hero h2{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;line-height:1.1;margin-top:4px}
+.rec-hero .porcao{font-size:13px;margin-top:8px;opacity:.8}
+.macros{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.macro{background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:10px 4px;text-align:center}
+.macro b{display:block;font-size:18px;color:var(--texto)}
+.macro span{font-size:11px;color:var(--texto-muted)}
+.macro.destaque{background:var(--verde);border-color:var(--verde)}
+.macro.destaque b,.macro.destaque span{color:#fff}
+.bloco{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.bloco h3{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:var(--verde);margin-bottom:4px}
+.bloco .sub{font-size:12px;color:var(--texto-muted);margin-bottom:8px}
+.ing{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--verde-bg);cursor:pointer;font-size:14.5px;line-height:1.4}
+.ing:last-child{border:none}
+.ing .ck{width:22px;height:22px;border:2px solid var(--borda);border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;margin-top:-1px}
+.ing.ok .ck{background:var(--verde-claro);border-color:var(--verde-claro)}
+.ing.ok .t{text-decoration:line-through;color:var(--texto-muted)}
+.ing .t small{color:var(--texto-muted)}
+.passo{display:flex;gap:12px;padding:10px 0;font-size:14.5px;line-height:1.5}
+.passo .n{width:28px;height:28px;border-radius:50%;background:var(--verde-light);color:var(--verde);font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nota{border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.5;margin-bottom:10px}
+.nota.dica{background:#FFF3CD;color:#5c4500}
+.nota.cons{background:var(--rest-bg);color:#1c5862}
+.nota.obs{background:var(--verde-bg);color:var(--texto-muted);border:1px dashed var(--borda)}
+.credito{font-size:11.5px;color:var(--texto-muted);text-align:center;margin:14px 0 6px;line-height:1.5}
+
 /* menu lateral */
 .fundo-menu{position:fixed;inset:0;background:rgba(27,45,39,.45);display:none;z-index:50}
 .fundo-menu.show{display:block}
@@ -146,6 +210,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
   <h3>Layane Moura</h3>
   <div class="crn">Nutricionista · CRN 18985</div>
   <button data-ir="inicio">🏠 Início</button>
+  <button data-ir="receitas">📖 Receitas</button>
   <button data-modo="chef">🍳 Chef Lay</button>
   <button data-modo="restaurante">🍽️ Lay no Restaurante</button>
   <button data-modo="mercado">🛒 Lay no Mercado</button>
@@ -194,6 +259,7 @@ const MODOS = {
 
 // ====== Estado ======
 let modoAtual = null;   // null = tela inicial
+let voltarPara = null;  // tela para onde o botão ← leva
 let historico = [];     // [{papel:'eu'|'ia', texto, imagem}]
 let fotoPendente = null;
 
@@ -205,7 +271,8 @@ const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',
 
 // ====== Telas ======
 function telaInicio() {
-  modoAtual = null; historico = [];
+  modoAtual = null; historico = []; voltarPara = null;
+  document.querySelector('.app').classList.remove('sem-entrada');
   $('btnVoltar').hidden = true; $('btnMenu').hidden = false;
   texto.placeholder = 'Ou escreva diretamente aqui…';
   const h = new Date().getHours();
@@ -215,6 +282,11 @@ function telaInicio() {
       <h2>${oi}! <em>Como posso te ajudar hoje?</em></h2>
       <p>Sou a assistente virtual da Layane. Te ajudo a seguir o plano em casa, no restaurante e no mercado.</p>
     </div>
+    <button class="banner-receitas" data-ir="receitas">
+      <div class="ic">📖</div>
+      <div><strong>Receitas</strong><span>Ideias práticas para o seu dia a dia</span></div>
+      <div class="seta">›</div>
+    </button>
     <div class="rotulo">Posso te ajudar com</div>
     <div class="grade">
       ${Object.entries(MODOS).map(([k, m]) => `
@@ -228,7 +300,8 @@ function telaInicio() {
 }
 
 function abrirModo(k) {
-  modoAtual = k; historico = [];
+  modoAtual = k; historico = []; voltarPara = telaInicio;
+  document.querySelector('.app').classList.remove('sem-entrada');
   const m = MODOS[k];
   $('btnVoltar').hidden = false; $('btnMenu').hidden = true;
   texto.placeholder = m.placeholder;
@@ -392,12 +465,132 @@ document.addEventListener('click', e => {
   const m = e.target.closest('[data-modo]');
   if (m) abrirModo(m.dataset.modo);
   if (e.target.closest('[data-ir="inicio"]')) { telaInicio(); fecharMenu(); }
+  if (e.target.closest('[data-ir="receitas"]')) { telaReceitas(); fecharMenu(); }
+  const r = e.target.closest('[data-receita]');
+  if (r) telaReceita(+r.dataset.receita);
+  const c = e.target.closest('[data-cat]');
+  if (c) { filtroCat = c.dataset.cat; desenharLista(); }
+  const i = e.target.closest('.ing');
+  if (i) i.classList.toggle('ok');
 });
-$('btnVoltar').onclick = telaInicio;
+$('btnVoltar').onclick = () => (voltarPara || telaInicio)();
 $('btnNovo').onclick = () => modoAtual ? abrirModo(modoAtual) : telaInicio();
 $('btnMenu').onclick = () => { $('menu').classList.add('show'); $('fundoMenu').classList.add('show'); };
 $('fundoMenu').onclick = fecharMenu;
 function fecharMenu() { $('menu').classList.remove('show'); $('fundoMenu').classList.remove('show'); }
+
+// ====== Receitas ======
+// Os livros ficam em receitas.json (gerado por ferramentas/converter_receitas.py).
+// Aceita um livro só ou uma lista de livros.
+let livros = null, filtroCat = 'todas', busca = '';
+const CORES_CAT = [['var(--chef-bg)','var(--chef)'],['#FFF6D6','#8a6a00'],['var(--merc-bg)','var(--merc)'],['var(--rest-bg)','var(--rest)'],['var(--verde-light)','var(--verde)']];
+
+async function carregarReceitas() {
+  if (livros) return livros;
+  try {
+    const r = await fetch('receitas.json', {cache: 'no-cache'});
+    if (!r.ok) throw 0;
+    const d = await r.json();
+    livros = Array.isArray(d) ? d : [d];
+  } catch { livros = []; }
+  // Índice único de receitas com cor e ícone da categoria
+  let ci = 0;
+  livros.forEach((l, li) => l.categorias.forEach(c => {
+    c.cor = CORES_CAT[ci++ % CORES_CAT.length];
+    c.receitas.forEach(r => { r.uid = li * 1000 + r.id; r.icone = c.icone; r.cor = c.cor; r.livro = l; });
+  }));
+  return livros;
+}
+const todasReceitas = () => livros.flatMap(l => l.categorias.flatMap(c => c.receitas));
+const fmt = n => Number.isInteger(n) ? n : n.toFixed(1).replace('.', ',');
+const semAcento = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+async function telaReceitas() {
+  modoAtual = null; voltarPara = telaInicio;
+  document.querySelector('.app').classList.add('sem-entrada');
+  $('btnVoltar').hidden = false; $('btnMenu').hidden = true;
+  conteudo.innerHTML = '<div class="vazio">Carregando receitas…</div>';
+  await carregarReceitas();
+  if (!livros.length) {
+    conteudo.innerHTML = '<div class="vazio"><b>📖</b>Ainda não há receitas por aqui.<br>A Layane vai liberar em breve!</div>';
+    return;
+  }
+  const cats = livros.flatMap(l => l.categorias);
+  const l0 = livros[0];
+  conteudo.innerHTML = `
+    <div class="livro-topo">
+      <h2>${livros.length > 1 ? 'Receitas' : esc(l0.titulo.charAt(0) + l0.titulo.slice(1).toLowerCase())}</h2>
+      ${livros.length > 1 ? '' : `<p>${esc(l0.descricao)}</p>`}
+      <small>${todasReceitas().length} receitas</small>
+    </div>
+    <div class="busca"><input id="buscaRec" type="search" placeholder="Buscar receita ou ingrediente…" value="${esc(busca)}"></div>
+    <div class="chips">
+      <button data-cat="todas">Todas</button>
+      ${cats.map(c => `<button data-cat="${esc(c.nome)}">${c.icone} ${esc(c.nome)}</button>`).join('')}
+    </div>
+    <div id="listaRec"></div>`;
+  $('buscaRec').addEventListener('input', e => { busca = e.target.value; desenharLista(); });
+  desenharLista();
+}
+
+function desenharLista() {
+  document.querySelectorAll('.chips button').forEach(b => b.classList.toggle('ativo', b.dataset.cat === filtroCat));
+  const q = semAcento(busca.trim());
+  const casa = r => !q || semAcento(r.nome + ' ' + r.ingredientes.join(' ')).includes(q);
+  let html = '';
+  livros.forEach(l => l.categorias.forEach(c => {
+    if (filtroCat !== 'todas' && filtroCat !== c.nome) return;
+    const rs = c.receitas.filter(casa);
+    if (!rs.length) return;
+    html += `<div class="cat-titulo"><h3>${c.icone} ${esc(c.nome)}</h3><span>${esc(c.subtitulo)}</span></div>
+      <div class="lista-rec">${rs.map(cardReceita).join('')}</div>`;
+  }));
+  $('listaRec').innerHTML = html || '<div class="vazio"><b>🔎</b>Nenhuma receita encontrada.</div>';
+}
+
+function cardReceita(r) {
+  const n = r.nutri;
+  return `<button class="card-rec" data-receita="${r.uid}">
+    <div class="emo" style="background:${r.cor[0]}">${r.icone}</div>
+    <div class="txt"><strong>${esc(r.nome)}</strong>
+      <div class="tags">
+        ${n.kcal != null ? `<span class="tag kcal">${fmt(n.kcal)} kcal</span>` : ''}
+        ${n.prot != null ? `<span class="tag">${fmt(n.prot)}g proteína</span>` : ''}
+      </div></div>
+    <div class="seta">›</div></button>`;
+}
+
+function telaReceita(uid) {
+  const r = todasReceitas().find(x => x.uid === uid);
+  if (!r) return;
+  voltarPara = () => telaReceitas();
+  const n = r.nutri;
+  const ing = s => esc(s).replace(/ — (ou .+)$/, ' <small>($1)</small>');
+  conteudo.innerHTML = `
+    <div class="rec-hero" style="background:${r.cor[0]};color:${r.cor[1]}">
+      <div class="emo">${r.icone}</div>
+      <div class="cat">${esc(r.categoria)}</div>
+      <h2>${esc(r.nome)}</h2>
+      ${r.porcao ? `<div class="porcao">🍽️ ${esc(r.porcao)}</div>` : ''}
+    </div>
+    ${n.kcal != null ? `<div class="macros">
+      <div class="macro destaque"><b>${fmt(n.kcal)}</b><span>kcal</span></div>
+      <div class="macro"><b>${fmt(n.prot ?? 0)}g</b><span>proteína</span></div>
+      <div class="macro"><b>${fmt(n.carbo ?? 0)}g</b><span>carbo</span></div>
+      <div class="macro"><b>${fmt(n.gord ?? 0)}g</b><span>gordura</span></div>
+    </div>` : ''}
+    <div class="bloco"><h3>Ingredientes</h3><div class="sub">Toque para marcar o que já separou</div>
+      ${r.ingredientes.map(i => `<div class="ing"><div class="ck">✓</div><div class="t">${ing(i)}</div></div>`).join('')}
+    </div>
+    <div class="bloco"><h3>Modo de preparo</h3>
+      ${r.preparo.map((p, k) => `<div class="passo"><div class="n">${k + 1}</div><div>${esc(p)}</div></div>`).join('')}
+    </div>
+    ${r.dica ? `<div class="nota dica">💡 <b>Dica:</b> ${esc(r.dica)}</div>` : ''}
+    ${r.conservacao ? `<div class="nota cons">❄️ <b>Conservação:</b> ${esc(r.conservacao)}</div>` : ''}
+    ${r.obs ? `<div class="nota obs">${esc(r.obs)}</div>` : ''}
+    <div class="credito">${esc(r.livro.titulo)} · ${esc(r.livro.autoria)}<br>Valores nutricionais aproximados. Siga as quantidades do seu plano.</div>`;
+  conteudo.scrollTop = 0;
+}
 
 telaInicio();
 

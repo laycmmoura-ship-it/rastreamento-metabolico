@@ -19,3 +19,10 @@ Web app instalável (PWA) com assistente para as pacientes da Layane Moura.
 python3 -m http.server 8000
 ```
 Abra http://localhost:8000/app/
+
+## Receitas
+- Tela "Receitas" com busca, filtro por categoria e página de cada receita
+  (ingredientes para marcar, passo a passo, kcal e macros, dica e conservação).
+- Para adicionar um livro: `python3 ferramentas/converter_receitas.py livro.txt app/receitas.json`
+- `app/receitas.json` está no `.gitignore`: livros de outras autoras só devem ser
+  publicados com autorização de uso.
