@@ -94,6 +94,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .btn-enviar:disabled{opacity:.4;cursor:default}
 .legal{font-size:10.5px;color:var(--texto-muted);text-align:center;margin-top:8px;line-height:1.4}
 
+/* análise de prato */
+.estimativa{margin:10px 0;border:1px solid var(--borda);border-radius:14px;overflow:hidden;background:var(--branco)}
+.est-topo{background:var(--verde);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.est-topo span{font-size:12.5px;opacity:.85}
+.est-topo b{font-size:20px;font-family:'DM Serif Display',serif;font-weight:400}
+.est-macros{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:11.5px;color:var(--texto-muted);border-bottom:1px solid var(--verde-light)}
+.est-macros div{padding:9px 4px}
+.est-macros b{display:block;font-size:16px;color:var(--texto)}
+.est-itens{width:100%;border-collapse:collapse;font-size:13px}
+.est-itens td{padding:8px 10px;border-bottom:1px solid var(--verde-bg)}
+.est-itens td:nth-child(2){color:var(--texto-muted);font-size:12px}
+.est-itens td:last-child{text-align:right;white-space:nowrap;font-weight:600;color:var(--verde)}
+.est-conf{font-size:12.5px;padding:9px 14px}
+.comparacao{background:var(--verde-bg);border:1px dashed var(--borda);border-radius:14px;padding:12px 14px;margin:10px 0;font-size:13.5px}
+.comparacao p{margin-top:6px}
+.bolha .mini{font-size:12.5px;color:var(--texto-muted);line-height:1.5}
+
 /* receitas */
 .app.sem-entrada .entrada{display:none}
 .banner-receitas{width:100%;display:flex;align-items:center;gap:14px;background:var(--verde);color:#fff;border:none;border-radius:var(--radius);padding:16px;margin-bottom:18px;cursor:pointer;text-align:left;font-family:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden}
@@ -249,11 +266,11 @@ const MODOS = {
     sugestoes: ['Como escolher um whey?', 'O que olhar num iogurte?']
   },
   duvidas: {
-    nome: 'Tirar dúvidas', ic: '💬', cor: 'var(--duv)', bg: 'var(--duv-bg)',
-    desc: 'Dúvidas sobre seu plano alimentar e sobre nutrição no dia a dia.',
-    abertura: 'Pode perguntar! 💬 Posso te ajudar com dúvidas sobre o seu plano e alimentação no dia a dia. Se for algo sobre remédios, exames ou sintomas fortes, aí é com a Layane ou seu médico, combinado?',
-    placeholder: 'Escreva sua dúvida…',
-    sugestoes: ['Posso trocar o arroz por batata?', 'Esqueci uma refeição, e agora?']
+    nome: 'Meu prato e dúvidas', ic: '📸', cor: 'var(--duv)', bg: 'var(--duv-bg)',
+    desc: 'Mande a foto do seu prato e veja as calorias, ou tire suas dúvidas.',
+    abertura: 'Me manda a <strong>foto do seu prato</strong> 📸 e, se puder, escreva <strong>o que tem e quanto</strong>. Exemplo: <em>“almoço: 4 col. de arroz, 1 concha de feijão, 1 filé de frango, salada à vontade”</em>.<br><br>Com as quantidades a estimativa fica bem mais certinha. Também pode só tirar uma dúvida, é só escrever!',
+    placeholder: 'Descreva o prato ou pergunte…',
+    sugestoes: ['Como descrevo meu prato?', 'Posso trocar o arroz por batata?']
   }
 };
 
@@ -337,7 +354,7 @@ function mostrarSugestoes(lista) {
 async function enviar(textoForcado) {
   const msg = (textoForcado ?? texto.value).trim();
   if (!msg && !fotoPendente) return;
-  if (!modoAtual) abrirModo(adivinharModo(msg));
+  if (!modoAtual) abrirModo(fotoPendente && !msg ? 'duvidas' : adivinharModo(msg));
   document.querySelectorAll('.sugestoes').forEach(e => e.remove());
 
   const foto = fotoPendente;
@@ -415,8 +432,41 @@ function gerarDemo(modo, msg, foto) {
       <li>ℹ️ Porção: compare a porção do rótulo com o quanto você realmente consome.</li></ul>
       <p>Na versão final, eu leio os números da sua foto e comparo com o seu plano.</p>`;
   }
+  if (foto || /col\.|colher|concha|filé|fatia|\d+\s*g\b/i.test(msg)) return demoPrato(msg, !!foto);
+  if (/como descrev/i.test(msg)) return `<p>É bem simples! Escreva <strong>a refeição</strong> e <strong>cada alimento com a quantidade</strong> em medida caseira:</p>
+      <ul><li>🍚 colheres de sopa (cheias ou rasas) de arroz, macarrão, purê</li>
+      <li>🫘 conchas de feijão</li><li>🍗 filé, pedaço ou unidades da carne (pequeno, médio, grande)</li>
+      <li>🥗 salada: pode dizer “à vontade”</li><li>🫒 se usou azeite, molho ou queijo por cima</li></ul>
+      <p>Fotografe o prato <strong>de cima</strong>, com o talher ao lado. Ajuda a ter noção do tamanho.</p>`;
   return `<p>Boa pergunta! No protótipo eu ainda não tenho as respostas reais. Na versão final, vou responder com base nas orientações da Layane e no seu plano.</p>
     <p>Se for algo sobre medicamentos, exames ou sintomas, sempre fale com a Layane ou com seu médico. 💚</p>`;
+}
+
+// Exemplo de análise de prato (protótipo). Na versão final, a IA identifica os alimentos e as
+// quantidades, e as calorias são calculadas pela tabela de composição (ex.: TACO), não "de cabeça".
+function demoPrato(msg, temFoto) {
+  const comQtd = /col\.|colher|concha|filé|fatia|unidade|\d+\s*g\b/i.test(msg);
+  const conf = comQtd ? ['Média', 'você informou as quantidades', '#7a5b00', '#FFF3CD']
+                      : ['Baixa', 'estimei só pela foto', '#842029', '#F8D7DA'];
+  const faixa = comQtd ? '520 a 600' : '450 a 700';
+  return `<p>Aqui está a estimativa do seu prato${temFoto ? '' : ' (pela descrição)'}. <strong>Exemplo do protótipo:</strong></p>
+    <div class="estimativa">
+      <div class="est-topo"><span>Estimativa total</span><b>${faixa} kcal</b></div>
+      <div class="est-macros"><div><b>~30g</b>proteína</div><div><b>~70g</b>carbo</div><div><b>~15g</b>gordura</div></div>
+      <table class="est-itens">
+        <tr><td>🍚 Arroz branco</td><td>4 col. sopa</td><td>~170 kcal</td></tr>
+        <tr><td>🫘 Feijão</td><td>1 concha</td><td>~90 kcal</td></tr>
+        <tr><td>🍗 Frango grelhado</td><td>1 filé médio</td><td>~190 kcal</td></tr>
+        <tr><td>🥗 Salada + azeite</td><td>à vontade</td><td>~80 kcal</td></tr>
+      </table>
+      <div class="est-conf" style="color:${conf[2]};background:${conf[3]}">Confiança: <b>${conf[0]}</b> · ${conf[1]}</div>
+    </div>
+    <div class="comparacao">
+      <b>📋 Comparando com o seu plano</b>
+      <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
+      <p class="mini">Enquanto isso, confira no seu plano se as calorias e a quantidade de proteína estão perto do previsto.</p>
+    </div>
+    <p class="mini">⚠️ É uma <strong>estimativa</strong>: foto não mostra peso, óleo do preparo nem o que está por baixo. Pratos grandes costumam ser subestimados. Não precisa ser perfeito, o importante é o padrão da semana. 💚</p>`;
 }
 
 // ====== Foto ======
