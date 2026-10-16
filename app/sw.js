@@ -1,6 +1,6 @@
 // Cache simples para o app abrir rápido e funcionar sem internet (só a interface).
-const CACHE = 'lay-ia-v4';
-const ARQUIVOS = ['./', './index.html', './manifest.webmanifest', './icon.svg', './apple-touch-icon.png', './icon-192.png', './icon-512.png'];
+const CACHE = 'lay-ia-v5';
+const ARQUIVOS = ['./', './index.html', './manifest.webmanifest', './icon.svg', './apple-touch-icon.png', './icon-192.png', './icon-512.png', './nutricao.js', './dados/taco.json', './dados/medidas.json'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ARQUIVOS)));

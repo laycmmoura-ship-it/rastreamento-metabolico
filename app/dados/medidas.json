@@ -1,0 +1,138 @@
+{
+ "instrucoes": "Preencha 'gramas' com o peso de UMA medida, conforme a referência que você usa (ex.: IBGE/POF 2008-2009 ou a do seu software). Deixe null o que não quiser usar. 'taco_id' liga a medida ao alimento da TACO.",
+ "medidas": [
+  {
+   "taco_id": 3,
+   "alimento": "Arroz branco cozido",
+   "medida": "colher de sopa cheia",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 1,
+   "alimento": "Arroz integral cozido",
+   "medida": "colher de sopa cheia",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 561,
+   "alimento": "Feijão carioca cozido",
+   "medida": "concha média",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 567,
+   "alimento": "Feijão preto cozido",
+   "medida": "concha média",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 410,
+   "alimento": "Peito de frango grelhado",
+   "medida": "filé médio",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 377,
+   "alimento": "Patinho grelhado",
+   "medida": "bife médio",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 326,
+   "alimento": "Carne moída (acém) cozida",
+   "medida": "colher de sopa cheia",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 488,
+   "alimento": "Ovo cozido",
+   "medida": "unidade",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 490,
+   "alimento": "Ovo frito",
+   "medida": "unidade",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 91,
+   "alimento": "Batata inglesa cozida",
+   "medida": "colher de sopa cheia",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 88,
+   "alimento": "Batata doce cozida",
+   "medida": "colher de sopa cheia",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 129,
+   "alimento": "Mandioca cozida",
+   "medida": "pedaço médio",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 533,
+   "alimento": "Cuscuz de milho cozido",
+   "medida": "fatia média",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 53,
+   "alimento": "Pão francês",
+   "medida": "unidade",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 182,
+   "alimento": "Banana prata",
+   "medida": "unidade média",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 260,
+   "alimento": "Azeite de oliva",
+   "medida": "colher de sopa",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 7,
+   "alimento": "Aveia em flocos",
+   "medida": "colher de sopa",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 458,
+   "alimento": "Leite integral",
+   "medida": "copo americano",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 448,
+   "alimento": "Iogurte natural",
+   "medida": "pote",
+   "gramas": null,
+   "fonte": ""
+  }
+ ]
+}

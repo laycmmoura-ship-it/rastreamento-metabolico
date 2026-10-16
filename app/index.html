@@ -107,6 +107,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .est-itens td:nth-child(2){color:var(--texto-muted);font-size:12px}
 .est-itens td:last-child{text-align:right;white-space:nowrap;font-weight:600;color:var(--verde)}
 .est-conf{font-size:12.5px;padding:9px 14px}
+.est-itens .falta{font-weight:500;color:#842029;font-size:11.5px;white-space:normal}
 .comparacao{background:var(--verde-bg);border:1px dashed var(--borda);border-radius:14px;padding:12px 14px;margin:10px 0;font-size:13.5px}
 .comparacao p{margin-top:6px}
 .bolha .mini{font-size:12.5px;color:var(--texto-muted);line-height:1.5}
@@ -237,6 +238,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
   <div class="info">Em caso de sintomas fortes ou dúvidas sobre medicamentos, fale com a Layane ou com seu médico.</div>
 </nav>
 
+<script src="nutricao.js"></script>
 <script>
 // ====== Configuração ======
 // Quando a IA estiver conectada, troque MODO_DEMO para false e aponte API_URL para o servidor.
@@ -432,7 +434,7 @@ function gerarDemo(modo, msg, foto) {
       <li>ℹ️ Porção: compare a porção do rótulo com o quanto você realmente consome.</li></ul>
       <p>Na versão final, eu leio os números da sua foto e comparo com o seu plano.</p>`;
   }
-  if (foto || /col\.|colher|concha|filé|fatia|\d+\s*g\b/i.test(msg)) return demoPrato(msg, !!foto);
+  if (foto || /col\.|colher|concha|filé|fatia|\d+\s*g\b/i.test(msg)) return analisarPrato(msg, !!foto);
   if (/como descrev/i.test(msg)) return `<p>É bem simples! Escreva <strong>a refeição</strong> e <strong>cada alimento com a quantidade</strong> em medida caseira:</p>
       <ul><li>🍚 colheres de sopa (cheias ou rasas) de arroz, macarrão, purê</li>
       <li>🫘 conchas de feijão</li><li>🍗 filé, pedaço ou unidades da carne (pequeno, médio, grande)</li>
@@ -440,6 +442,40 @@ function gerarDemo(modo, msg, foto) {
       <p>Fotografe o prato <strong>de cima</strong>, com o talher ao lado. Ajuda a ter noção do tamanho.</p>`;
   return `<p>Boa pergunta! No protótipo eu ainda não tenho as respostas reais. Na versão final, vou responder com base nas orientações da Layane e no seu plano.</p>
     <p>Se for algo sobre medicamentos, exames ou sintomas, sempre fale com a Layane ou com seu médico. 💚</p>`;
+}
+
+// Cálculo real pela TACO quando a paciente escreve os alimentos; sem descrição, mostra o exemplo
+// (identificar alimentos só pela foto depende da IA, etapa seguinte).
+async function analisarPrato(msg, temFoto) {
+  try { await Nutricao.carregar(); } catch { return demoPrato(msg, temFoto); }
+  const itens = msg ? Nutricao.lerPrato(msg) : [];
+  if (!itens.length) return demoPrato(msg, temFoto);
+  const tot = Nutricao.calcular(itens);
+  const r = n => Math.round(n);
+  const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
+  const todosEmGramas = itens.every(i => i.calc && /g|ml/.test(i.qtdTexto));
+  const conf = !faltam && todosEmGramas ? ['Boa', 'quantidades em gramas', '#1f5c41', 'var(--verde-light)']
+             : !faltam ? ['Média', 'medidas caseiras convertidas', '#7a5b00', '#FFF3CD']
+             : ['Parcial', `${faltam} ${faltam > 1 ? 'itens ficaram' : 'item ficou'} de fora do total`, '#842029', '#F8D7DA'];
+  const linha = i => {
+    const nome = i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`;
+    const valor = i.calc ? `~${r(i.calc.kcal)} kcal`
+      : !i.alimento ? '<span class="falta">não está na TACO</span>'
+      : '<span class="falta">medida sem peso cadastrado</span>';
+    return `<tr><td>${nome}</td><td>${esc(i.gramas != null && !/g|ml/.test(i.qtdTexto) ? `${i.qtdTexto} (${r(i.gramas)}g)` : i.qtdTexto)}</td><td>${valor}</td></tr>`;
+  };
+  return `<p>Calculei pelos alimentos que você escreveu${temFoto ? ' (a leitura da foto entra quando a IA estiver conectada)' : ''}:</p>
+    <div class="estimativa">
+      <div class="est-topo"><span>${faltam ? 'Total parcial' : 'Total estimado'}</span><b>${r(tot.kcal)} kcal</b></div>
+      <div class="est-macros"><div><b>${r(tot.prot)}g</b>proteína</div><div><b>${r(tot.carbo)}g</b>carbo</div><div><b>${r(tot.gord)}g</b>gordura</div></div>
+      <table class="est-itens">${itens.map(linha).join('')}</table>
+      <div class="est-conf" style="color:${conf[2]};background:${conf[3]}">Confiança: <b>${conf[0]}</b> · ${conf[1]}</div>
+    </div>
+    <div class="comparacao">
+      <b>📋 Comparando com o seu plano</b>
+      <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
+    </div>
+    <p class="mini">Valores da ${Nutricao.fonte}, por alimento pronto para consumo. Confira se o alimento encontrado é o que você comeu. Óleo do preparo e molhos só entram se você escrever.</p>`;
 }
 
 // Exemplo de análise de prato (protótipo). Na versão final, a IA identifica os alimentos e as

@@ -26,3 +26,15 @@ Abra http://localhost:8000/app/
 - Para adicionar um livro: `python3 ferramentas/converter_receitas.py livro.txt app/receitas.json`
 - `app/receitas.json` está no `.gitignore`: livros de outras autoras só devem ser
   publicados com autorização de uso.
+
+## Cálculo nutricional (TACO)
+- `app/dados/taco.json`: 597 alimentos da **TACO – Tabela Brasileira de Composição de Alimentos,
+  4ª ed. revisada e ampliada. NEPA/UNICAMP, Campinas, 2011** (reprodução permitida com citação da fonte).
+  Gerado por `ferramentas/gerar_taco.py` a partir dos CSVs de github.com/raulfdm/taco-api (MIT),
+  conferidos contra o PDF oficial: 2.653 valores iguais; 6 fibras ausentes completadas pelo PDF.
+- `app/nutricao.js`: encontra o alimento na TACO e calcula kcal e macros pelos gramas.
+  Quando não acha o alimento, avisa ("não está na TACO") em vez de chutar outro.
+- `app/dados/medidas.json`: **gramas das medidas caseiras, a preencher pela nutricionista**
+  (enquanto estiver em branco, medidas como "colher" ficam fora do total).
+- TBCA (USP/FoRC): não incluída. Os termos encontrados indicam licença CC BY-NC-ND e proibição de
+  reprodução; usar só com autorização do FoRC.
