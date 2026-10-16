@@ -1,19 +1,37 @@
 {
- "instrucoes": "Preencha 'gramas' com o peso de UMA medida, conforme a referência que você usa (ex.: IBGE/POF 2008-2009 ou a do seu software). Deixe null o que não quiser usar. 'taco_id' liga a medida ao alimento da TACO.",
+ "instrucoes": "Preencha 'gramas' com o peso de UMA medida, conforme a referência que você usa (ex.: IBGE/POF ou a do seu software). Deixe null o que não quiser usar. 'taco_id' liga a medida ao alimento da TACO. 'padrao': true = usada quando a paciente não diz se é rasa ou cheia.",
  "medidas": [
   {
    "taco_id": 3,
    "alimento": "Arroz branco cozido",
    "medida": "colher de sopa cheia",
    "gramas": null,
-   "fonte": ""
+   "fonte": "",
+   "padrao": true
+  },
+  {
+   "taco_id": 3,
+   "alimento": "Arroz branco cozido",
+   "medida": "colher de sopa rasa",
+   "gramas": null,
+   "fonte": "",
+   "padrao": false
   },
   {
    "taco_id": 1,
    "alimento": "Arroz integral cozido",
    "medida": "colher de sopa cheia",
    "gramas": null,
-   "fonte": ""
+   "fonte": "",
+   "padrao": true
+  },
+  {
+   "taco_id": 1,
+   "alimento": "Arroz integral cozido",
+   "medida": "colher de sopa rasa",
+   "gramas": null,
+   "fonte": "",
+   "padrao": false
   },
   {
    "taco_id": 561,
@@ -48,7 +66,16 @@
    "alimento": "Carne moída (acém) cozida",
    "medida": "colher de sopa cheia",
    "gramas": null,
-   "fonte": ""
+   "fonte": "",
+   "padrao": true
+  },
+  {
+   "taco_id": 326,
+   "alimento": "Carne moída (acém) cozida",
+   "medida": "colher de sopa rasa",
+   "gramas": null,
+   "fonte": "",
+   "padrao": false
   },
   {
    "taco_id": 488,
@@ -69,14 +96,32 @@
    "alimento": "Batata inglesa cozida",
    "medida": "colher de sopa cheia",
    "gramas": null,
-   "fonte": ""
+   "fonte": "",
+   "padrao": true
+  },
+  {
+   "taco_id": 91,
+   "alimento": "Batata inglesa cozida",
+   "medida": "colher de sopa rasa",
+   "gramas": null,
+   "fonte": "",
+   "padrao": false
   },
   {
    "taco_id": 88,
    "alimento": "Batata doce cozida",
    "medida": "colher de sopa cheia",
    "gramas": null,
-   "fonte": ""
+   "fonte": "",
+   "padrao": true
+  },
+  {
+   "taco_id": 88,
+   "alimento": "Batata doce cozida",
+   "medida": "colher de sopa rasa",
+   "gramas": null,
+   "fonte": "",
+   "padrao": false
   },
   {
    "taco_id": 129,
@@ -109,16 +154,34 @@
   {
    "taco_id": 260,
    "alimento": "Azeite de oliva",
-   "medida": "colher de sopa",
+   "medida": "colher de sopa cheia",
    "gramas": null,
-   "fonte": ""
+   "fonte": "",
+   "padrao": true
+  },
+  {
+   "taco_id": 260,
+   "alimento": "Azeite de oliva",
+   "medida": "colher de sopa rasa",
+   "gramas": null,
+   "fonte": "",
+   "padrao": false
   },
   {
    "taco_id": 7,
    "alimento": "Aveia em flocos",
-   "medida": "colher de sopa",
+   "medida": "colher de sopa cheia",
    "gramas": null,
-   "fonte": ""
+   "fonte": "",
+   "padrao": true
+  },
+  {
+   "taco_id": 7,
+   "alimento": "Aveia em flocos",
+   "medida": "colher de sopa rasa",
+   "gramas": null,
+   "fonte": "",
+   "padrao": false
   },
   {
    "taco_id": 458,
@@ -137,16 +200,34 @@
   {
    "taco_id": 121,
    "alimento": "Farinha de mandioca crua",
-   "medida": "colher de sopa",
+   "medida": "colher de sopa cheia",
    "gramas": null,
-   "fonte": ""
+   "fonte": "",
+   "padrao": true
+  },
+  {
+   "taco_id": 121,
+   "alimento": "Farinha de mandioca crua",
+   "medida": "colher de sopa rasa",
+   "gramas": null,
+   "fonte": "",
+   "padrao": false
   },
   {
    "taco_id": 122,
    "alimento": "Farinha de mandioca torrada",
-   "medida": "colher de sopa",
+   "medida": "colher de sopa cheia",
    "gramas": null,
-   "fonte": ""
+   "fonte": "",
+   "padrao": true
+  },
+  {
+   "taco_id": 122,
+   "alimento": "Farinha de mandioca torrada",
+   "medida": "colher de sopa rasa",
+   "gramas": null,
+   "fonte": "",
+   "padrao": false
   }
  ]
 }

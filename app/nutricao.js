@@ -31,7 +31,8 @@ const Nutricao = (() => {
   // Singular simples para comparar: ovos -> ovo, fritos -> frito, feijoes -> feijao
   const sing = w => w.length > 3 ? w.replace(/(oes|aes)$/, 'ao').replace(/eses$/, 'es').replace(/s$/, '') : w;
   // Palavras que descrevem o pedaço/prato mas não precisam estar no nome da TACO
-  const GENERICAS = new Set(['file', 'files', 'pedaco', 'fatia', 'salada', 'porcao', 'bife', 'prato', 'pouco', 'pouca']);
+  const GENERICAS = new Set(['file', 'files', 'pedaco', 'fatia', 'salada', 'porcao', 'bife', 'prato', 'pouco', 'pouca',
+    'rasa', 'cheia', 'nivelada', 'pequena', 'pequeno', 'media', 'medio', 'grande']);
 
   async function carregar() {
     if (taco) return;
@@ -85,10 +86,20 @@ const Nutricao = (() => {
   }
 
   // Gramas de uma medida caseira cadastrada (ex.: "colher de sopa" de arroz). null se não cadastrada.
-  function gramasDaMedida(alimento, medida) {
-    const m = norm(medida).replace(/s\b/g, '');
-    const item = medidas.find(x => x.taco_id === alimento.id && norm(x.medida).replace(/s\b/g, '').startsWith(m.slice(0, 5)) && x.gramas);
-    return item ? item.gramas : null;
+  // Ex.: medida "colheres de sopa" + tamanho "rasa" -> procura "colher de sopa rasa" daquele alimento.
+  // Sem tamanho informado, usa a medida marcada como padrão (ou a única cadastrada).
+  const TAMANHOS = ['rasa', 'cheia', 'nivelada', 'pequena', 'media', 'grande', 'pequeno', 'medio'];
+  function gramasDaMedida(alimento, medida, tamanho) {
+    const base = s => norm(s).split(' ').filter(w => !TAMANHOS.includes(w) && w !== 'de').map(sing).join(' ');
+    const mb = base(medida);
+    const doAlimento = medidas.filter(x => x.taco_id === alimento.id && x.gramas && base(x.medida).startsWith(mb.slice(0, 5)));
+    if (!doAlimento.length) return null;
+    if (tamanho) {
+      const t = sing(tamanho);
+      const certo = doAlimento.find(x => norm(x.medida).split(' ').map(sing).includes(t));
+      return certo ? certo.gramas : null;   // "rasa" pedida e só existe "cheia": melhor não chutar
+    }
+    return (doAlimento.find(x => x.padrao) || doAlimento[0]).gramas;
   }
 
   const NUM = {'um': 1, 'uma': 1, 'meia': 0.5, 'meio': 0.5, 'dois': 2, 'duas': 2, 'tres': 3, 'quatro': 4, 'cinco': 5};
@@ -96,10 +107,24 @@ const Nutricao = (() => {
   const RX_CONTAGEM = /^(\d+(?:[.,]\d+)?|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s+(?=[a-z])/;
   const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa))?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?|porcao|porcoes)\b/;
 
+  // "pão com manteiga" e "arroz com feijão" são dois alimentos; "frango com pele" é um só (existe assim na TACO).
+  function separarCom(parte) {
+    const [esq, ...resto] = parte.split(/\s+com\s+/);
+    if (!resto.length) return [parte];
+    const dir = resto.join(' com ');
+    const termos = norm(parte).split(' ').filter(t => t.length > 1 && !PALAVRAS_VAZIAS.has(t) && !(t in NUM) && !/^\d/.test(t) && !GENERICAS.has(t)).map(sing);
+    const junto = buscar(parte), ws = junto ? junto.chave.split(' ').map(sing) : [];
+    const juntoNaTaco = !!junto && termos.every(t => ws.includes(t));
+    return juntoNaTaco || !buscar(dir) ? [parte] : [esq, dir];
+  }
+
   // "almoço: 4 col. de arroz, 1 concha de feijão, 120g de frango" -> itens
   function lerPrato(texto) {
     const t = texto.replace(/½/g, ' meia ').replace(/^\s*(caf[eé] da manh[aã]|almo[cç]o|jantar|lanche|ceia)\s*:?/i, '');
-    return t.split(/\s+e\s+|,|;|\+|\n/).map(norm).filter(Boolean).map(parte => {
+    const QTD = '(?=\\d|um |uma |dois |duas |tr[eê]s |quatro |cinco |meia |meio )';
+    const partes = t.split(new RegExp(`\\s+e\\s+|,|;|\\+|\\n|\\s+(?:com|mais)\\s+${QTD}`, 'i')).map(norm).filter(Boolean)
+      .flatMap(separarCom);
+    return partes.map(parte => {
       // tira palavras de conversa do começo ("tem dois ovos" -> "dois ovos")
       parte = parte.split(' ').filter((w, k, a) => !(PALAVRAS_VAZIAS.has(w) && !(w in NUM) && a.slice(0, k).every(x => PALAVRAS_VAZIAS.has(x) && !(x in NUM)))).join(' ');
       let gramas = null, medida = null, qtd = 1, resto = parte, porUnidade = '';
@@ -120,11 +145,12 @@ const Nutricao = (() => {
       }
       else if (m) { qtd = NUM[m[1]] ?? parseFloat(m[1].replace(',', '.')); medida = m[2]; resto = parte.replace(m[0], ' '); }
       const alimento = buscar(resto);
+      const tam = m && (parte.slice((m.index || 0) + m[0].length).match(/^\s*(rasas?|cheias?|niveladas?|pequen[oa]s?|medi[oa]s?|grandes?)\b/) || [])[1];
       if (alimento && medida && gramas == null) {
-        const porMedida = gramasDaMedida(alimento, medida);
+        const porMedida = gramasDaMedida(alimento, medida, tam);
         if (porMedida) gramas = porMedida * qtd;
       }
-      const qtdTexto = g ? porUnidade + g[0] : m ? (m[2] === 'unidade' && !/unidade/.test(m[0]) ? `${String(qtd).replace('.', ',')} ${qtd > 1 ? 'unidades' : 'unidade'}` : m[0]) : '';
+      const qtdTexto = g ? porUnidade + g[0] : m ? (m[2] === 'unidade' && !/unidade/.test(m[0]) ? `${String(qtd).replace('.', ',')} ${qtd > 1 ? 'unidades' : 'unidade'}` : m[0] + (tam ? ' ' + tam : '')) : '';
       return {texto: parte, alimento, gramas, qtdTexto, semMedida: !!(alimento && !g && gramas == null)};
     }).filter(i => i.alimento || i.qtdTexto || i.texto.length > 2);
   }
