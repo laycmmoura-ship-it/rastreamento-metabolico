@@ -133,6 +133,20 @@
    "medida": "pote",
    "gramas": null,
    "fonte": ""
+  },
+  {
+   "taco_id": 121,
+   "alimento": "Farinha de mandioca crua",
+   "medida": "colher de sopa",
+   "gramas": null,
+   "fonte": ""
+  },
+  {
+   "taco_id": 122,
+   "alimento": "Farinha de mandioca torrada",
+   "medida": "colher de sopa",
+   "gramas": null,
+   "fonte": ""
   }
  ]
 }

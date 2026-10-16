@@ -458,6 +458,11 @@ async function analisarPrato(msg, temFoto) {
   const tot = Nutricao.calcular(itens);
   const r = n => Math.round(n);
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
+  const semPeso = itens.filter(i => i.semMedida);
+  const dicaGramas = semPeso.length ? `<p class="mini">📏 <strong>${semPeso.map(i => esc(i.qtdTexto)).join(', ')}</strong>: essa medida ainda não tem peso cadastrado pela Layane. Se souber o peso, escreva em gramas (ex.: <em>“2 ovos de 50g”</em> ou <em>“30g de farinha”</em>).</p>` : '';
+  if (!calculados.length) return `<p>Encontrei estes alimentos, mas <strong>ainda não consigo calcular as calorias</strong>:</p>
+    <div class="estimativa"><table class="est-itens">${itens.map(i => `<tr><td>${i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`}</td><td>${esc(i.qtdTexto)}</td><td>${i.alimento ? '<span class="falta">medida sem peso cadastrado</span>' : '<span class="falta">não está na TACO</span>'}</td></tr>`).join('')}</table></div>
+    ${dicaGramas}`;
   const todosEmGramas = itens.every(i => i.calc && /g|ml/.test(i.qtdTexto));
   const conf = !faltam && todosEmGramas ? ['Boa', 'quantidades em gramas', '#1f5c41', 'var(--verde-light)']
              : !faltam ? ['Média', 'medidas caseiras convertidas', '#5E4F25', '#F3ECDA']
@@ -480,6 +485,7 @@ async function analisarPrato(msg, temFoto) {
       <b>📋 Comparando com o seu plano</b>
       <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
     </div>
+    ${dicaGramas}
     <p class="mini">Valores da ${Nutricao.fonte}, por alimento pronto para consumo. Confira se o alimento encontrado é o que você comeu. Óleo do preparo e molhos só entram se você escrever.</p>`;
 }
 
