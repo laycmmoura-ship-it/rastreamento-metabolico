@@ -38,3 +38,9 @@ Abra http://localhost:8000/app/
   (enquanto estiver em branco, medidas como "colher" ficam fora do total).
 - TBCA (USP/FoRC): não incluída. Os termos encontrados indicam licença CC BY-NC-ND e proibição de
   reprodução; usar só com autorização do FoRC.
+
+## Identidade visual
+- Paleta da marca: verde #4B5344, creme #F6F5F0, branco, dourado #A48E52 a #E0CC8F (lidos das logos).
+- Fontes Poppins (texto) e Great Vibes (títulos), licença SIL OFL, servidas pelo próprio app em `app/fontes/`.
+- `app/marca/`: símbolo (avatar do Instagram) e logo horizontal 1C verde, reduzidos para o app.
+  Os ícones do celular (`apple-touch-icon.png`, `icon-192.png`, `icon-512.png`) usam o mesmo símbolo.

@@ -4,39 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Lay IA | Layane Moura Nutricionista</title>
-<meta name="theme-color" content="#2D6A4F">
+<meta name="theme-color" content="#4B5344">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Lay IA">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="fontes/fontes.css" rel="stylesheet">
 <style>
-:root{--verde:#2D6A4F;--verde-claro:#52B788;--verde-bg:#F0F7F4;--verde-light:#D8F3DC;--texto:#1B2D27;--texto-muted:#5A7268;--borda:#B7D9C8;--branco:#FAFFFE;--radius:16px;--shadow:0 2px 20px rgba(45,106,79,0.08);
-  --chef:#B5651D;--chef-bg:#FBEFE3;--rest:#2A7F8F;--rest-bg:#E2F3F5;--merc:#C0567A;--merc-bg:#FBE8EF;--duv:#2D6A4F;--duv-bg:#D8F3DC}
+:root{--verde:#4B5344;--verde-claro:#8A9A6E;--verde-bg:#F6F5F0;--verde-light:#E7E9DF;--texto:#2B3127;--texto-muted:#6B7062;--borda:#DDD8C9;--branco:#FFFFFF;--radius:16px;--shadow:0 2px 18px rgba(75,83,68,0.08);
+  --ouro:#A48E52;--ouro-claro:#E0CC8F;--ouro-escuro:#7D6A35;--ouro-grad:linear-gradient(135deg,#9A8248 0%,#E0CC8F 50%,#A48E52 100%);
+  --titulo:'Great Vibes',cursive;
+  --chef:#7D6A35;--chef-bg:#F3ECDA;--rest:#4B5344;--rest-bg:#E7E9DF;--merc:#7A5E48;--merc-bg:#F0E7DE;--duv:#4B5344;--duv-bg:#ECEEE4}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--texto);display:flex;justify-content:center}
+body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--texto);display:flex;justify-content:center}
 .app{width:100%;max-width:520px;height:100dvh;display:flex;flex-direction:column;background:var(--verde-bg);position:relative}
 
 /* topo */
 .topo{background:var(--branco);border-bottom:1px solid var(--borda);padding:calc(12px + env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0}
 .btn-icone{width:38px;height:38px;border-radius:50%;border:none;background:var(--verde-bg);color:var(--verde);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .btn-icone[hidden]{display:none}
-.avatar{width:44px;height:44px;border-radius:50%;background:var(--verde);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 0 0 3px var(--verde-light)}
+.avatar{width:46px;height:46px;border-radius:50%;background:var(--verde) url(marca/simbolo.png) center/cover;flex-shrink:0;box-shadow:0 0 0 2px var(--branco),0 0 0 3.5px var(--ouro)}
 .topo-txt{flex:1;min-width:0}
-.topo-txt h1{font-family:'DM Serif Display',serif;font-size:21px;color:var(--verde);line-height:1.1}
+.topo-txt h1{font-family:var(--titulo);font-weight:400;font-size:34px;color:var(--verde);line-height:.9}
+.topo-txt h1 span{font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;color:var(--ouro-escuro);vertical-align:middle;margin-left:2px}
 .status{font-size:12px;color:var(--texto-muted);display:flex;align-items:center;gap:5px;margin-top:2px}
-.status::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--verde-claro)}
+.status::before{content:'';width:7px;height:7px;border-radius:50%;background:#6FA06A}
 
-.aviso-demo{background:#FFF3CD;color:#6b5100;font-size:12px;text-align:center;padding:7px 12px;flex-shrink:0}
+.aviso-demo{background:#F3ECDA;color:#5E4F25;font-size:12px;text-align:center;padding:7px 12px;flex-shrink:0}
 
 /* área rolável */
 .conteudo{flex:1;overflow-y:auto;padding:18px 16px 12px;scroll-behavior:smooth}
 
 /* início */
 .saudacao{margin-bottom:18px}
-.saudacao h2{font-family:'DM Serif Display',serif;font-size:26px;color:var(--texto);line-height:1.15}
+.saudacao h2{font-family:'Poppins',sans-serif;font-weight:600;font-size:22px;color:var(--texto);line-height:1.25}
+.saudacao h2 em{display:block;font-family:var(--titulo);font-style:normal;font-weight:400;font-size:38px;line-height:1.1;margin-top:2px}
 .saudacao h2 em{color:var(--verde)}
 .saudacao p{font-size:14px;color:var(--texto-muted);margin-top:6px;line-height:1.5}
 .rotulo{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--texto-muted);margin:4px 0 10px}
@@ -44,7 +48,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .card-modo{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:14px;text-align:left;cursor:pointer;box-shadow:var(--shadow);font-family:inherit;color:inherit;transition:transform .12s,border-color .15s;display:flex;flex-direction:column;gap:8px;min-height:150px}
 .card-modo:active{transform:scale(.98)}
 .card-modo:hover{border-color:var(--verde-claro)}
-.card-modo .ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px}
+.card-modo .ic{width:40px;height:40px;border-radius:50%;border:1px solid var(--ouro);display:flex;align-items:center;justify-content:center;font-size:19px}
 .card-modo strong{font-size:15px;font-weight:600}
 .card-modo span{font-size:12.5px;color:var(--texto-muted);line-height:1.45}
 .dica-escrever{text-align:center;font-size:12.5px;color:var(--texto-muted);margin:18px 0 4px}
@@ -52,7 +56,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 /* chat */
 .msg{display:flex;gap:8px;margin-bottom:12px;align-items:flex-end;animation:entra .2s ease}
 @keyframes entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.msg .mini-av{width:28px;height:28px;border-radius:50%;background:var(--verde);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.msg .mini-av{width:28px;height:28px;border-radius:50%;background:var(--verde) url(marca/simbolo.png) center/cover;flex-shrink:0;box-shadow:0 0 0 1.5px var(--ouro)}
 .bolha{max-width:82%;padding:10px 14px;border-radius:18px;font-size:14.5px;line-height:1.5;word-wrap:break-word}
 .msg.ia .bolha{background:var(--branco);border:1px solid var(--borda);border-bottom-left-radius:6px}
 .msg.eu{justify-content:flex-end}
@@ -98,7 +102,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .estimativa{margin:10px 0;border:1px solid var(--borda);border-radius:14px;overflow:hidden;background:var(--branco)}
 .est-topo{background:var(--verde);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .est-topo span{font-size:12.5px;opacity:.85}
-.est-topo b{font-size:20px;font-family:'DM Serif Display',serif;font-weight:400}
+.est-topo b{font-size:20px;font-family:'Poppins',sans-serif;font-weight:600;font-weight:400}
 .est-macros{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:11.5px;color:var(--texto-muted);border-bottom:1px solid var(--verde-light)}
 .est-macros div{padding:9px 4px}
 .est-macros b{display:block;font-size:16px;color:var(--texto)}
@@ -115,13 +119,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 /* receitas */
 .app.sem-entrada .entrada{display:none}
 .banner-receitas{width:100%;display:flex;align-items:center;gap:14px;background:var(--verde);color:#fff;border:none;border-radius:var(--radius);padding:16px;margin-bottom:18px;cursor:pointer;text-align:left;font-family:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.banner-receitas::after{content:'';position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:rgba(82,183,136,.25)}
-.banner-receitas .ic{font-size:30px;width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.banner-receitas strong{display:block;font-family:'DM Serif Display',serif;font-size:19px;font-weight:400}
-.banner-receitas span{font-size:13px;opacity:.85}
-.banner-receitas .seta{margin-left:auto;font-size:20px;position:relative;z-index:1}
+.banner-receitas::after{content:'';position:absolute;right:-34px;top:-34px;width:120px;height:120px;border-radius:50%;border:1.5px solid rgba(224,204,143,.55)}
+.banner-receitas::before{content:'';position:absolute;right:-12px;top:-12px;width:76px;height:76px;border-radius:50%;border:1.5px solid rgba(224,204,143,.35)}
+.banner-receitas .ic{font-size:28px;width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.08);border:1.5px solid var(--ouro-claro);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.banner-receitas strong{display:block;font-family:var(--titulo);font-size:34px;font-weight:400;line-height:1;background:var(--ouro-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.banner-receitas span{font-size:12.5px;opacity:.85;display:block;margin-top:2px}
+.banner-receitas .seta{margin-left:auto;font-size:22px;position:relative;z-index:1;color:var(--ouro-claro)}
 
-.livro-topo h2{font-family:'DM Serif Display',serif;font-size:25px;line-height:1.15;color:var(--texto)}
+.livro-topo h2{font-family:'Poppins',sans-serif;font-weight:600;font-size:25px;line-height:1.15;color:var(--texto)}
 .livro-topo p{font-size:13.5px;color:var(--texto-muted);margin-top:6px;line-height:1.5}
 .livro-topo small{display:block;font-size:12px;color:var(--verde);font-weight:600;margin-top:6px}
 .busca{position:relative;margin:16px 0 12px}
@@ -133,7 +138,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .chips button{flex-shrink:0;font-family:inherit;font-size:13px;font-weight:500;border:1.5px solid var(--borda);background:var(--branco);color:var(--texto-muted);padding:7px 13px;border-radius:20px;cursor:pointer;white-space:nowrap}
 .chips button.ativo{background:var(--verde);border-color:var(--verde);color:#fff}
 .cat-titulo{display:flex;flex-direction:column;gap:2px;margin:20px 0 10px}
-.cat-titulo h3{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:var(--verde)}
+.cat-titulo h3{font-family:'Poppins',sans-serif;font-weight:600;font-size:17px;color:var(--verde)}
 .cat-titulo span{font-size:12px;color:var(--texto-muted)}
 .lista-rec{display:flex;flex-direction:column;gap:10px}
 .card-rec{display:flex;gap:12px;align-items:center;background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:12px;cursor:pointer;text-align:left;font-family:inherit;color:inherit;width:100%;box-shadow:var(--shadow)}
@@ -143,7 +148,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .card-rec strong{display:block;font-size:15px;font-weight:600;margin-bottom:5px}
 .tags{display:flex;gap:6px;flex-wrap:wrap}
 .tag{font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:8px;background:var(--verde-bg);color:var(--verde)}
-.tag.kcal{background:#FFF3CD;color:#7a5b00}
+.tag.kcal{background:#F3ECDA;color:#6A5A2C}
 .card-rec .seta{color:var(--borda);font-size:18px}
 .vazio{text-align:center;color:var(--texto-muted);font-size:14px;padding:40px 16px;line-height:1.6}
 .vazio b{display:block;font-size:34px;margin-bottom:8px}
@@ -151,7 +156,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .rec-hero{border-radius:20px;padding:22px 18px;margin-bottom:16px;position:relative;overflow:hidden}
 .rec-hero .emo{font-size:44px;margin-bottom:6px}
 .rec-hero .cat{font-size:11.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;opacity:.75}
-.rec-hero h2{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;line-height:1.1;margin-top:4px}
+.rec-hero h2{font-family:'Poppins',sans-serif;font-size:24px;font-weight:600;line-height:1.2;margin-top:4px}
 .rec-hero .porcao{font-size:13px;margin-top:8px;opacity:.8}
 .macros{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
 .macro{background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:10px 4px;text-align:center}
@@ -160,7 +165,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .macro.destaque{background:var(--verde);border-color:var(--verde)}
 .macro.destaque b,.macro.destaque span{color:#fff}
 .bloco{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
-.bloco h3{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:var(--verde);margin-bottom:4px}
+.bloco h3{font-family:'Poppins',sans-serif;font-weight:600;font-size:17px;color:var(--verde);margin-bottom:4px}
 .bloco .sub{font-size:12px;color:var(--texto-muted);margin-bottom:8px}
 .ing{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--verde-bg);cursor:pointer;font-size:14.5px;line-height:1.4}
 .ing:last-child{border:none}
@@ -171,7 +176,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .passo{display:flex;gap:12px;padding:10px 0;font-size:14.5px;line-height:1.5}
 .passo .n{width:28px;height:28px;border-radius:50%;background:var(--verde-light);color:var(--verde);font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nota{border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.5;margin-bottom:10px}
-.nota.dica{background:#FFF3CD;color:#5c4500}
+.nota.dica{background:#F3ECDA;color:#5E4F25}
 .nota.cons{background:var(--rest-bg);color:#1c5862}
 .nota.obs{background:var(--verde-bg);color:var(--texto-muted);border:1px dashed var(--borda)}
 .credito{font-size:11.5px;color:var(--texto-muted);text-align:center;margin:14px 0 6px;line-height:1.5}
@@ -181,7 +186,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 .fundo-menu.show{display:block}
 .menu{position:fixed;top:0;bottom:0;left:0;width:min(300px,85vw);background:var(--branco);z-index:51;transform:translateX(-100%);transition:transform .25s;padding:calc(24px + env(safe-area-inset-top)) 20px 20px;display:flex;flex-direction:column;gap:6px}
 .menu.show{transform:none}
-.menu h3{font-family:'DM Serif Display',serif;color:var(--verde);font-size:20px;margin-bottom:2px}
+.menu-logo{width:calc(100% + 40px);margin:calc(-24px - env(safe-area-inset-top)) -20px 14px;display:block}
+.menu h3{font-family:'Poppins',sans-serif;font-weight:600;color:var(--verde);font-size:20px;margin-bottom:2px}
 .menu .crn{font-size:12px;color:var(--texto-muted);margin-bottom:16px}
 .menu button,.menu a{display:flex;align-items:center;gap:10px;font-family:inherit;font-size:15px;color:var(--texto);background:none;border:none;text-align:left;padding:11px 8px;border-radius:10px;cursor:pointer;text-decoration:none}
 .menu button:hover,.menu a:hover{background:var(--verde-bg)}
@@ -195,9 +201,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
   <header class="topo">
     <button class="btn-icone" id="btnMenu" aria-label="Abrir menu">☰</button>
     <button class="btn-icone" id="btnVoltar" aria-label="Voltar ao início" hidden>←</button>
-    <div class="avatar" aria-hidden="true">🌿</div>
+    <div class="avatar" aria-hidden="true"></div>
     <div class="topo-txt">
-      <h1>Lay IA</h1>
+      <h1>Lay <span>IA</span></h1>
       <div class="status">Online · assistente da Layane</div>
     </div>
     <button class="btn-icone" id="btnNovo" aria-label="Nova conversa">＋</button>
@@ -225,14 +231,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--verde-bg);color:var(--tex
 
 <div class="fundo-menu" id="fundoMenu"></div>
 <nav class="menu" id="menu" aria-label="Menu">
-  <h3>Layane Moura</h3>
-  <div class="crn">Nutricionista · CRN 18985</div>
+  <img class="menu-logo" src="marca/logo-horizontal.jpg" alt="Layane Moura · Nutricionista Clínica · CRN 18985">
   <button data-ir="inicio">🏠 Início</button>
   <button data-ir="receitas">📖 Receitas</button>
   <button data-modo="chef">🍳 Chef Lay</button>
   <button data-modo="restaurante">🍽️ Lay no Restaurante</button>
   <button data-modo="mercado">🛒 Lay no Mercado</button>
-  <button data-modo="duvidas">💬 Tirar dúvidas</button>
+  <button data-modo="duvidas">📸 Meu prato e dúvidas</button>
   <div class="sep"></div>
   <a href="../index.html">📋 Rastreamento metabólico</a>
   <div class="info">Em caso de sintomas fortes ou dúvidas sobre medicamentos, fale com a Layane ou com seu médico.</div>
@@ -333,7 +338,7 @@ function abrirModo(k) {
 function addMsg(papel, html) {
   const d = document.createElement('div');
   d.className = 'msg ' + papel;
-  d.innerHTML = (papel === 'ia' ? '<div class="mini-av">🌿</div>' : '') +
+  d.innerHTML = (papel === 'ia' ? '<div class="mini-av"></div>' : '') +
     `<div class="bolha">${html}<div class="hora">${hora()}</div></div>`;
   conteudo.appendChild(d);
   conteudo.scrollTop = conteudo.scrollHeight;
@@ -455,7 +460,7 @@ async function analisarPrato(msg, temFoto) {
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
   const todosEmGramas = itens.every(i => i.calc && /g|ml/.test(i.qtdTexto));
   const conf = !faltam && todosEmGramas ? ['Boa', 'quantidades em gramas', '#1f5c41', 'var(--verde-light)']
-             : !faltam ? ['Média', 'medidas caseiras convertidas', '#7a5b00', '#FFF3CD']
+             : !faltam ? ['Média', 'medidas caseiras convertidas', '#5E4F25', '#F3ECDA']
              : ['Parcial', `${faltam} ${faltam > 1 ? 'itens ficaram' : 'item ficou'} de fora do total`, '#842029', '#F8D7DA'];
   const linha = i => {
     const nome = i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`;
@@ -482,7 +487,7 @@ async function analisarPrato(msg, temFoto) {
 // quantidades, e as calorias são calculadas pela tabela de composição (ex.: TACO), não "de cabeça".
 function demoPrato(msg, temFoto) {
   const comQtd = /col\.|colher|concha|filé|fatia|unidade|\d+\s*g\b/i.test(msg);
-  const conf = comQtd ? ['Média', 'você informou as quantidades', '#7a5b00', '#FFF3CD']
+  const conf = comQtd ? ['Média', 'você informou as quantidades', '#5E4F25', '#F3ECDA']
                       : ['Baixa', 'estimei só pela foto', '#842029', '#F8D7DA'];
   const faixa = comQtd ? '520 a 600' : '450 a 700';
   return `<p>Aqui está a estimativa do seu prato${temFoto ? '' : ' (pela descrição)'}. <strong>Exemplo do protótipo:</strong></p>
@@ -569,7 +574,7 @@ function fecharMenu() { $('menu').classList.remove('show'); $('fundoMenu').class
 // Os livros ficam em receitas.json (gerado por ferramentas/converter_receitas.py).
 // Aceita um livro só ou uma lista de livros.
 let livros = null, filtroCat = 'todas', busca = '';
-const CORES_CAT = [['var(--chef-bg)','var(--chef)'],['#FFF6D6','#8a6a00'],['var(--merc-bg)','var(--merc)'],['var(--rest-bg)','var(--rest)'],['var(--verde-light)','var(--verde)']];
+const CORES_CAT = [['#F3ECDA','#6A5A2C'],['#E7E9DF','#4B5344'],['#F0E7DE','#6E5442'],['#ECEEE4','#3F4A38'],['#F6F1E4','#7D6A35']];
 
 async function carregarReceitas() {
   if (livros) return livros;
