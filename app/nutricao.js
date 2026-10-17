@@ -33,7 +33,7 @@ const Nutricao = (() => {
     'tem', 'tinha', 'teve', 'comi', 'comeu', 'era', 'eram', 'foi', 'foram', 'mais', 'cerca', 'aproximadamente', 'uns', 'umas',
     'so', 'apenas', 'meu', 'minha', 'meus', 'minhas', 'tambem', 'ai', 'aqui', 'isso', 'esse', 'essa']);
   // Singular simples para comparar: ovos -> ovo, fritos -> frito, feijoes -> feijao
-  const sing = w => w.length > 3 ? w.replace(/(oes|aes)$/, 'ao').replace(/eses$/, 'es').replace(/s$/, '') : w;
+  const sing = w => w.length > 3 ? w.replace(/(oes|aes)$/, 'ao').replace(/eses$/, 'es').replace(/(lh|[^e])eres$/, '$1er').replace(/s$/, '') : w;
   // Palavras que descrevem o pedaço/prato mas não precisam estar no nome da TACO
   const GENERICAS = new Set(['file', 'files', 'pedaco', 'fatia', 'salada', 'porcao', 'bife', 'prato', 'pouco', 'pouca',
     'rasa', 'cheia', 'nivelada', 'pequena', 'pequeno', 'media', 'medio', 'grande', 'duplo', 'dupla', 'americano']);
@@ -109,13 +109,19 @@ const Nutricao = (() => {
   const TAMANHOS = ['rasa', 'cheia', 'nivelada', 'pequena', 'media', 'grande', 'pequeno', 'medio', 'americano', 'duplo'];
   function gramasDaMedida(alimento, medida, tamanho) {
     const base = s => norm(s).split(' ').filter(w => !TAMANHOS.includes(w) && w !== 'de').map(sing).join(' ');
-    const mb = base(medida);
-    const daMedida = x => x.gramas && base(x.medida).startsWith(mb.slice(0, 5));
+    let mb = base(medida);
+    // "colher" sozinha = colher de sopa ("1 colher de arroz" é uma colher de sopa com arroz);
+    // a "colher de arroz" das tabelas é a colher de servir
+    if (/^col(her)?$/.test(mb)) mb = 'colher sopa';
+    if (/servir$/.test(mb)) mb = 'colher arroz';
+    const daMedida = x => x.gramas && (mb.startsWith('colher') ? base(x.medida).startsWith(mb) : base(x.medida).startsWith(mb.slice(0, 5)));
     let doAlimento = medidas.filter(x => x.taco_id === alimento.id && daMedida(x));
     // Unidade e fatia pesam o mesmo no cru, cozido ou frito (ovo, pão): usa a do mesmo alimento principal
     if (!doAlimento.length && /^(unidade|fatia)/.test(mb)) {
-      const principal = alimento.chave.split(' ')[0];
-      doAlimento = medidas.filter(x => daMedida(x) && taco.find(a => a.id === x.taco_id)?.chave.split(' ')[0] === principal);
+      // mesmo alimento, só muda o preparo (ovo cru/cozido/frito); batata-doce ≠ batata-inglesa
+      const semPreparo = c => c.split(' ').filter(w => !/^(cru|crua|cozid|grelhad|assad|frit|refogad|cozido|cozida|frito|frita|\d)/.test(w)).join(' ');
+      const alvo = semPreparo(alimento.chave);
+      doAlimento = medidas.filter(x => daMedida(x) && semPreparo(taco.find(a => a.id === x.taco_id)?.chave || '') === alvo);
     }
     if (!doAlimento.length) return null;
     if (tamanho) {
@@ -134,7 +140,7 @@ const Nutricao = (() => {
   const NUM = {'um': 1, 'uma': 1, 'meia': 0.5, 'meio': 0.5, 'dois': 2, 'duas': 2, 'tres': 3, 'quatro': 4, 'cinco': 5};
   const RX_GRAMAS = /(\d+(?:[.,]\d+)?)\s*(g|gr|gramas?|ml)\b/;
   const RX_CONTAGEM = /^(\d+(?:[.,]\d+)?|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s+(?=[a-z])/;
-  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa))?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?(?:\s+americanos?)?|dosador(?:es)?|scoops?|porcao|porcoes)\b/;
+  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa|cafe|servir))?|escumadeiras?|folhas?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?(?:\s+americanos?)?|dosador(?:es)?|scoops?|porcao|porcoes)\b/;
 
   // "pão com manteiga" e "arroz com feijão" são dois alimentos; "frango com pele" é um só (existe assim na TACO).
   function separarCom(parte) {

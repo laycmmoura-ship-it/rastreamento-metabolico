@@ -44,3 +44,14 @@ Abra http://localhost:8000/app/
 - Fontes Poppins (texto) e Great Vibes (títulos), licença SIL OFL, servidas pelo próprio app em `app/fontes/`.
 - `app/marca/`: símbolo (avatar do Instagram) e logo horizontal 1C verde, reduzidos para o app.
   Os ícones do celular (`apple-touch-icon.png`, `icon-192.png`, `icon-512.png`) usam o mesmo símbolo.
+
+## Medidas caseiras (`app/dados/medidas.json`)
+Cada medida traz a fonte. Ordem de preferência quando há mais de uma: Web Diet (print e planos exportados)
+e depois o livro abaixo.
+- **Web Diet**: pesos tirados de prints e de planos exportados em PDF pela nutricionista
+  (`ferramentas/medidas_do_webdiet.py`).
+- **Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo
+  Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu.** Apenas os pesos das medidas de cerca de
+  30 alimentos comuns, com a página citada em cada item. O livro não é distribuído aqui.
+  Conferência: cada peso lido por OCR só foi aceito quando batia com as kcal da mesma linha do livro;
+  os demais foram lidos diretamente nas páginas.
