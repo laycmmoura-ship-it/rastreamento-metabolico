@@ -217,7 +217,7 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
     <button class="btn-icone" id="btnNovo" aria-label="Nova conversa">＋</button>
   </header>
 
-  <div class="aviso-demo">Protótipo: as respostas ainda são exemplos, sem IA real conectada.</div>
+  <div class="aviso-demo" id="avisoDemo">Protótipo: as respostas ainda são exemplos, sem IA real conectada.</div>
 
   <main class="conteudo" id="conteudo"></main>
 
@@ -448,7 +448,8 @@ function gerarDemo(modo, msg, foto) {
       <li>ℹ️ Porção: compare a porção do rótulo com o quanto você realmente consome.</li></ul>
       <p>Na versão final, eu leio os números da sua foto e comparo com o seu plano.</p>`;
   }
-  if (foto || ehRefeicao(msg) || (iaLigada() && !ehPergunta(msg))) return analisarPrato(msg, foto);
+  // Com a IA ligada, ela decide se é refeição (e_refeicao); só perguntas com "?" vão direto para a resposta de dúvida
+  if (foto || ehRefeicao(msg) || (iaLigada() && !/\?\s*$/.test(msg))) return analisarPrato(msg, foto);
   if (/como descrev/i.test(msg)) return `<p>É bem simples! Escreva <strong>a refeição</strong> e <strong>cada alimento com a quantidade</strong> em medida caseira:</p>
       <ul><li>🍚 colheres de sopa (cheias ou rasas) de arroz, macarrão, purê</li>
       <li>🫘 conchas de feijão</li><li>🍗 filé, pedaço ou unidades da carne (pequeno, médio, grande)</li>
@@ -467,11 +468,13 @@ let ultimoPrato = null;
 const SOMAR = /^\s*(e\s+)?(tbm|tb|tamb[eé]m|mais|ainda|depois)\b/i;
 
 // A mensagem descreve o que a paciente comeu? (perguntas como "posso trocar arroz por batata?" não)
-const ehPergunta = msg => !msg || /\?\s*$/.test(msg) || /^\s*(posso|pode|qual|quais|como|quanto|quando|por ?que|o que|é bom|e se|devo|tem problema)\b/i.test(msg);
+// "como 3 colheres de arroz" é o verbo comer, não "como...?"
+const COMO_COMER = /^\s*(eu\s+)?como\s+(\d|meia|meio|uma?\b|duas|dois|tr[eê]s|quatro|cinco|arroz|feij)/i;
+const ehPergunta = msg => !msg || /\?\s*$/.test(msg) || (!COMO_COMER.test(msg) && /^\s*(posso|pode|qual|quais|como|quanto|quando|por ?que|o que|é bom|e se|devo|tem problema)\b/i.test(msg));
 function ehRefeicao(msg) {
   if (ehPergunta(msg)) return false;
   if (/col\.|colher|concha|fil[eé]|fatia|peda[cç]o|bife|unidade|x[ií]cara|copo|\d+\s*(g|ml)\b/i.test(msg)) return true;
-  if (/\b(comi|almocei|jantei|lanchei|tomei|bebi)\b/i.test(msg) || SOMAR.test(msg)) return true;
+  if (/\b(comi|almocei|jantei|lanchei|tomei|bebi)\b/i.test(msg) || COMO_COMER.test(msg) || SOMAR.test(msg)) return true;
   return false;
 }
 
@@ -482,6 +485,7 @@ function respostaDuvida() {
 
 // ====== IA (Supabase Edge Function "interpretar-prato") ======
 const iaLigada = () => !!(window.LAY_CONFIG && LAY_CONFIG.iaUrl);
+if (iaLigada()) document.getElementById('avisoDemo').textContent = 'Versão de teste: a Lay IA já lê o seu prato; as outras respostas ainda são exemplos.';
 
 // A IA só devolve a lista (alimento, quantidade, medida); a conta é feita aqui pela TACO e pelas medidas.
 async function interpretarComIA(msg, foto) {
