@@ -116,6 +116,14 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
 .comparacao p{margin-top:6px}
 .bolha .mini{font-size:12.5px;color:var(--texto-muted);line-height:1.5}
 
+/* perguntas de confirmação */
+.pergunta{background:var(--branco);border:1px solid var(--ouro);border-radius:14px;padding:10px 12px;margin:10px 0;font-size:13.5px;line-height:1.45}
+.pergunta .opcoes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pergunta button{font-family:inherit;font-size:12.5px;border:1.5px solid var(--borda);background:var(--verde-bg);color:var(--texto);padding:6px 10px;border-radius:16px;cursor:pointer;text-align:left}
+.pergunta button.sim{background:var(--verde);border-color:var(--verde);color:#fff}
+.pergunta button.nenhum{background:transparent;color:var(--texto-muted)}
+.est-itens tr.duvida td:first-child{color:#6A5A2C}
+
 /* receitas */
 .app.sem-entrada .entrada{display:none}
 .banner-receitas{width:100%;display:flex;align-items:center;gap:14px;background:var(--verde);color:#fff;border:none;border-radius:var(--radius);padding:16px;margin-bottom:18px;cursor:pointer;text-align:left;font-family:inherit;box-shadow:var(--shadow);position:relative;overflow:hidden}
@@ -451,44 +459,101 @@ function gerarDemo(modo, msg, foto) {
 
 // Cálculo real pela TACO quando a paciente escreve os alimentos; sem descrição, mostra o exemplo
 // (identificar alimentos só pela foto depende da IA, etapa seguinte).
+// Cada análise fica guardada para a paciente corrigir (escolher outro alimento ou medida) e recalcular
+const pratos = {};
+let proxPrato = 1;
+
 async function analisarPrato(msg, temFoto) {
   try { await Nutricao.carregar(); } catch { return demoPrato(msg, temFoto); }
   const itens = msg ? Nutricao.lerPrato(msg) : [];
   if (!itens.length) return demoPrato(msg, temFoto);
+  const id = proxPrato++;
+  pratos[id] = {itens, temFoto};
+  return `<div class="prato-res" data-prato="${id}">${desenharPrato(id)}</div>`;
+}
+
+function desenharPrato(id) {
+  const {itens, temFoto} = pratos[id];
   const tot = Nutricao.calcular(itens);
   const r = n => Math.round(n);
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
-  const semPeso = itens.filter(i => i.semMedida);
-  const dicaGramas = semPeso.length ? `<p class="mini">📏 <strong>${semPeso.map(i => esc(i.qtdTexto)).join(', ')}</strong>: essa medida ainda não tem peso cadastrado pela Layane. Se souber o peso, escreva em gramas (ex.: <em>“2 ovos de 50g”</em> ou <em>“30g de farinha”</em>).</p>` : '';
-  if (!calculados.length) return `<p>Encontrei estes alimentos, mas <strong>ainda não consigo calcular as calorias</strong>:</p>
-    <div class="estimativa"><table class="est-itens">${itens.map(i => `<tr><td>${i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`}</td><td>${esc(i.qtdTexto)}</td><td>${!i.alimento ? '<span class="falta">não está na TACO</span>' : i.semDado ? '<span class="falta">TACO sem valores para este alimento</span>' : '<span class="falta">medida sem peso cadastrado</span>'}</td></tr>`).join('')}</table></div>
-    ${dicaGramas}`;
   const todosEmGramas = itens.every(i => i.calc && /\d\s*(g|ml)\b/.test(i.qtdTexto));
   const conf = !faltam && todosEmGramas ? ['Boa', 'quantidades em gramas', '#1f5c41', 'var(--verde-light)']
              : !faltam ? ['Média', 'medidas caseiras convertidas', '#5E4F25', '#F3ECDA']
              : ['Parcial', `${faltam} ${faltam > 1 ? 'itens ficaram' : 'item ficou'} de fora do total`, '#842029', '#F8D7DA'];
-  const linha = i => {
+  const qtdMostrada = i => esc(i.gramas != null && !/\d\s*(g|ml)\b/.test(i.qtdTexto) ? `${i.qtdTexto} (${r(i.gramas)}${i.unidade || 'g'})` : i.qtdTexto);
+  const linha = (i, k) => {
     const nome = i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`;
     const valor = i.calc ? `~${r(i.calc.kcal)} kcal`
-      : !i.alimento ? '<span class="falta">não está na TACO</span>'
-      : i.semDado ? '<span class="falta">TACO sem valores para este alimento</span>'
-      : '<span class="falta">medida sem peso cadastrado</span>';
-    return `<tr><td>${nome}</td><td>${esc(i.gramas != null && !/\d\s*(g|ml)\b/.test(i.qtdTexto) ? `${i.qtdTexto} (${r(i.gramas)}${i.unidade || 'g'})` : i.qtdTexto)}</td><td>${valor}</td></tr>`;
+      : !i.alimento ? '<span class="falta">não encontrei</span>'
+      : i.semDado ? '<span class="falta">TACO sem valores</span>'
+      : '<span class="falta">escolha a medida ↓</span>';
+    return `<tr${perguntas(i).length ? ' class="duvida"' : ''}><td>${nome}</td><td>${qtdMostrada(i)}</td><td>${valor}</td></tr>`;
   };
-  return `<p>Calculei pelos alimentos que você escreveu${temFoto ? ' (a leitura da foto entra quando a IA estiver conectada)' : ''}:</p>
+  const blocos = itens.map((i, k) => perguntaHtml(id, i, k)).join('');
+  return `<p>${calculados.length ? 'Calculei pelos alimentos que você escreveu' : 'Encontrei estes alimentos'}${temFoto ? ' (a leitura da foto entra quando a IA estiver conectada)' : ''}:</p>
     <div class="estimativa">
-      <div class="est-topo"><span>${faltam ? 'Total parcial' : 'Total estimado'}</span><b>${r(tot.kcal)} kcal</b></div>
-      <div class="est-macros"><div><b>${r(tot.prot)}g</b>proteína</div><div><b>${r(tot.carbo)}g</b>carbo</div><div><b>${r(tot.gord)}g</b>gordura</div></div>
+      ${calculados.length ? `<div class="est-topo"><span>${faltam ? 'Total parcial' : 'Total estimado'}</span><b>${r(tot.kcal)} kcal</b></div>
+      <div class="est-macros"><div><b>${r(tot.prot)}g</b>proteína</div><div><b>${r(tot.carbo)}g</b>carbo</div><div><b>${r(tot.gord)}g</b>gordura</div></div>` : ''}
       <table class="est-itens">${itens.map(linha).join('')}</table>
-      <div class="est-conf" style="color:${conf[2]};background:${conf[3]}">Confiança: <b>${conf[0]}</b> · ${conf[1]}</div>
+      ${calculados.length ? `<div class="est-conf" style="color:${conf[2]};background:${conf[3]}">Confiança: <b>${conf[0]}</b> · ${conf[1]}</div>` : ''}
     </div>
-    <div class="comparacao">
+    ${blocos}
+    ${calculados.length ? `<div class="comparacao">
       <b>📋 Comparando com o seu plano</b>
       <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
-    </div>
-    ${dicaGramas}
-    <p class="mini">Valores da ${Nutricao.fonte}, por alimento pronto para consumo. Confira se o alimento encontrado é o que você comeu. Óleo do preparo e molhos só entram se você escrever.</p>`;
+    </div>` : ''}
+    <p class="mini">Valores da ${Nutricao.fonte}, por alimento pronto para consumo. Medidas caseiras do Web Diet e da tabela de Pinheiro et al. (4ª ed.). Óleo do preparo e molhos só entram se você escrever.</p>`;
 }
+
+// O que perguntar sobre um item: qual alimento (não achou / não tem certeza) ou qual medida (sem peso)
+function perguntas(i) {
+  const q = [];
+  if (i.foraDaTaco) return q;
+  if (!i.alimento || !i.exato) q.push('alimento');
+  else if (i.semMedida) q.push('medida');
+  return q;
+}
+
+function perguntaHtml(id, i, k) {
+  if (i.foraDaTaco) return `<div class="pergunta"><b>“${esc(i.busca || i.texto)}”</b> não existe pronto na TACO, então ficou fora do total. Se souber, escreva um alimento parecido.</div>`;
+  const q = perguntas(i)[0];
+  if (q === 'alimento') {
+    const ops = Nutricao.sugerir(i.busca || i.texto).filter(a => a !== i.alimento);
+    const botoes = [
+      ...(i.alimento ? [`<button data-esc="${id}:${k}:a:${i.alimento.id}" class="sim">✓ ${esc(i.alimento.nome)}</button>`] : []),
+      ...ops.slice(0, i.alimento ? 3 : 4).map(a => `<button data-esc="${id}:${k}:a:${a.id}">${esc(a.nome)}</button>`),
+      `<button data-esc="${id}:${k}:x:0" class="nenhum">Nenhum destes</button>`];
+    const titulo = i.alimento ? `Para <b>“${esc(i.busca || i.texto)}”</b>, é este alimento?` : `Não encontrei <b>“${esc(i.busca || i.texto)}”</b>. Você quis dizer:`;
+    return ops.length || i.alimento ? `<div class="pergunta">${titulo}<div class="opcoes">${botoes.join('')}</div></div>`
+      : `<div class="pergunta">Não encontrei <b>“${esc(i.busca || i.texto)}”</b> na TACO. Tente escrever de outro jeito.</div>`;
+  }
+  if (q === 'medida') {
+    const meds = Nutricao.medidasDe(i.alimento);
+    const n = i.qtd || 1, nTxt = String(n).replace('.', ',');
+    if (!meds.length) return `<div class="pergunta">Ainda não tenho medidas caseiras de <b>${esc(i.alimento.nome)}</b>. Escreva em gramas (ex.: <em>“30g”</em>).</div>`;
+    return `<div class="pergunta">${i.qtdTexto ? `Qual destas é a sua medida de <b>${esc(i.alimento.nome)}</b>? (quantidade: ${nTxt})` : `Quanto de <b>${esc(i.alimento.nome)}</b>?`}<div class="opcoes">
+      ${meds.slice(0, 6).map((m, j) => `<button data-esc="${id}:${k}:m:${j}">${nTxt} ${esc(m.medida)} · ${Math.round(m.gramas * n)}${m.unidade}</button>`).join('')}</div></div>`;
+  }
+  return '';
+}
+
+// Toque num botão de escolha: ajusta o item e redesenha a resposta no lugar
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-esc]');
+  if (!b) return;
+  const [id, k, tipo, val] = b.dataset.esc.split(':');
+  const prato = pratos[id]; if (!prato) return;
+  const item = prato.itens[+k];
+  if (tipo === 'a') Nutricao.ajustar(item, {alimento: Nutricao.porId(+val)});
+  if (tipo === 'x') { item.alimento = null; item.exato = true; item.foraDaTaco = true; }
+  if (tipo === 'm') {
+    const m = Nutricao.medidasDe(item.alimento)[+val], n = item.qtd || 1;
+    Nutricao.ajustar(item, {gramas: m.gramas * n, medida: `${String(n).replace('.', ',')} ${m.medida}`, unidade: m.unidade});
+  }
+  const caixa = document.querySelector(`.prato-res[data-prato="${id}"]`);
+  if (caixa) caixa.innerHTML = desenharPrato(id);
+});
 
 // Exemplo de análise de prato (protótipo). Na versão final, a IA identifica os alimentos e as
 // quantidades, e as calorias são calculadas pela tabela de composição (ex.: TACO), não "de cabeça".

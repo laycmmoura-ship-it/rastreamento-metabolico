@@ -1876,6 +1876,46 @@
    "gramas": 80,
    "livro": "pinheiro",
    "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 164,
+   "alimento": "Abacaxi, cru",
+   "medida": "fatia grande",
+   "gramas": 190,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Abacaxi, p. 3"
+  },
+  {
+   "taco_id": 164,
+   "alimento": "Abacaxi, cru",
+   "medida": "fatia média",
+   "gramas": 75,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Abacaxi, p. 3"
+  },
+  {
+   "taco_id": 164,
+   "alimento": "Abacaxi, cru",
+   "medida": "fatia pequena",
+   "gramas": 50,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Abacaxi, p. 3"
+  },
+  {
+   "taco_id": 164,
+   "alimento": "Abacaxi, cru",
+   "medida": "unidade média",
+   "gramas": 750,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Abacaxi, p. 3"
+  },
+  {
+   "taco_id": 164,
+   "alimento": "Abacaxi, cru",
+   "medida": "unidade pequena",
+   "gramas": 480,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Abacaxi, p. 3"
   }
  ],
  "fontes": {

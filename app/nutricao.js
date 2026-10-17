@@ -64,11 +64,14 @@ const Nutricao = (() => {
     }
   }
 
-  function buscar(texto) {
+  const buscar = texto => buscarDetalhe(texto).alimento;
+  // exato = todas as palavras importantes bateram (senão o app pede confirmação à paciente)
+  function buscarDetalhe(texto) {
+    const nada = {alimento: null, exato: false};
     const q = norm(texto);
-    if (!q) return null;
+    if (!q) return nada;
     const termos = q.split(' ').filter(t => t.length > 1 && !PALAVRAS_VAZIAS.has(t) && !(t in NUM) && !/^\d/.test(t)).map(sing);
-    if (!termos.length) return null;
+    if (!termos.length) return nada;
     const qs = termos.join(' ');
     // 1) nome comum conhecido, só quando o texto não traz outro detalhe (ex.: "batata frita" não é "batata")
     const sk = k => k.split(' ').filter(w => !PALAVRAS_VAZIAS.has(w)).map(sing).join(' ');
@@ -76,7 +79,7 @@ const Nutricao = (() => {
     // palavras que já estão no nome do alimento padrão também contam ("feijão cozido" = Feijão, carioca, cozido)
     const alvoPadrao = chave && PADRAO[chave] != null ? (taco.find(a => a.id === PADRAO[chave])?.chave || '').split(' ').map(sing) : [];
     if (chave && termos.every(t => sk(chave).split(' ').includes(t) || GENERICAS.has(t) || alvoPadrao.includes(t)))
-      return PADRAO[chave] == null ? null : taco.find(a => a.id === PADRAO[chave]);
+      return {alimento: PADRAO[chave] == null ? null : taco.find(a => a.id === PADRAO[chave]), exato: true, foraDaTaco: PADRAO[chave] == null};
     // 2) pontuação por palavras em comum (aceita plural/feminino: cozido ~ cozida)
     // Iguais ignorando masculino/feminino (cozido = cozida); "cacau" não bate com "cação"
     const raiz = w => w.length >= 5 ? w.replace(/[aoe]$/, '') : w;
@@ -106,7 +109,52 @@ const Nutricao = (() => {
       p -= a.nome.length / 1000;                                         // desempate: nome mais simples
       if (p > pts) { pts = p; melhor = a; }
     }
-    return pts > 0.5 ? melhor : null;   // o alimento principal já é obrigatório acima
+    if (!(pts > 0.5)) return nada;   // o alimento principal já é obrigatório acima
+    const ws = melhor.chave.split(' ');
+    return {alimento: melhor, exato: termos.every(t => GENERICAS.has(t) || ws.some(w => bate(t, w)))};
+  }
+
+  // Distância de edição (quantas letras trocar/incluir/tirar): "bije" -> "bife" = 1
+  function distancia(a, b) {
+    if (Math.abs(a.length - b.length) > 2) return 9;
+    let ant = Array.from({length: b.length + 1}, (_, j) => j);
+    for (let i = 1; i <= a.length; i++) {
+      const at = [i];
+      for (let j = 1; j <= b.length; j++) at[j] = Math.min(ant[j] + 1, at[j - 1] + 1, ant[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      ant = at;
+    }
+    return ant[b.length];
+  }
+
+  // Até n alimentos parecidos com o texto, tolerando erros de digitação, para a paciente escolher
+  function sugerir(texto, n = 4) {
+    const termos = norm(texto).split(' ').filter(t => t.length > 1 && !PALAVRAS_VAZIAS.has(t) && !(t in NUM) && !/^\d/.test(t) && !GENERICAS.has(t)).map(sing);
+    if (!termos.length) return [];
+    const parecida = (t, w) => {
+      w = sing(w);
+      if (w === t || (w.length >= 5 && t.length >= 5 && w.replace(/[aoe]$/, '') === t.replace(/[aoe]$/, ''))) return 1;
+      const d = distancia(t, w);
+      return t.length >= 4 && d <= 1 ? 0.75 : t.length >= 7 && d <= 2 ? 0.5 : (w.startsWith(t) && t.length >= 4 ? 0.6 : 0);
+    };
+    const pontos = taco.filter(a => a.kcal != null).map(a => {
+      const ws = a.chave.split(' ');
+      let p = 0;
+      termos.forEach((t, k) => { p += Math.max(0, ...ws.map(w => parecida(t, w))) / (1 + 0.5 * k); });
+      if (parecida(termos[0], ws[0]) > 0) p += 0.5;
+      if (/\bcrua?\b/.test(a.chave) && temVersaoPronta.has(ws[0])) p -= 0.4;
+      if (PROCESSADO.test(a.chave)) p -= 0.3;
+      return [p - a.nome.length / 1000, a];
+    }).filter(([p]) => p > 0.6).sort((x, y) => y[0] - x[0]);
+    return pontos.slice(0, n).map(([, a]) => a);
+  }
+
+  // Medidas cadastradas de um alimento (para a paciente escolher quando a dela não tem peso)
+  function medidasDe(alimento) {
+    if (!alimento) return [];
+    const vistos = new Set();
+    return medidas.filter(x => x.taco_id === alimento.id && x.gramas)
+      .filter(x => { const k = norm(x.medida); if (vistos.has(k)) return false; vistos.add(k); return true; })
+      .map(x => ({medida: x.medida, gramas: x.gramas, unidade: /^(copo|xicara|xícara)/i.test(x.medida) ? 'ml' : 'g'}));
   }
 
   // Gramas de uma medida caseira cadastrada (ex.: "colher de sopa" de arroz). null se não cadastrada.
@@ -194,7 +242,7 @@ const Nutricao = (() => {
         }
       }
       else if (m) { qtd = NUM[m[1]] ?? parseFloat(m[1].replace(',', '.')); medida = m[2]; resto = parte.replace(m[0], ' '); }
-      const alimento = buscar(resto);
+      const {alimento, exato, foraDaTaco} = buscarDetalhe(resto);
       const tam = m && (parte.match(/\b(rasas?|cheias?|niveladas?|pequen[oa]s?|medi[oa]s?|grandes?|duplos?)\b/) || [])[1];
       if (alimento && medida && gramas == null) {
         const porMedida = gramasDaMedida(alimento, medida, tam);
@@ -202,7 +250,9 @@ const Nutricao = (() => {
       }
       const qtdTexto = g ? porUnidade + g[0] : m ? (m[2] === 'unidade' && !/unidade/.test(m[0]) ? `${String(qtd).replace('.', ',')} ${qtd > 1 ? 'unidades' : 'unidade'}` : m[0] + (tam ? ' ' + tam : '')) : '';
       const unidade = (g && /ml/.test(g[2])) || (medida && /^(copo|xicara)/.test(medida)) ? 'ml' : 'g';
-      return {texto: parte, alimento, gramas, unidade, qtdTexto, semDado: !!(alimento && alimento.kcal == null),
+      // texto do alimento sem sobras da quantidade ("rasa de farinha" -> "farinha")
+      const busca = resto.trim().split(/\s+/).filter((w, k, arr) => !(arr.slice(0, k + 1).every(x => PALAVRAS_VAZIAS.has(x) || GENERICAS.has(x)))).join(' ') || resto.trim();
+      return {texto: parte, busca, qtd, exato, foraDaTaco: !!foraDaTaco, alimento, gramas, unidade, qtdTexto, semDado: !!(alimento && alimento.kcal == null),
               semMedida: !!(alimento && alimento.kcal != null && !g && gramas == null)};
     }).filter(i => i.alimento || i.qtdTexto || i.texto.length > 2);
   }
@@ -217,5 +267,21 @@ const Nutricao = (() => {
     return tot;
   }
 
-  return {carregar, buscar, lerPrato, calcular, fonte: 'TACO 4ª ed. (NEPA/UNICAMP, 2011)'};
+  // Paciente escolheu outro alimento ou outra medida: atualiza o item
+  function ajustar(item, {alimento, gramas, medida, unidade}) {
+    if (alimento) {
+      item.alimento = alimento; item.exato = true; item.semDado = alimento.kcal == null;
+      if (item.gramas == null && item.qtdTexto && !/\d\s*(g|ml)\b/.test(item.qtdTexto)) {
+        const m = item.qtdTexto.match(/^\S+\s+(.+)$/);
+        const porMedida = m && gramasDaMedida(alimento, m[1]);
+        if (porMedida) item.gramas = porMedida * (item.qtd || 1);
+      }
+    }
+    if (gramas != null) { item.gramas = gramas; item.qtdTexto = medida; item.unidade = unidade || 'g'; }
+    item.semMedida = !!(item.alimento && item.alimento.kcal != null && item.gramas == null);
+    delete item.calc;
+  }
+
+  const porId = id => taco.find(a => a.id === id);
+  return {carregar, buscar, lerPrato, calcular, sugerir, medidasDe, ajustar, porId, fonte: 'TACO 4ª ed. (NEPA/UNICAMP, 2011)'};
 })();
