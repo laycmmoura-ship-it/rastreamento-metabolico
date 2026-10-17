@@ -1,5 +1,5 @@
 {
- "instrucoes": "Valores por 100 g/ml para alimentos sem dados na TACO. Sempre com a fonte. Só a nutricionista inclui itens aqui.",
+ "instrucoes": "'alimentos': completam itens da TACO sem valores. 'novos': alimentos que a TACO não tem (ids 9001+), valores por 100 g com a fonte. Só a nutricionista inclui itens aqui.",
  "alimentos": [
   {
    "taco_id": 457,
@@ -10,6 +10,748 @@
    "gord": 0.4,
    "fibra": 0,
    "fonte": "Web Diet (print da Layane, 17/10/2026): 82,5 ml = 31 kcal; P 2,5 g; L 0,3 g; C 4,9 g"
+  }
+ ],
+ "novos": [
+  {
+   "id": 9001,
+   "nome": "Macarrão, cozido",
+   "kcal": 109.0,
+   "prot": 3.4,
+   "carbo": 23.0,
+   "gord": 0.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Cozido, p. 40"
+  },
+  {
+   "id": 9002,
+   "nome": "Macarrão, ao sugo",
+   "kcal": 102.0,
+   "prot": 3.1,
+   "carbo": 21.6,
+   "gord": 0.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Sugo, p. 40"
+  },
+  {
+   "id": 9003,
+   "nome": "Macarrão, ao alho e óleo",
+   "kcal": 219.0,
+   "prot": 5.3,
+   "carbo": 31.6,
+   "gord": 7.9,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Alho E Óleo, p. 40"
+  },
+  {
+   "id": 9004,
+   "nome": "Pão, de forma",
+   "kcal": 269.0,
+   "prot": 9.3,
+   "carbo": 57.4,
+   "gord": 0.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão De Formas, p. 49"
+  },
+  {
+   "id": 9005,
+   "nome": "Pão, de batata",
+   "kcal": 274.0,
+   "prot": 8.2,
+   "carbo": 58.2,
+   "gord": 0.9,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão De Batata, p. 49"
+  },
+  {
+   "id": 9006,
+   "nome": "Pão, árabe",
+   "kcal": 269.0,
+   "prot": 9.3,
+   "carbo": 57.4,
+   "gord": 0.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão Árabe, p. 48"
+  },
+  {
+   "id": 9007,
+   "nome": "Pão, doce",
+   "kcal": 268.0,
+   "prot": 7.5,
+   "carbo": 56.3,
+   "gord": 1.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão Doce, p. 49"
+  },
+  {
+   "id": 9008,
+   "nome": "Misto quente",
+   "kcal": 333.0,
+   "prot": 13.2,
+   "carbo": 34.0,
+   "gord": 16.0,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Misto Quente, p. 43"
+  },
+  {
+   "id": 9009,
+   "nome": "Peixe, cozido",
+   "kcal": 98.0,
+   "prot": 22.9,
+   "carbo": 0.0,
+   "gord": 0.7,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Cozido, p. 51"
+  },
+  {
+   "id": 9010,
+   "nome": "Peixe, frito",
+   "kcal": 364.0,
+   "prot": 28.9,
+   "carbo": 3.4,
+   "gord": 26.1,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Frito, p. 51"
+  },
+  {
+   "id": 9011,
+   "nome": "Peixe, ensopado",
+   "kcal": 130.0,
+   "prot": 17.9,
+   "carbo": 1.9,
+   "gord": 5.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Ensopado, p. 51"
+  },
+  {
+   "id": 9012,
+   "nome": "Peixe, à milanesa",
+   "kcal": 266.0,
+   "prot": 21.8,
+   "carbo": 14.8,
+   "gord": 13.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe À Milanesa, p. 51"
+  },
+  {
+   "id": 9013,
+   "nome": "Bacalhau, cozido",
+   "kcal": 147.0,
+   "prot": 34.8,
+   "carbo": 0.0,
+   "gord": 0.8,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "id": 9014,
+   "nome": "Frango, ensopado",
+   "kcal": 127.0,
+   "prot": 22.0,
+   "carbo": 0.0,
+   "gord": 4.3,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Frango Ensopado, p. 31"
+  },
+  {
+   "id": 9015,
+   "nome": "Frango, frito",
+   "kcal": 145.0,
+   "prot": 22.0,
+   "carbo": 0.0,
+   "gord": 6.3,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Frango Frito, p. 32"
+  },
+  {
+   "id": 9016,
+   "nome": "Carne, ensopada com legumes",
+   "kcal": 164.0,
+   "prot": 13.8,
+   "carbo": 7.5,
+   "gord": 8.8,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Carne Ensopada Com Legumes, p. 17"
+  },
+  {
+   "id": 9017,
+   "nome": "Strogonoff, de carne",
+   "kcal": 173.0,
+   "prot": 15.9,
+   "carbo": 2.1,
+   "gord": 11.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Strogonoff De Carne, p. 62"
+  },
+  {
+   "id": 9018,
+   "nome": "Strogonoff, de frango",
+   "kcal": 199.0,
+   "prot": 17.4,
+   "carbo": 2.5,
+   "gord": 13.3,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Strogonoff De Frango, p. 62"
+  },
+  {
+   "id": 9019,
+   "nome": "Lasanha, à bolonhesa",
+   "kcal": 209.0,
+   "prot": 15.5,
+   "carbo": 15.9,
+   "gord": 9.3,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Lasanha À Bolonhesa, p. 37"
+  },
+  {
+   "id": 9020,
+   "nome": "Purê, de batata",
+   "kcal": 124.0,
+   "prot": 2.5,
+   "carbo": 18.8,
+   "gord": 4.3,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Purê De Batata, p. 54"
+  },
+  {
+   "id": 9021,
+   "nome": "Omelete",
+   "kcal": 170.0,
+   "prot": 11.2,
+   "carbo": 2.4,
+   "gord": 12.9,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Omelete, p. 47"
+  },
+  {
+   "id": 9022,
+   "nome": "Ovo, de galinha, mexido",
+   "kcal": 195.0,
+   "prot": 12.9,
+   "carbo": 0.8,
+   "gord": 15.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo De Galinha Mexido, p. 48"
+  },
+  {
+   "id": 9023,
+   "nome": "Ovo, de codorna",
+   "kcal": 156.0,
+   "prot": 13.1,
+   "carbo": 1.0,
+   "gord": 11.1,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo De Codorna, p. 47"
+  },
+  {
+   "id": 9024,
+   "nome": "Grão-de-bico, cozido",
+   "kcal": 136.0,
+   "prot": 6.6,
+   "carbo": 22.9,
+   "gord": 2.0,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Grão-De-Bico Cozido, p. 34"
+  },
+  {
+   "id": 9025,
+   "nome": "Espinafre, cozido",
+   "kcal": 60.0,
+   "prot": 5.6,
+   "carbo": 7.6,
+   "gord": 0.8,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Espinafre Cozido, p. 28"
+  },
+  {
+   "id": 9026,
+   "nome": "Vagem, cozida",
+   "kcal": 52.0,
+   "prot": 3.0,
+   "carbo": 9.5,
+   "gord": 0.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Vagem Cozida, p. 65"
+  },
+  {
+   "id": 9027,
+   "nome": "Vagem, refogada",
+   "kcal": 99.0,
+   "prot": 3.1,
+   "carbo": 10.0,
+   "gord": 5.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Vagem Refogada, p. 65"
+  },
+  {
+   "id": 9028,
+   "nome": "Brócolis, refogado",
+   "kcal": 81.0,
+   "prot": 3.0,
+   "carbo": 5.5,
+   "gord": 5.3,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Brócolis Refogado, p. 16"
+  },
+  {
+   "id": 9029,
+   "nome": "Cenoura, refogada",
+   "kcal": 101.0,
+   "prot": 1.4,
+   "carbo": 12.1,
+   "gord": 5.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cenoura Refogada, p. 18"
+  },
+  {
+   "id": 9030,
+   "nome": "Jiló, cozido",
+   "kcal": 52.0,
+   "prot": 1.7,
+   "carbo": 8.4,
+   "gord": 1.3,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Jiló Cozido, p. 36"
+  },
+  {
+   "id": 9031,
+   "nome": "Maxixe, cozido",
+   "kcal": 6.0,
+   "prot": 0.2,
+   "carbo": 1.2,
+   "gord": 0.1,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maxixe Cozido, p. 42"
+  },
+  {
+   "id": 9032,
+   "nome": "Canja",
+   "kcal": 85.0,
+   "prot": 6.4,
+   "carbo": 9.4,
+   "gord": 2.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Canja, p. 17"
+  },
+  {
+   "id": 9033,
+   "nome": "Sopa, de ervilha",
+   "kcal": 97.0,
+   "prot": 5.6,
+   "carbo": 15.2,
+   "gord": 1.5,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Sopa De Ervilha, p. 60"
+  },
+  {
+   "id": 9034,
+   "nome": "Caldo verde",
+   "kcal": 61.0,
+   "prot": 2.4,
+   "carbo": 5.3,
+   "gord": 3.3,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Caldo Verde, p. 16"
+  },
+  {
+   "id": 9035,
+   "nome": "Sopa, de feijão com macarrão",
+   "kcal": 132.0,
+   "prot": 5.2,
+   "carbo": 19.1,
+   "gord": 3.8,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Sopa De Fejão Com Macarrão, p. 60"
+  },
+  {
+   "id": 9036,
+   "nome": "Ameixa, seca",
+   "kcal": 186.0,
+   "prot": 2.4,
+   "carbo": 43.1,
+   "gord": 0.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ameixa Seca, p. 6"
+  },
+  {
+   "id": 9037,
+   "nome": "Uva-passa",
+   "kcal": 299.0,
+   "prot": 2.3,
+   "carbo": 71.4,
+   "gord": 0.5,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Uva Passa, p. 65"
+  },
+  {
+   "id": 9038,
+   "nome": "Damasco, seco",
+   "kcal": 131.0,
+   "prot": 3.1,
+   "carbo": 29.6,
+   "gord": 0.0,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Damasco Dessecado, p. 26"
+  },
+  {
+   "id": 9039,
+   "nome": "Amendoim, torrado, com sal",
+   "kcal": 638.0,
+   "prot": 23.2,
+   "carbo": 21.7,
+   "gord": 50.9,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Amendoim Torrado Com Sal, p. 6"
+  },
+  {
+   "id": 9040,
+   "nome": "Aveia, farinha",
+   "kcal": 396.0,
+   "prot": 14.2,
+   "carbo": 68.2,
+   "gord": 7.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Aveia Farinha, p. 7"
+  },
+  {
+   "id": 9041,
+   "nome": "Farelo, de trigo",
+   "kcal": 310.0,
+   "prot": 14.5,
+   "carbo": 56.7,
+   "gord": 2.8,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Farelo De Trigo, p. 29"
+  },
+  {
+   "id": 9042,
+   "nome": "Biscoito, maria",
+   "kcal": 441.0,
+   "prot": 8.8,
+   "carbo": 73.1,
+   "gord": 12.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Biscoito Marias, p. 13"
+  },
+  {
+   "id": 9043,
+   "nome": "Biscoito, água e sal",
+   "kcal": 428.0,
+   "prot": 12.8,
+   "carbo": 67.2,
+   "gord": 11.3,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Biscoito Água E Salº, p. 12"
+  },
+  {
+   "id": 9044,
+   "nome": "Biscoito, de polvilho",
+   "kcal": 421.0,
+   "prot": 2.7,
+   "carbo": 79.6,
+   "gord": 10.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Biscoito Polvilho, p. 13"
+  },
+  {
+   "id": 9045,
+   "nome": "Pizza, de muçarela",
+   "kcal": 278.0,
+   "prot": 14.7,
+   "carbo": 21.9,
+   "gord": 14.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pizza De Muzzarela, p. 54"
+  },
+  {
+   "id": 9046,
+   "nome": "Pizza, portuguesa",
+   "kcal": 197.0,
+   "prot": 8.8,
+   "carbo": 18.9,
+   "gord": 9.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pizza Portuguesa, p. 54"
+  },
+  {
+   "id": 9047,
+   "nome": "Bolo, simples",
+   "kcal": 439.0,
+   "prot": 8.2,
+   "carbo": 55.5,
+   "gord": 20.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bolo Simples, p. 15"
+  },
+  {
+   "id": 9048,
+   "nome": "Bolo, de cenoura",
+   "kcal": 379.0,
+   "prot": 6.4,
+   "carbo": 64.3,
+   "gord": 10.7,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bolo De Cenoura, p. 15"
+  },
+  {
+   "id": 9049,
+   "nome": "Bolo, de chocolate",
+   "kcal": 511.0,
+   "prot": 9.2,
+   "carbo": 56.7,
+   "gord": 27.5,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bolo De Chocolate Simples, p. 15"
+  },
+  {
+   "id": 9050,
+   "nome": "Pudim, de leite",
+   "kcal": 182.0,
+   "prot": 6.7,
+   "carbo": 24.3,
+   "gord": 6.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pudim De Leite, p. 54"
+  },
+  {
+   "id": 9051,
+   "nome": "Brigadeiro",
+   "kcal": 402.0,
+   "prot": 9.5,
+   "carbo": 62.0,
+   "gord": 12.9,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Brigadeiro, p. 16"
+  },
+  {
+   "id": 9052,
+   "nome": "Rabanada",
+   "kcal": 311.0,
+   "prot": 6.3,
+   "carbo": 35.7,
+   "gord": 15.9,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Rabanada, p. 56"
+  },
+  {
+   "id": 9053,
+   "nome": "Arroz, à grega",
+   "kcal": 140.0,
+   "prot": 2.0,
+   "carbo": 26.5,
+   "gord": 2.9,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Arroz À Grega, p. 6"
+  },
+  {
+   "id": 9054,
+   "nome": "Risoto, de frango",
+   "kcal": 180.0,
+   "prot": 8.3,
+   "carbo": 25.2,
+   "gord": 5.1,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Risoto De Frango, p. 58"
+  },
+  {
+   "id": 9055,
+   "nome": "Salada, de batata com maionese",
+   "kcal": 152.0,
+   "prot": 2.4,
+   "carbo": 18.3,
+   "gord": 7.7,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Salada De Batata C/ Maionese, p. 58"
+  },
+  {
+   "id": 9056,
+   "nome": "Batata, inglesa, sauté",
+   "kcal": 150.0,
+   "prot": 1.9,
+   "carbo": 17.2,
+   "gord": 8.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Batata-Inglesa Sauté, p. 10"
+  },
+  {
+   "id": 9057,
+   "nome": "Purê, de inhame",
+   "kcal": 123.0,
+   "prot": 2.0,
+   "carbo": 18.4,
+   "gord": 4.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Puré De Inhame, p. 54"
+  },
+  {
+   "id": 9058,
+   "nome": "Cuscuz, de milho com leite",
+   "kcal": 157.0,
+   "prot": 4.5,
+   "carbo": 31.5,
+   "gord": 1.5,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cuscuz De Milho Com Leite, p. 26"
+  },
+  {
+   "id": 9059,
+   "nome": "Cuscuz, de tapioca",
+   "kcal": 248.0,
+   "prot": 0.8,
+   "carbo": 54.2,
+   "gord": 3.1,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cuscuz De Tapioca, p. 26"
+  },
+  {
+   "id": 9060,
+   "nome": "Banana-da-terra, frita",
+   "kcal": 220.0,
+   "prot": 2.6,
+   "carbo": 31.6,
+   "gord": 9.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Banana-Da-Terra Frita, p. 8"
+  },
+  {
+   "id": 9061,
+   "nome": "Batata-doce, frita",
+   "kcal": 383.0,
+   "prot": 2.7,
+   "carbo": 60.1,
+   "gord": 14.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Batata-Doce Frita, p. 9"
+  },
+  {
+   "id": 9062,
+   "nome": "Berinjela, frita",
+   "kcal": 218.0,
+   "prot": 1.2,
+   "carbo": 7.6,
+   "gord": 20.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Berinjela Frita, p. 11"
+  },
+  {
+   "id": 9063,
+   "nome": "Feijoada, caseira",
+   "kcal": 154.0,
+   "prot": 8.6,
+   "carbo": 10.5,
+   "gord": 8.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Feijoada Caseira, p. 30"
+  },
+  {
+   "id": 9064,
+   "nome": "Coxinha, de frango",
+   "kcal": 443.0,
+   "prot": 14.1,
+   "carbo": 36.3,
+   "gord": 26.9,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Coxinha De Galinha, p. 23"
+  },
+  {
+   "id": 9065,
+   "nome": "Pastel, de forno",
+   "kcal": 464.0,
+   "prot": 10.2,
+   "carbo": 37.6,
+   "gord": 30.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pastel De Forno, p. 50"
+  },
+  {
+   "id": 9066,
+   "nome": "Pão com ovo",
+   "kcal": 248.0,
+   "prot": 11.6,
+   "carbo": 28.9,
+   "gord": 9.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão Com Ovo, p. 48"
+  },
+  {
+   "id": 9067,
+   "nome": "Sanduíche, de frango",
+   "kcal": 249.0,
+   "prot": 12.3,
+   "carbo": 27.2,
+   "gord": 10.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Sanduíche De Frango, p. 59"
+  },
+  {
+   "id": 9068,
+   "nome": "Molho, de tomate",
+   "kcal": 66.0,
+   "prot": 0.7,
+   "carbo": 4.2,
+   "gord": 5.2,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Molho De Tomate, p. 44"
+  },
+  {
+   "id": 9069,
+   "nome": "Molho, branco",
+   "kcal": 200.0,
+   "prot": 6.7,
+   "carbo": 14.8,
+   "gord": 12.7,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Molho Branco, p. 44"
+  },
+  {
+   "id": 9070,
+   "nome": "Maionese, caseira",
+   "kcal": 185.0,
+   "prot": 5.5,
+   "carbo": 0.3,
+   "gord": 17.9,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maionese Caseira, p. 40"
+  },
+  {
+   "id": 9071,
+   "nome": "Café com leite, sem açúcar",
+   "kcal": 44.0,
+   "prot": 2.6,
+   "carbo": 3.7,
+   "gord": 2.1,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Café Com Leite S/Aç, p. 16"
+  },
+  {
+   "id": 9072,
+   "nome": "Fígado, isca",
+   "kcal": 242.0,
+   "prot": 29.9,
+   "carbo": 6.6,
+   "gord": 10.7,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Isca De Fígado, p. 36"
+  },
+  {
+   "id": 9073,
+   "nome": "Costela, bovina, assada",
+   "kcal": 453.0,
+   "prot": 30.8,
+   "carbo": 0.5,
+   "gord": 36.4,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Costela De Boi Assada, p. 23"
+  },
+  {
+   "id": 9074,
+   "nome": "Língua, bovina, ensopada",
+   "kcal": 251.0,
+   "prot": 23.0,
+   "carbo": 2.3,
+   "gord": 16.6,
+   "fibra": null,
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Língua Bovina Ensopada, p. 39"
   }
  ]
 }

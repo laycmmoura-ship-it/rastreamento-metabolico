@@ -55,3 +55,8 @@ e depois o livro abaixo.
   30 alimentos comuns, com a página citada em cada item. O livro não é distribuído aqui.
   Conferência: cada peso lido por OCR só foi aceito quando batia com as kcal da mesma linha do livro;
   os demais foram lidos diretamente nas páginas.
+- **Alimentos que a TACO não tem** (`app/dados/complementar.json`, campo `novos`, ids 9001+): 74 alimentos
+  comuns e sem marca (macarrão cozido, pão de forma, peixes, ovo mexido, grão-de-bico, purê, strogonoff,
+  lasanha, pizzas, bolos, biscoitos, sopas…), com kcal e macros por 100 g de Pinheiro et al. (4ª ed.) e a
+  página citada. Conferência: kcal ≈ 4×P + 4×C + 9×G, comparação com uma segunda leitura e, nos casos
+  duvidosos, leitura direta da página (corrigidos: brócolis refogado 81 kcal, maxixe cozido 6 kcal).

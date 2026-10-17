@@ -9,19 +9,22 @@ const Nutricao = (() => {
     'arroz': 3, 'arroz branco': 3, 'arroz integral': 1,
     'feijao': 561, 'feijao carioca': 561, 'feijao preto': 567,
     'frango': 410, 'peito de frango': 410, 'file de frango': 410, 'frango grelhado': 410,
-    'ovo': 488, 'ovo cozido': 488, 'ovo frito': 490, 'ovo mexido': 490, // mexido leva gordura no preparo, como o frito
+    'ovo': 488, 'ovo cozido': 488, 'ovo frito': 490, 'ovo mexido': 9022, 'ovos mexidos': 9022,
     'batata': 91, 'batata inglesa': 91, 'batata doce': 88,
     'patinho': 377, 'carne moida': 326,
     'mandioca': 129, 'aipim': 129, 'macaxeira': 129,
     'banana': 182, 'azeite': 260, 'cuscuz': 533, 'aveia': 7, 'iogurte': 448,
     'pao': 53, 'pao frances': 53, 'leite': 458, 'alface': 78, 'tomate': 157,
     // Sem versão pronta na TACO: melhor não calcular do que usar o alimento errado
-    'macarrao': null, 'massa': null, 'tilapia': null, 'pao de forma': null,
+    'macarrao': 9001, 'massa': 9001, 'macarrao cozido': 9001, 'pao de forma': 9004, 'pao forma': 9004, 'peixe': 9009,
+    // aproximações: o app pergunta antes de usar (tilápia não tem na TACO nem no livro)
+    'tilapia': 9009, 'file de tilapia': 9009, 'pescada': 9009,
     'cacau': null, 'cacau em po': null, 'chia': null, 'semente de chia': null, 'tapioca': null, 'goma de tapioca': null,
     'whey': null, 'whey protein': null, 'farinha de aveia': null,
     // grafias comuns que a TACO escreve diferente
     'mussarela': 463, 'mucarela': 463, 'muzzarela': 463, 'queijo mussarela': 463, 'queijo mucarela': 463
   };
+  const APROX = new Set(['tilapia', 'file de tilapia', 'pescada']);
   const PREPARADO = /\b(cozid|grelhad|assad|refogad)/;
   const PROCESSADO = /\b(calda|doce|industrializad|enlatad|frit|instantane|polpa|suco|geleia|sorvete|cristalizad|desidratad)/;
   let temVersaoPronta = new Set();   // nomes principais que têm versão cozida/grelhada (ex.: batata)
@@ -51,6 +54,8 @@ const Nutricao = (() => {
     ]);
     taco = t.alimentos.map(a => ({id: a[0], nome: a[1], kcal: a[3], prot: a[4], carbo: a[5], gord: a[6], fibra: a[7], chave: norm(a[1])}));
     medidas = m.medidas || [];
+    // Alimentos que a TACO não tem (ex.: macarrão cozido), de outra fonte citada; ids 9001+
+    for (const x of c.novos || []) taco.push({id: x.id, nome: x.nome, kcal: x.kcal, prot: x.prot, carbo: x.carbo, gord: x.gord, fibra: x.fibra ?? 0, chave: norm(x.nome), fonte: x.fonte});
     // Alimentos que a TACO deixou sem valores ("*"), completados com outra fonte citada
     for (const x of c.alimentos || []) {
       const a = taco.find(a => a.id === x.taco_id);
@@ -79,7 +84,9 @@ const Nutricao = (() => {
     // palavras que já estão no nome do alimento padrão também contam ("feijão cozido" = Feijão, carioca, cozido)
     const alvoPadrao = chave && PADRAO[chave] != null ? (taco.find(a => a.id === PADRAO[chave])?.chave || '').split(' ').map(sing) : [];
     if (chave && termos.every(t => sk(chave).split(' ').includes(t) || GENERICAS.has(t) || alvoPadrao.includes(t)))
-      return {alimento: PADRAO[chave] == null ? null : taco.find(a => a.id === PADRAO[chave]), exato: true, foraDaTaco: PADRAO[chave] == null};
+      return {alimento: PADRAO[chave] == null ? null : taco.find(a => a.id === PADRAO[chave]), exato: !APROX.has(chave), foraDaTaco: PADRAO[chave] == null};
+    // Se o nome comum foi citado com outro detalhe ("batata frita"), prefere o mesmo tipo do padrão (batata inglesa)
+    const tipoPadrao = alvoPadrao.filter(w => w.length > 2 && !/^(cru|crua|cozid|grelhad|assad|frit|refogad|tipo|\d)/.test(w) && !sk(chave).split(' ').includes(w));
     // 2) pontuação por palavras em comum (aceita plural/feminino: cozido ~ cozida)
     // Iguais ignorando masculino/feminino (cozido = cozida); "cacau" não bate com "cação"
     const raiz = w => w.length >= 5 ? w.replace(/[aoe]$/, '') : w;
@@ -106,6 +113,8 @@ const Nutricao = (() => {
       if (!querCru && /\bcrua?\b/.test(a.chave) && temVersaoPronta.has(principal)) p -= 1.5;
       if (!querCru && PREPARADO.test(a.chave)) p += 0.5;
       if (PROCESSADO.test(a.chave) && !termos.some(t => PROCESSADO.test(t))) p -= 1;
+      const todasBatem = termos.every(t => GENERICAS.has(t) || palavras.some(w => bate(t, w)));
+      if (todasBatem && tipoPadrao.length && tipoPadrao.every(w => palavras.map(sing).includes(w))) p += 0.5;
       p -= a.nome.length / 1000;                                         // desempate: nome mais simples
       if (p > pts) { pts = p; melhor = a; }
     }
@@ -178,7 +187,7 @@ const Nutricao = (() => {
       doAlimento = medidas.filter(x => daMedida(x) && semPreparo(taco.find(a => a.id === x.taco_id)?.chave || '') === alvo);
     }
     if (!doAlimento.length && /^pedaco/.test(mb)) {
-      for (const alt of ['bife', 'file']) {
+      for (const alt of ['bife', 'file', 'fatia']) {
         doAlimento = medidas.filter(x => x.taco_id === alimento.id && x.gramas && base(x.medida).startsWith(alt));
         if (doAlimento.length) break;
       }

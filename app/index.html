@@ -503,7 +503,7 @@ function desenharPrato(id) {
       <b>📋 Comparando com o seu plano</b>
       <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
     </div>` : ''}
-    <p class="mini">Valores da ${Nutricao.fonte}, por alimento pronto para consumo. Medidas caseiras do Web Diet e da tabela de Pinheiro et al. (4ª ed.). Óleo do preparo e molhos só entram se você escrever.</p>`;
+    <p class="mini">Valores da ${Nutricao.fonte}${itens.some(i => i.alimento?.id >= 9000) ? '; itens que a TACO não tem, da tabela de Pinheiro et al. (4ª ed.)' : ''}. Medidas caseiras do Web Diet e de Pinheiro et al. Óleo do preparo e molhos só entram se você escrever.</p>`;
 }
 
 // O que perguntar sobre um item: qual alimento (não achou / não tem certeza) ou qual medida (sem peso)
@@ -519,7 +519,9 @@ function perguntaHtml(id, i, k) {
   if (i.foraDaTaco) return `<div class="pergunta"><b>“${esc(i.busca || i.texto)}”</b> não existe pronto na TACO, então ficou fora do total. Se souber, escreva um alimento parecido.</div>`;
   const q = perguntas(i)[0];
   if (q === 'alimento') {
-    const ops = Nutricao.sugerir(i.busca || i.texto).filter(a => a !== i.alimento);
+    let ops = Nutricao.sugerir(i.busca || i.texto).filter(a => a !== i.alimento);
+    // aproximação (ex.: tilápia -> peixe): oferece as variações do alimento aproximado
+    if (!ops.length && i.alimento) ops = Nutricao.sugerir(i.alimento.nome.split(',')[0], 5).filter(a => a !== i.alimento);
     const botoes = [
       ...(i.alimento ? [`<button data-esc="${id}:${k}:a:${i.alimento.id}" class="sim">✓ ${esc(i.alimento.nome)}</button>`] : []),
       ...ops.slice(0, i.alimento ? 3 : 4).map(a => `<button data-esc="${id}:${k}:a:${a.id}">${esc(a.nome)}</button>`),

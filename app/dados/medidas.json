@@ -990,38 +990,6 @@
    "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Aipim frito, p. 5"
   },
   {
-   "taco_id": 490,
-   "alimento": "Ovo, de galinha, inteiro, frito",
-   "medida": "colher de arroz cheia",
-   "gramas": 45,
-   "livro": "pinheiro",
-   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo de galinha mexido, p. 48 (medidas do ovo mexido (o app trata ovo mexido como ovo frito da TACO))"
-  },
-  {
-   "taco_id": 490,
-   "alimento": "Ovo, de galinha, inteiro, frito",
-   "medida": "colher de arroz rasa",
-   "gramas": 25,
-   "livro": "pinheiro",
-   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo de galinha mexido, p. 48 (medidas do ovo mexido (o app trata ovo mexido como ovo frito da TACO))"
-  },
-  {
-   "taco_id": 490,
-   "alimento": "Ovo, de galinha, inteiro, frito",
-   "medida": "colher de sopa cheia",
-   "gramas": 15,
-   "livro": "pinheiro",
-   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo de galinha mexido, p. 48 (medidas do ovo mexido (o app trata ovo mexido como ovo frito da TACO))"
-  },
-  {
-   "taco_id": 490,
-   "alimento": "Ovo, de galinha, inteiro, frito",
-   "medida": "colher de sopa rasa",
-   "gramas": 10,
-   "livro": "pinheiro",
-   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo de galinha mexido, p. 48 (medidas do ovo mexido (o app trata ovo mexido como ovo frito da TACO))"
-  },
-  {
    "taco_id": 410,
    "alimento": "Frango, peito, sem pele, grelhado",
    "medida": "filé grande",
@@ -1916,6 +1884,1486 @@
    "gramas": 480,
    "livro": "pinheiro",
    "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Abacaxi, p. 3"
+  },
+  {
+   "taco_id": 9001,
+   "alimento": "Macarrão, cozido",
+   "medida": "colher de arroz cheia",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Cozido, p. 40"
+  },
+  {
+   "taco_id": 9001,
+   "alimento": "Macarrão, cozido",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Cozido, p. 40"
+  },
+  {
+   "taco_id": 9001,
+   "alimento": "Macarrão, cozido",
+   "medida": "escumadeira média cheia",
+   "gramas": 110.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Cozido, p. 40"
+  },
+  {
+   "taco_id": 9001,
+   "alimento": "Macarrão, cozido",
+   "medida": "escumadeira média rasa",
+   "gramas": 75.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Cozido, p. 40"
+  },
+  {
+   "taco_id": 9002,
+   "alimento": "Macarrão, ao sugo",
+   "medida": "colher de arroz cheia",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Sugo, p. 40"
+  },
+  {
+   "taco_id": 9002,
+   "alimento": "Macarrão, ao sugo",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Sugo, p. 40"
+  },
+  {
+   "taco_id": 9002,
+   "alimento": "Macarrão, ao sugo",
+   "medida": "escumadeira média cheia",
+   "gramas": 110.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Sugo, p. 40"
+  },
+  {
+   "taco_id": 9002,
+   "alimento": "Macarrão, ao sugo",
+   "medida": "escumadeira média rasa",
+   "gramas": 75.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Sugo, p. 40"
+  },
+  {
+   "taco_id": 9003,
+   "alimento": "Macarrão, ao alho e óleo",
+   "medida": "colher de arroz cheia",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Alho E Óleo, p. 40"
+  },
+  {
+   "taco_id": 9003,
+   "alimento": "Macarrão, ao alho e óleo",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Alho E Óleo, p. 40"
+  },
+  {
+   "taco_id": 9003,
+   "alimento": "Macarrão, ao alho e óleo",
+   "medida": "escumadeira média cheia",
+   "gramas": 110.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Alho E Óleo, p. 40"
+  },
+  {
+   "taco_id": 9003,
+   "alimento": "Macarrão, ao alho e óleo",
+   "medida": "escumadeira média rasa",
+   "gramas": 75.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Macarrão Ao Alho E Óleo, p. 40"
+  },
+  {
+   "taco_id": 9004,
+   "alimento": "Pão, de forma",
+   "medida": "fatia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão De Formas, p. 49"
+  },
+  {
+   "taco_id": 9004,
+   "alimento": "Pão, de forma",
+   "medida": "unidade",
+   "gramas": 70.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão De Formas, p. 49"
+  },
+  {
+   "taco_id": 9005,
+   "alimento": "Pão, de batata",
+   "medida": "unidade média",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão De Batata, p. 49"
+  },
+  {
+   "taco_id": 9006,
+   "alimento": "Pão, árabe",
+   "medida": "unidade grande",
+   "gramas": 80.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão Árabe, p. 48"
+  },
+  {
+   "taco_id": 9007,
+   "alimento": "Pão, doce",
+   "medida": "unidade",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão Doce, p. 49"
+  },
+  {
+   "taco_id": 9008,
+   "alimento": "Misto quente",
+   "medida": "unidade",
+   "gramas": 85.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Misto Quente, p. 43"
+  },
+  {
+   "taco_id": 9009,
+   "alimento": "Peixe, cozido",
+   "medida": "colher de sopa cheia",
+   "gramas": 20,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Cozido, p. 51"
+  },
+  {
+   "taco_id": 9009,
+   "alimento": "Peixe, cozido",
+   "medida": "colher de sopa rasa",
+   "gramas": 10,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Cozido, p. 51"
+  },
+  {
+   "taco_id": 9009,
+   "alimento": "Peixe, cozido",
+   "medida": "filé grande",
+   "gramas": 155,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Cozido, p. 51"
+  },
+  {
+   "taco_id": 9009,
+   "alimento": "Peixe, cozido",
+   "medida": "filé médio",
+   "gramas": 120,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Cozido, p. 51"
+  },
+  {
+   "taco_id": 9009,
+   "alimento": "Peixe, cozido",
+   "medida": "filé pequeno",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Cozido, p. 51"
+  },
+  {
+   "taco_id": 9009,
+   "alimento": "Peixe, cozido",
+   "medida": "posta grande",
+   "gramas": 250,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Cozido, p. 51"
+  },
+  {
+   "taco_id": 9009,
+   "alimento": "Peixe, cozido",
+   "medida": "posta média",
+   "gramas": 200,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Cozido, p. 51"
+  },
+  {
+   "taco_id": 9009,
+   "alimento": "Peixe, cozido",
+   "medida": "posta pequena",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Cozido, p. 51"
+  },
+  {
+   "taco_id": 9010,
+   "alimento": "Peixe, frito",
+   "medida": "filé grande",
+   "gramas": 155,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Frito, p. 51"
+  },
+  {
+   "taco_id": 9011,
+   "alimento": "Peixe, ensopado",
+   "medida": "filé grande",
+   "gramas": 155,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Ensopado, p. 51"
+  },
+  {
+   "taco_id": 9011,
+   "alimento": "Peixe, ensopado",
+   "medida": "filé médio",
+   "gramas": 120,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Ensopado, p. 51"
+  },
+  {
+   "taco_id": 9011,
+   "alimento": "Peixe, ensopado",
+   "medida": "filé pequeno",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Ensopado, p. 51"
+  },
+  {
+   "taco_id": 9011,
+   "alimento": "Peixe, ensopado",
+   "medida": "posta grande",
+   "gramas": 250,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Ensopado, p. 51"
+  },
+  {
+   "taco_id": 9011,
+   "alimento": "Peixe, ensopado",
+   "medida": "posta média",
+   "gramas": 200,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Ensopado, p. 51"
+  },
+  {
+   "taco_id": 9011,
+   "alimento": "Peixe, ensopado",
+   "medida": "posta pequena",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe Ensopado, p. 51"
+  },
+  {
+   "taco_id": 9012,
+   "alimento": "Peixe, à milanesa",
+   "medida": "filé grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe À Milanesa, p. 51"
+  },
+  {
+   "taco_id": 9012,
+   "alimento": "Peixe, à milanesa",
+   "medida": "filé médio",
+   "gramas": 115,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe À Milanesa, p. 51"
+  },
+  {
+   "taco_id": 9012,
+   "alimento": "Peixe, à milanesa",
+   "medida": "filé pequeno",
+   "gramas": 90,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Peixe À Milanesa, p. 51"
+  },
+  {
+   "taco_id": 9013,
+   "alimento": "Bacalhau, cozido",
+   "medida": "colher de arroz cheia",
+   "gramas": 55.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "taco_id": 9013,
+   "alimento": "Bacalhau, cozido",
+   "medida": "colher de arroz rasa",
+   "gramas": 40.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "taco_id": 9013,
+   "alimento": "Bacalhau, cozido",
+   "medida": "colher de sopa cheia",
+   "gramas": 20.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "taco_id": 9013,
+   "alimento": "Bacalhau, cozido",
+   "medida": "colher de sopa rasa",
+   "gramas": 15.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "taco_id": 9013,
+   "alimento": "Bacalhau, cozido",
+   "medida": "escumadeira média cheia",
+   "gramas": 60.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "taco_id": 9013,
+   "alimento": "Bacalhau, cozido",
+   "medida": "escumadeira média rasa",
+   "gramas": 48.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "taco_id": 9013,
+   "alimento": "Bacalhau, cozido",
+   "medida": "pedaço grande",
+   "gramas": 220.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "taco_id": 9013,
+   "alimento": "Bacalhau, cozido",
+   "medida": "pedaço médio",
+   "gramas": 135.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "taco_id": 9013,
+   "alimento": "Bacalhau, cozido",
+   "medida": "pedaço pequeno",
+   "gramas": 70.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bacalhau Cozido, p. 8"
+  },
+  {
+   "taco_id": 9014,
+   "alimento": "Frango, ensopado",
+   "medida": "colher de sopa cheia",
+   "gramas": 20.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Frango Ensopado, p. 31"
+  },
+  {
+   "taco_id": 9014,
+   "alimento": "Frango, ensopado",
+   "medida": "colher de sopa rasa",
+   "gramas": 10.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Frango Ensopado, p. 31"
+  },
+  {
+   "taco_id": 9014,
+   "alimento": "Frango, ensopado",
+   "medida": "concha",
+   "gramas": 60.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Frango Ensopado, p. 31"
+  },
+  {
+   "taco_id": 9014,
+   "alimento": "Frango, ensopado",
+   "medida": "unidade média",
+   "gramas": 16.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Frango Ensopado, p. 31"
+  },
+  {
+   "taco_id": 9015,
+   "alimento": "Frango, frito",
+   "medida": "colher de sopa cheia",
+   "gramas": 20.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Frango Frito, p. 32"
+  },
+  {
+   "taco_id": 9015,
+   "alimento": "Frango, frito",
+   "medida": "colher de sopa rasa",
+   "gramas": 10.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Frango Frito, p. 32"
+  },
+  {
+   "taco_id": 9015,
+   "alimento": "Frango, frito",
+   "medida": "concha",
+   "gramas": 90.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Frango Frito, p. 32"
+  },
+  {
+   "taco_id": 9016,
+   "alimento": "Carne, ensopada com legumes",
+   "medida": "colher de arroz cheia",
+   "gramas": 70.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Carne Ensopada Com Legumes, p. 17"
+  },
+  {
+   "taco_id": 9016,
+   "alimento": "Carne, ensopada com legumes",
+   "medida": "colher de arroz rasa",
+   "gramas": 45.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Carne Ensopada Com Legumes, p. 17"
+  },
+  {
+   "taco_id": 9016,
+   "alimento": "Carne, ensopada com legumes",
+   "medida": "colher de sopa cheia",
+   "gramas": 35.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Carne Ensopada Com Legumes, p. 17"
+  },
+  {
+   "taco_id": 9017,
+   "alimento": "Strogonoff, de carne",
+   "medida": "colher de arroz cheia",
+   "gramas": 40.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Strogonoff De Carne, p. 62"
+  },
+  {
+   "taco_id": 9017,
+   "alimento": "Strogonoff, de carne",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Strogonoff De Carne, p. 62"
+  },
+  {
+   "taco_id": 9018,
+   "alimento": "Strogonoff, de frango",
+   "medida": "concha média cheia",
+   "gramas": 170.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Strogonoff De Frango, p. 62"
+  },
+  {
+   "taco_id": 9018,
+   "alimento": "Strogonoff, de frango",
+   "medida": "colher de arroz cheia",
+   "gramas": 40.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Strogonoff De Frango, p. 62"
+  },
+  {
+   "taco_id": 9018,
+   "alimento": "Strogonoff, de frango",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Strogonoff De Frango, p. 62"
+  },
+  {
+   "taco_id": 9019,
+   "alimento": "Lasanha, à bolonhesa",
+   "medida": "colher de arroz cheia",
+   "gramas": 100.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Lasanha À Bolonhesa, p. 37"
+  },
+  {
+   "taco_id": 9019,
+   "alimento": "Lasanha, à bolonhesa",
+   "medida": "colher de sopa cheia",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Lasanha À Bolonhesa, p. 37"
+  },
+  {
+   "taco_id": 9019,
+   "alimento": "Lasanha, à bolonhesa",
+   "medida": "escumadeira média cheia",
+   "gramas": 170.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Lasanha À Bolonhesa, p. 37"
+  },
+  {
+   "taco_id": 9019,
+   "alimento": "Lasanha, à bolonhesa",
+   "medida": "pedaço grande",
+   "gramas": 250.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Lasanha À Bolonhesa, p. 37"
+  },
+  {
+   "taco_id": 9019,
+   "alimento": "Lasanha, à bolonhesa",
+   "medida": "pedaço médio",
+   "gramas": 190.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Lasanha À Bolonhesa, p. 37"
+  },
+  {
+   "taco_id": 9019,
+   "alimento": "Lasanha, à bolonhesa",
+   "medida": "pedaço pequeno",
+   "gramas": 120.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Lasanha À Bolonhesa, p. 37"
+  },
+  {
+   "taco_id": 9020,
+   "alimento": "Purê, de batata",
+   "medida": "concha média rasa",
+   "gramas": 140.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Purê De Batata, p. 54"
+  },
+  {
+   "taco_id": 9020,
+   "alimento": "Purê, de batata",
+   "medida": "colher de arroz cheia",
+   "gramas": 80.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Purê De Batata, p. 54"
+  },
+  {
+   "taco_id": 9020,
+   "alimento": "Purê, de batata",
+   "medida": "colher de sopa cheia",
+   "gramas": 45.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Purê De Batata, p. 54"
+  },
+  {
+   "taco_id": 9020,
+   "alimento": "Purê, de batata",
+   "medida": "colher de sopa rasa",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Purê De Batata, p. 54"
+  },
+  {
+   "taco_id": 9021,
+   "alimento": "Omelete",
+   "medida": "unidade pequena",
+   "gramas": 65.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Omelete, p. 47"
+  },
+  {
+   "taco_id": 9022,
+   "alimento": "Ovo, de galinha, mexido",
+   "medida": "colher de arroz cheia",
+   "gramas": 45.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo De Galinha Mexido, p. 48"
+  },
+  {
+   "taco_id": 9022,
+   "alimento": "Ovo, de galinha, mexido",
+   "medida": "colher de arroz rasa",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo De Galinha Mexido, p. 48"
+  },
+  {
+   "taco_id": 9022,
+   "alimento": "Ovo, de galinha, mexido",
+   "medida": "colher de sopa cheia",
+   "gramas": 15.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo De Galinha Mexido, p. 48"
+  },
+  {
+   "taco_id": 9022,
+   "alimento": "Ovo, de galinha, mexido",
+   "medida": "colher de sopa rasa",
+   "gramas": 10.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo De Galinha Mexido, p. 48"
+  },
+  {
+   "taco_id": 9022,
+   "alimento": "Ovo, de galinha, mexido",
+   "medida": "escumadeira média rasa",
+   "gramas": 45.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo De Galinha Mexido, p. 48"
+  },
+  {
+   "taco_id": 9023,
+   "alimento": "Ovo, de codorna",
+   "medida": "unidade",
+   "gramas": 10.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ovo De Codorna, p. 47"
+  },
+  {
+   "taco_id": 9024,
+   "alimento": "Grão-de-bico, cozido",
+   "medida": "concha média cheia",
+   "gramas": 120.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Grão-De-Bico Cozido, p. 34"
+  },
+  {
+   "taco_id": 9024,
+   "alimento": "Grão-de-bico, cozido",
+   "medida": "colher de sopa cheia",
+   "gramas": 22.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Grão-De-Bico Cozido, p. 34"
+  },
+  {
+   "taco_id": 9025,
+   "alimento": "Espinafre, cozido",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Espinafre Cozido, p. 28"
+  },
+  {
+   "taco_id": 9026,
+   "alimento": "Vagem, cozida",
+   "medida": "colher de sopa cheia",
+   "gramas": 20.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Vagem Cozida, p. 65"
+  },
+  {
+   "taco_id": 9026,
+   "alimento": "Vagem, cozida",
+   "medida": "colher de sopa rasa",
+   "gramas": 15.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Vagem Cozida, p. 65"
+  },
+  {
+   "taco_id": 9027,
+   "alimento": "Vagem, refogada",
+   "medida": "colher de arroz cheia",
+   "gramas": 73.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Vagem Refogada, p. 65"
+  },
+  {
+   "taco_id": 9027,
+   "alimento": "Vagem, refogada",
+   "medida": "colher de arroz rasa",
+   "gramas": 45.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Vagem Refogada, p. 65"
+  },
+  {
+   "taco_id": 9027,
+   "alimento": "Vagem, refogada",
+   "medida": "colher de sopa cheia",
+   "gramas": 35.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Vagem Refogada, p. 65"
+  },
+  {
+   "taco_id": 9027,
+   "alimento": "Vagem, refogada",
+   "medida": "colher de sopa rasa",
+   "gramas": 15.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Vagem Refogada, p. 65"
+  },
+  {
+   "taco_id": 9028,
+   "alimento": "Brócolis, refogado",
+   "medida": "colher de sopa cheia",
+   "gramas": 10.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Brócolis Refogado, p. 16"
+  },
+  {
+   "taco_id": 9029,
+   "alimento": "Cenoura, refogada",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cenoura Refogada, p. 18"
+  },
+  {
+   "taco_id": 9029,
+   "alimento": "Cenoura, refogada",
+   "medida": "colher de sopa rasa",
+   "gramas": 15.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cenoura Refogada, p. 18"
+  },
+  {
+   "taco_id": 9030,
+   "alimento": "Jiló, cozido",
+   "medida": "colher de arroz cheia",
+   "gramas": 95.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Jiló Cozido, p. 36"
+  },
+  {
+   "taco_id": 9030,
+   "alimento": "Jiló, cozido",
+   "medida": "colher de arroz rasa",
+   "gramas": 60.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Jiló Cozido, p. 36"
+  },
+  {
+   "taco_id": 9030,
+   "alimento": "Jiló, cozido",
+   "medida": "colher de sopa cheia",
+   "gramas": 60.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Jiló Cozido, p. 36"
+  },
+  {
+   "taco_id": 9030,
+   "alimento": "Jiló, cozido",
+   "medida": "colher de sopa rasa",
+   "gramas": 30.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Jiló Cozido, p. 36"
+  },
+  {
+   "taco_id": 9030,
+   "alimento": "Jiló, cozido",
+   "medida": "escumadeira média cheia",
+   "gramas": 110.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Jiló Cozido, p. 36"
+  },
+  {
+   "taco_id": 9030,
+   "alimento": "Jiló, cozido",
+   "medida": "escumadeira média rasa",
+   "gramas": 80.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Jiló Cozido, p. 36"
+  },
+  {
+   "taco_id": 9031,
+   "alimento": "Maxixe, cozido",
+   "medida": "colher de arroz cheia",
+   "gramas": 75,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maxixe Cozido, p. 42"
+  },
+  {
+   "taco_id": 9031,
+   "alimento": "Maxixe, cozido",
+   "medida": "colher de arroz rasa",
+   "gramas": 55,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maxixe Cozido, p. 42"
+  },
+  {
+   "taco_id": 9031,
+   "alimento": "Maxixe, cozido",
+   "medida": "colher de sopa cheia",
+   "gramas": 40,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maxixe Cozido, p. 42"
+  },
+  {
+   "taco_id": 9031,
+   "alimento": "Maxixe, cozido",
+   "medida": "colher de sopa rasa",
+   "gramas": 25,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maxixe Cozido, p. 42"
+  },
+  {
+   "taco_id": 9031,
+   "alimento": "Maxixe, cozido",
+   "medida": "escumadeira média cheia",
+   "gramas": 130,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maxixe Cozido, p. 42"
+  },
+  {
+   "taco_id": 9031,
+   "alimento": "Maxixe, cozido",
+   "medida": "escumadeira média rasa",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maxixe Cozido, p. 42"
+  },
+  {
+   "taco_id": 9032,
+   "alimento": "Canja",
+   "medida": "concha média cheia",
+   "gramas": 130.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Canja, p. 17"
+  },
+  {
+   "taco_id": 9035,
+   "alimento": "Sopa, de feijão com macarrão",
+   "medida": "colher de sopa cheia",
+   "gramas": 20.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Sopa De Fejão Com Macarrão, p. 60"
+  },
+  {
+   "taco_id": 9036,
+   "alimento": "Ameixa, seca",
+   "medida": "unidade média",
+   "gramas": 5.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Ameixa Seca, p. 6"
+  },
+  {
+   "taco_id": 9037,
+   "alimento": "Uva-passa",
+   "medida": "colher de sopa cheia",
+   "gramas": 18.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Uva Passa, p. 65"
+  },
+  {
+   "taco_id": 9037,
+   "alimento": "Uva-passa",
+   "medida": "colher de sopa rasa",
+   "gramas": 10.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Uva Passa, p. 65"
+  },
+  {
+   "taco_id": 9037,
+   "alimento": "Uva-passa",
+   "medida": "copo pequeno cheia",
+   "gramas": 125.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Uva Passa, p. 65"
+  },
+  {
+   "taco_id": 9037,
+   "alimento": "Uva-passa",
+   "medida": "unidade",
+   "gramas": 0.3,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Uva Passa, p. 65"
+  },
+  {
+   "taco_id": 9038,
+   "alimento": "Damasco, seco",
+   "medida": "unidade",
+   "gramas": 7.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Damasco Dessecado, p. 26"
+  },
+  {
+   "taco_id": 9040,
+   "alimento": "Aveia, farinha",
+   "medida": "colher de sopa cheia",
+   "gramas": 18.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Aveia Farinha, p. 7"
+  },
+  {
+   "taco_id": 9040,
+   "alimento": "Aveia, farinha",
+   "medida": "colher de sopa rasa",
+   "gramas": 8.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Aveia Farinha, p. 7"
+  },
+  {
+   "taco_id": 9040,
+   "alimento": "Aveia, farinha",
+   "medida": "colher de sobremesa cheia",
+   "gramas": 8.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Aveia Farinha, p. 7"
+  },
+  {
+   "taco_id": 9040,
+   "alimento": "Aveia, farinha",
+   "medida": "colher de sobremesa rasa",
+   "gramas": 6.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Aveia Farinha, p. 7"
+  },
+  {
+   "taco_id": 9041,
+   "alimento": "Farelo, de trigo",
+   "medida": "colher de café cheia",
+   "gramas": 1.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Farelo De Trigo, p. 29"
+  },
+  {
+   "taco_id": 9041,
+   "alimento": "Farelo, de trigo",
+   "medida": "colher de chá cheia",
+   "gramas": 2.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Farelo De Trigo, p. 29"
+  },
+  {
+   "taco_id": 9041,
+   "alimento": "Farelo, de trigo",
+   "medida": "colher de sopa rasa",
+   "gramas": 6.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Farelo De Trigo, p. 29"
+  },
+  {
+   "taco_id": 9041,
+   "alimento": "Farelo, de trigo",
+   "medida": "colher de sobremesa cheia",
+   "gramas": 7.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Farelo De Trigo, p. 29"
+  },
+  {
+   "taco_id": 9041,
+   "alimento": "Farelo, de trigo",
+   "medida": "colher de sobremesa rasa",
+   "gramas": 4.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Farelo De Trigo, p. 29"
+  },
+  {
+   "taco_id": 9045,
+   "alimento": "Pizza, de muçarela",
+   "medida": "fatia grande",
+   "gramas": 130.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pizza De Muzzarela, p. 54"
+  },
+  {
+   "taco_id": 9045,
+   "alimento": "Pizza, de muçarela",
+   "medida": "fatia média",
+   "gramas": 100.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pizza De Muzzarela, p. 54"
+  },
+  {
+   "taco_id": 9045,
+   "alimento": "Pizza, de muçarela",
+   "medida": "fatia pequena",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pizza De Muzzarela, p. 54"
+  },
+  {
+   "taco_id": 9046,
+   "alimento": "Pizza, portuguesa",
+   "medida": "fatia grande",
+   "gramas": 160.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pizza Portuguesa, p. 54"
+  },
+  {
+   "taco_id": 9046,
+   "alimento": "Pizza, portuguesa",
+   "medida": "fatia média",
+   "gramas": 125.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pizza Portuguesa, p. 54"
+  },
+  {
+   "taco_id": 9046,
+   "alimento": "Pizza, portuguesa",
+   "medida": "fatia pequena",
+   "gramas": 65.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pizza Portuguesa, p. 54"
+  },
+  {
+   "taco_id": 9047,
+   "alimento": "Bolo, simples",
+   "medida": "fatia grande",
+   "gramas": 100.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bolo Simples, p. 15"
+  },
+  {
+   "taco_id": 9047,
+   "alimento": "Bolo, simples",
+   "medida": "fatia pequena",
+   "gramas": 30.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bolo Simples, p. 15"
+  },
+  {
+   "taco_id": 9049,
+   "alimento": "Bolo, de chocolate",
+   "medida": "fatia grande",
+   "gramas": 100.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bolo De Chocolate Simples, p. 15"
+  },
+  {
+   "taco_id": 9049,
+   "alimento": "Bolo, de chocolate",
+   "medida": "unidade",
+   "gramas": 22.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bolo De Chocolate Simples, p. 15"
+  },
+  {
+   "taco_id": 9050,
+   "alimento": "Pudim, de leite",
+   "medida": "colher de sopa cheia",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pudim De Leite, p. 54"
+  },
+  {
+   "taco_id": 9050,
+   "alimento": "Pudim, de leite",
+   "medida": "colher de sobremesa cheia",
+   "gramas": 40.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pudim De Leite, p. 54"
+  },
+  {
+   "taco_id": 9050,
+   "alimento": "Pudim, de leite",
+   "medida": "fatia grande",
+   "gramas": 260.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pudim De Leite, p. 54"
+  },
+  {
+   "taco_id": 9050,
+   "alimento": "Pudim, de leite",
+   "medida": "fatia média",
+   "gramas": 130.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pudim De Leite, p. 54"
+  },
+  {
+   "taco_id": 9050,
+   "alimento": "Pudim, de leite",
+   "medida": "fatia pequena",
+   "gramas": 90.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pudim De Leite, p. 54"
+  },
+  {
+   "taco_id": 9051,
+   "alimento": "Brigadeiro",
+   "medida": "colher de sopa cheia",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Brigadeiro, p. 16"
+  },
+  {
+   "taco_id": 9051,
+   "alimento": "Brigadeiro",
+   "medida": "colher de sobremesa cheia",
+   "gramas": 30.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Brigadeiro, p. 16"
+  },
+  {
+   "taco_id": 9051,
+   "alimento": "Brigadeiro",
+   "medida": "unidade grande",
+   "gramas": 30.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Brigadeiro, p. 16"
+  },
+  {
+   "taco_id": 9051,
+   "alimento": "Brigadeiro",
+   "medida": "unidade média",
+   "gramas": 15.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Brigadeiro, p. 16"
+  },
+  {
+   "taco_id": 9051,
+   "alimento": "Brigadeiro",
+   "medida": "unidade pequena",
+   "gramas": 10.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Brigadeiro, p. 16"
+  },
+  {
+   "taco_id": 9052,
+   "alimento": "Rabanada",
+   "medida": "unidade grande",
+   "gramas": 100.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Rabanada, p. 56"
+  },
+  {
+   "taco_id": 9052,
+   "alimento": "Rabanada",
+   "medida": "unidade média",
+   "gramas": 60.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Rabanada, p. 56"
+  },
+  {
+   "taco_id": 9052,
+   "alimento": "Rabanada",
+   "medida": "unidade pequena",
+   "gramas": 30.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Rabanada, p. 56"
+  },
+  {
+   "taco_id": 9053,
+   "alimento": "Arroz, à grega",
+   "medida": "colher de arroz cheia",
+   "gramas": 45.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Arroz À Grega, p. 6"
+  },
+  {
+   "taco_id": 9053,
+   "alimento": "Arroz, à grega",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Arroz À Grega, p. 6"
+  },
+  {
+   "taco_id": 9053,
+   "alimento": "Arroz, à grega",
+   "medida": "colher de sopa rasa",
+   "gramas": 15.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Arroz À Grega, p. 6"
+  },
+  {
+   "taco_id": 9053,
+   "alimento": "Arroz, à grega",
+   "medida": "escumadeira média cheia",
+   "gramas": 85.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Arroz À Grega, p. 6"
+  },
+  {
+   "taco_id": 9053,
+   "alimento": "Arroz, à grega",
+   "medida": "escumadeira média rasa",
+   "gramas": 60.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Arroz À Grega, p. 6"
+  },
+  {
+   "taco_id": 9054,
+   "alimento": "Risoto, de frango",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Risoto De Frango, p. 58"
+  },
+  {
+   "taco_id": 9054,
+   "alimento": "Risoto, de frango",
+   "medida": "escumadeira média cheia",
+   "gramas": 85.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Risoto De Frango, p. 58"
+  },
+  {
+   "taco_id": 9055,
+   "alimento": "Salada, de batata com maionese",
+   "medida": "colher de sopa cheia",
+   "gramas": 38.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Salada De Batata C/ Maionese, p. 58"
+  },
+  {
+   "taco_id": 9056,
+   "alimento": "Batata, inglesa, sauté",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Batata-Inglesa Sauté, p. 10"
+  },
+  {
+   "taco_id": 9057,
+   "alimento": "Purê, de inhame",
+   "medida": "colher de arroz cheia",
+   "gramas": 65.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Puré De Inhame, p. 54"
+  },
+  {
+   "taco_id": 9057,
+   "alimento": "Purê, de inhame",
+   "medida": "colher de sopa cheia",
+   "gramas": 40.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Puré De Inhame, p. 54"
+  },
+  {
+   "taco_id": 9057,
+   "alimento": "Purê, de inhame",
+   "medida": "colher de sopa rasa",
+   "gramas": 20.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Puré De Inhame, p. 54"
+  },
+  {
+   "taco_id": 9058,
+   "alimento": "Cuscuz, de milho com leite",
+   "medida": "pedaço grande",
+   "gramas": 270.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cuscuz De Milho Com Leite, p. 26"
+  },
+  {
+   "taco_id": 9058,
+   "alimento": "Cuscuz, de milho com leite",
+   "medida": "pedaço médio",
+   "gramas": 180.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cuscuz De Milho Com Leite, p. 26"
+  },
+  {
+   "taco_id": 9058,
+   "alimento": "Cuscuz, de milho com leite",
+   "medida": "pedaço pequeno",
+   "gramas": 115.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cuscuz De Milho Com Leite, p. 26"
+  },
+  {
+   "taco_id": 9059,
+   "alimento": "Cuscuz, de tapioca",
+   "medida": "fatia grande",
+   "gramas": 200.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cuscuz De Tapioca, p. 26"
+  },
+  {
+   "taco_id": 9059,
+   "alimento": "Cuscuz, de tapioca",
+   "medida": "fatia pequena",
+   "gramas": 60.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Cuscuz De Tapioca, p. 26"
+  },
+  {
+   "taco_id": 9060,
+   "alimento": "Banana-da-terra, frita",
+   "medida": "fatia grande",
+   "gramas": 42.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Banana-Da-Terra Frita, p. 8"
+  },
+  {
+   "taco_id": 9060,
+   "alimento": "Banana-da-terra, frita",
+   "medida": "fatia média",
+   "gramas": 31.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Banana-Da-Terra Frita, p. 8"
+  },
+  {
+   "taco_id": 9060,
+   "alimento": "Banana-da-terra, frita",
+   "medida": "fatia pequena",
+   "gramas": 15.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Banana-Da-Terra Frita, p. 8"
+  },
+  {
+   "taco_id": 9061,
+   "alimento": "Batata-doce, frita",
+   "medida": "fatia grande",
+   "gramas": 84.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Batata-Doce Frita, p. 9"
+  },
+  {
+   "taco_id": 9061,
+   "alimento": "Batata-doce, frita",
+   "medida": "fatia média",
+   "gramas": 65.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Batata-Doce Frita, p. 9"
+  },
+  {
+   "taco_id": 9062,
+   "alimento": "Berinjela, frita",
+   "medida": "fatia grande",
+   "gramas": 35.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Berinjela Frita, p. 11"
+  },
+  {
+   "taco_id": 9062,
+   "alimento": "Berinjela, frita",
+   "medida": "fatia pequena",
+   "gramas": 10.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Berinjela Frita, p. 11"
+  },
+  {
+   "taco_id": 9064,
+   "alimento": "Coxinha, de frango",
+   "medida": "unidade grande",
+   "gramas": 110.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Coxinha De Galinha, p. 23"
+  },
+  {
+   "taco_id": 9064,
+   "alimento": "Coxinha, de frango",
+   "medida": "unidade média",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Coxinha De Galinha, p. 23"
+  },
+  {
+   "taco_id": 9065,
+   "alimento": "Pastel, de forno",
+   "medida": "unidade média",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pastel De Forno, p. 50"
+  },
+  {
+   "taco_id": 9066,
+   "alimento": "Pão com ovo",
+   "medida": "unidade",
+   "gramas": 100.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Pão Com Ovo, p. 48"
+  },
+  {
+   "taco_id": 9067,
+   "alimento": "Sanduíche, de frango",
+   "medida": "unidade média",
+   "gramas": 120.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Sanduíche De Frango, p. 59"
+  },
+  {
+   "taco_id": 9068,
+   "alimento": "Molho, de tomate",
+   "medida": "colher de arroz",
+   "gramas": 45.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Molho De Tomate, p. 44"
+  },
+  {
+   "taco_id": 9068,
+   "alimento": "Molho, de tomate",
+   "medida": "colher de sopa",
+   "gramas": 20.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Molho De Tomate, p. 44"
+  },
+  {
+   "taco_id": 9068,
+   "alimento": "Molho, de tomate",
+   "medida": "colher de sobremesa",
+   "gramas": 17.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Molho De Tomate, p. 44"
+  },
+  {
+   "taco_id": 9069,
+   "alimento": "Molho, branco",
+   "medida": "colher de arroz",
+   "gramas": 55.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Molho Branco, p. 44"
+  },
+  {
+   "taco_id": 9069,
+   "alimento": "Molho, branco",
+   "medida": "colher de sopa",
+   "gramas": 35.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Molho Branco, p. 44"
+  },
+  {
+   "taco_id": 9069,
+   "alimento": "Molho, branco",
+   "medida": "colher de sobremesa",
+   "gramas": 25.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Molho Branco, p. 44"
+  },
+  {
+   "taco_id": 9070,
+   "alimento": "Maionese, caseira",
+   "medida": "colher de arroz cheia",
+   "gramas": 50.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maionese Caseira, p. 40"
+  },
+  {
+   "taco_id": 9070,
+   "alimento": "Maionese, caseira",
+   "medida": "colher de sopa cheia",
+   "gramas": 27.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maionese Caseira, p. 40"
+  },
+  {
+   "taco_id": 9070,
+   "alimento": "Maionese, caseira",
+   "medida": "colher de sopa rasa",
+   "gramas": 17.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maionese Caseira, p. 40"
+  },
+  {
+   "taco_id": 9070,
+   "alimento": "Maionese, caseira",
+   "medida": "colher de sobremesa cheia",
+   "gramas": 17.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maionese Caseira, p. 40"
+  },
+  {
+   "taco_id": 9070,
+   "alimento": "Maionese, caseira",
+   "medida": "colher de sobremesa rasa",
+   "gramas": 12.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Maionese Caseira, p. 40"
+  },
+  {
+   "taco_id": 9071,
+   "alimento": "Café com leite, sem açúcar",
+   "medida": "xícara de chá cheia",
+   "gramas": 200.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Café Com Leite S/Aç, p. 16"
+  },
+  {
+   "taco_id": 9072,
+   "alimento": "Fígado, isca",
+   "medida": "colher de sopa cheia",
+   "gramas": 22.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Isca De Fígado, p. 36"
+  },
+  {
+   "taco_id": 9072,
+   "alimento": "Fígado, isca",
+   "medida": "colher de sopa rasa",
+   "gramas": 15.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Isca De Fígado, p. 36"
+  },
+  {
+   "taco_id": 9074,
+   "alimento": "Língua, bovina, ensopada",
+   "medida": "fatia média",
+   "gramas": 30.0,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Língua Bovina Ensopada, p. 39"
   }
  ],
  "fontes": {
