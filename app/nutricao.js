@@ -272,6 +272,7 @@ const Nutricao = (() => {
   function calcular(itens) {
     const tot = {kcal: 0, prot: 0, carbo: 0, gord: 0, fibra: 0};
     for (const i of itens) {
+      i.calc = null;  // limpa a conta anterior (ex.: a paciente tocou em "Nenhum destes")
       if (!i.alimento || i.gramas == null || i.alimento.kcal == null) continue;
       i.calc = {};
       for (const k in tot) { i.calc[k] = i.alimento[k] * i.gramas / 100; tot[k] += i.calc[k]; }

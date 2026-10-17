@@ -572,13 +572,13 @@ async function analisarPrato(msg, foto) {
   const anterior = SOMAR.test(msg) && ultimoPrato && pratos[ultimoPrato];
   const itens = anterior ? [...anterior.itens.map(i => ({...i})), ...novos] : novos;
   const id = proxPrato++;
-  pratos[id] = {itens, temFoto, somado: !!anterior, viaIA, erroIA};
+  pratos[id] = {itens, temFoto, soFoto: temFoto && !msg, somado: !!anterior, viaIA, erroIA};
   ultimoPrato = id;
   return `<div class="prato-res" data-prato="${id}">${desenharPrato(id)}</div>`;
 }
 
 function desenharPrato(id) {
-  const {itens, temFoto, somado, viaIA, erroIA} = pratos[id];
+  const {itens, temFoto, soFoto, somado, viaIA, erroIA} = pratos[id];
   const tot = Nutricao.calcular(itens);
   const r = n => Math.round(n);
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
@@ -596,7 +596,7 @@ function desenharPrato(id) {
     return `<tr${perguntas(i).length ? ' class="duvida"' : ''}><td>${nome}</td><td>${qtdMostrada(i)}</td><td>${valor}</td></tr>`;
   };
   const blocos = itens.map((i, k) => perguntaHtml(id, i, k)).join('');
-  return `<p>${somado ? 'Somei ao que você já tinha me contado. Refeição completa' : calculados.length ? 'Calculei pelos alimentos que você escreveu' : 'Encontrei estes alimentos'}${temFoto && !viaIA ? ' (a leitura da foto entra quando a IA estiver conectada)' : viaIA && temFoto ? ' e pela foto' : ''}:</p>
+  return `<p>${somado ? 'Somei ao que você já tinha me contado. Refeição completa' : soFoto && viaIA ? 'Pela foto, identifiquei' : calculados.length ? 'Calculei pelos alimentos que você escreveu' : 'Encontrei estes alimentos'}${soFoto && viaIA ? '' : temFoto && !viaIA ? ' (a leitura da foto entra quando a IA estiver conectada)' : viaIA && temFoto ? ' e pela foto' : ''}:</p>
     <div class="estimativa">
       ${calculados.length ? `<div class="est-topo"><span>${faltam ? 'Total parcial' : 'Total estimado'}</span><b>${r(tot.kcal)} kcal</b></div>
       <div class="est-macros"><div><b>${r(tot.prot)}g</b>proteína</div><div><b>${r(tot.carbo)}g</b>carbo</div><div><b>${r(tot.gord)}g</b>gordura</div></div>` : ''}
@@ -622,7 +622,7 @@ function perguntas(i) {
 }
 
 function perguntaHtml(id, i, k) {
-  if (i.foraDaTaco) return `<div class="pergunta"><b>“${esc(i.busca || i.texto)}”</b> não existe pronto na TACO, então ficou fora do total. Se souber, escreva um alimento parecido.</div>`;
+  if (i.foraDaTaco) return `<div class="pergunta"><b>“${esc(i.busca || i.texto)}”</b> não existe pronto na TACO, então ficou fora do total. Se souber, escreva um alimento parecido.${i.antes ? `<div class="opcoes"><button data-esc="${id}:${k}:v:0">↩ Voltar às opções parecidas</button></div>` : ''}</div>`;
   const q = perguntas(i)[0];
   if (q === 'alimento') {
     let ops = Nutricao.sugerir(i.busca || i.texto).filter(a => a !== i.alimento);
@@ -657,7 +657,8 @@ document.addEventListener('click', e => {
   const prato = pratos[id]; if (!prato) return;
   const item = prato.itens[+k];
   if (tipo === 'a') Nutricao.ajustar(item, {alimento: Nutricao.porId(+val)});
-  if (tipo === 'x') { item.alimento = null; item.exato = true; item.foraDaTaco = true; }
+  if (tipo === 'x') { item.antes = item.alimento; item.alimento = null; item.exato = true; item.foraDaTaco = true; }
+  if (tipo === 'v') { item.alimento = item.antes; item.antes = null; item.exato = false; item.foraDaTaco = false; }
   if (tipo === 'm') {
     const m = Nutricao.medidasDe(item.alimento)[+val], n = item.qtd || 1;
     Nutricao.ajustar(item, {gramas: m.gramas * n, medida: `${String(n).replace('.', ',')} ${m.medida}`, unidade: m.unidade});
