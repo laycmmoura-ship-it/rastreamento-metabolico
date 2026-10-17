@@ -332,7 +332,7 @@ function telaInicio() {
 }
 
 function abrirModo(k) {
-  modoAtual = k; historico = []; voltarPara = telaInicio;
+  modoAtual = k; historico = []; voltarPara = telaInicio; ultimoPrato = null;
   document.querySelector('.app').classList.remove('sem-entrada');
   const m = MODOS[k];
   $('btnVoltar').hidden = false; $('btnMenu').hidden = true;
@@ -447,7 +447,7 @@ function gerarDemo(modo, msg, foto) {
       <li>ℹ️ Porção: compare a porção do rótulo com o quanto você realmente consome.</li></ul>
       <p>Na versão final, eu leio os números da sua foto e comparo com o seu plano.</p>`;
   }
-  if (foto || /col\.|colher|concha|filé|fatia|\d+\s*g\b/i.test(msg)) return analisarPrato(msg, !!foto);
+  if (foto || ehRefeicao(msg)) return analisarPrato(msg, !!foto);
   if (/como descrev/i.test(msg)) return `<p>É bem simples! Escreva <strong>a refeição</strong> e <strong>cada alimento com a quantidade</strong> em medida caseira:</p>
       <ul><li>🍚 colheres de sopa (cheias ou rasas) de arroz, macarrão, purê</li>
       <li>🫘 conchas de feijão</li><li>🍗 filé, pedaço ou unidades da carne (pequeno, médio, grande)</li>
@@ -463,17 +463,32 @@ function gerarDemo(modo, msg, foto) {
 const pratos = {};
 let proxPrato = 1;
 
+let ultimoPrato = null;
+const SOMAR = /^\s*(e\s+)?(tbm|tb|tamb[eé]m|mais|ainda|depois)\b/i;
+
+// A mensagem descreve o que a paciente comeu? (perguntas como "posso trocar arroz por batata?" não)
+function ehRefeicao(msg) {
+  if (!msg || /\?\s*$/.test(msg) || /^\s*(posso|pode|qual|quais|como|quanto|quando|por ?que|o que|é bom|e se|devo|tem problema)\b/i.test(msg)) return false;
+  if (/col\.|colher|concha|fil[eé]|fatia|peda[cç]o|bife|unidade|x[ií]cara|copo|\d+\s*(g|ml)\b/i.test(msg)) return true;
+  if (/\b(comi|almocei|jantei|lanchei|tomei|bebi)\b/i.test(msg) || SOMAR.test(msg)) return true;
+  return false;
+}
+
 async function analisarPrato(msg, temFoto) {
   try { await Nutricao.carregar(); } catch { return demoPrato(msg, temFoto); }
-  const itens = msg ? Nutricao.lerPrato(msg) : [];
-  if (!itens.length) return demoPrato(msg, temFoto);
+  const novos = msg ? Nutricao.lerPrato(msg) : [];
+  if (!novos.length) return demoPrato(msg, temFoto);
+  // "tbm comi um pedaço de bife": soma ao prato anterior desta conversa
+  const anterior = SOMAR.test(msg) && ultimoPrato && pratos[ultimoPrato];
+  const itens = anterior ? [...anterior.itens.map(i => ({...i})), ...novos] : novos;
   const id = proxPrato++;
-  pratos[id] = {itens, temFoto};
+  pratos[id] = {itens, temFoto, somado: !!anterior};
+  ultimoPrato = id;
   return `<div class="prato-res" data-prato="${id}">${desenharPrato(id)}</div>`;
 }
 
 function desenharPrato(id) {
-  const {itens, temFoto} = pratos[id];
+  const {itens, temFoto, somado} = pratos[id];
   const tot = Nutricao.calcular(itens);
   const r = n => Math.round(n);
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
@@ -491,7 +506,7 @@ function desenharPrato(id) {
     return `<tr${perguntas(i).length ? ' class="duvida"' : ''}><td>${nome}</td><td>${qtdMostrada(i)}</td><td>${valor}</td></tr>`;
   };
   const blocos = itens.map((i, k) => perguntaHtml(id, i, k)).join('');
-  return `<p>${calculados.length ? 'Calculei pelos alimentos que você escreveu' : 'Encontrei estes alimentos'}${temFoto ? ' (a leitura da foto entra quando a IA estiver conectada)' : ''}:</p>
+  return `<p>${somado ? 'Somei ao que você já tinha me contado. Refeição completa' : calculados.length ? 'Calculei pelos alimentos que você escreveu' : 'Encontrei estes alimentos'}${temFoto ? ' (a leitura da foto entra quando a IA estiver conectada)' : ''}:</p>
     <div class="estimativa">
       ${calculados.length ? `<div class="est-topo"><span>${faltam ? 'Total parcial' : 'Total estimado'}</span><b>${r(tot.kcal)} kcal</b></div>
       <div class="est-macros"><div><b>${r(tot.prot)}g</b>proteína</div><div><b>${r(tot.carbo)}g</b>carbo</div><div><b>${r(tot.gord)}g</b>gordura</div></div>` : ''}
@@ -522,9 +537,12 @@ function perguntaHtml(id, i, k) {
     let ops = Nutricao.sugerir(i.busca || i.texto).filter(a => a !== i.alimento);
     // aproximação (ex.: tilápia -> peixe): oferece as variações do alimento aproximado
     if (!ops.length && i.alimento) ops = Nutricao.sugerir(i.alimento.nome.split(',')[0], 5).filter(a => a !== i.alimento);
+    // bife sem corte: oferece outros cortes grelhados
+    if (i.alimento && /bovina/.test(i.alimento.chave) && /grelhad/.test(i.alimento.chave))
+      ops = Nutricao.filtrar(a => a !== i.alimento && /bovina/.test(a.chave) && /grelhad/.test(a.chave) && !/figado|com gordura|capa/.test(a.chave));
     const botoes = [
       ...(i.alimento ? [`<button data-esc="${id}:${k}:a:${i.alimento.id}" class="sim">✓ ${esc(i.alimento.nome)}</button>`] : []),
-      ...ops.slice(0, i.alimento ? 3 : 4).map(a => `<button data-esc="${id}:${k}:a:${a.id}">${esc(a.nome)}</button>`),
+      ...ops.slice(0, i.alimento ? (/bovina/.test(i.alimento.chave) ? 6 : 3) : 4).map(a => `<button data-esc="${id}:${k}:a:${a.id}">${esc(a.nome)}</button>`),
       `<button data-esc="${id}:${k}:x:0" class="nenhum">Nenhum destes</button>`];
     const titulo = i.alimento ? `Para <b>“${esc(i.busca || i.texto)}”</b>, é este alimento?` : `Não encontrei <b>“${esc(i.busca || i.texto)}”</b>. Você quis dizer:`;
     return ops.length || i.alimento ? `<div class="pergunta">${titulo}<div class="opcoes">${botoes.join('')}</div></div>`

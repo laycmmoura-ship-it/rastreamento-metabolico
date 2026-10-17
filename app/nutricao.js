@@ -19,12 +19,13 @@ const Nutricao = (() => {
     'macarrao': 9001, 'massa': 9001, 'macarrao cozido': 9001, 'pao de forma': 9004, 'pao forma': 9004, 'peixe': 9009,
     // aproximações: o app pergunta antes de usar (tilápia não tem na TACO nem no livro)
     'tilapia': 9009, 'file de tilapia': 9009, 'pescada': 9009,
+    'bife': 377, 'bife grelhado': 377, 'carne grelhada': 377, 'bife de carne': 377, 'carne': 377,
     'cacau': null, 'cacau em po': null, 'chia': null, 'semente de chia': null, 'tapioca': null, 'goma de tapioca': null,
     'whey': null, 'whey protein': null, 'farinha de aveia': null,
     // grafias comuns que a TACO escreve diferente
     'mussarela': 463, 'mucarela': 463, 'muzzarela': 463, 'queijo mussarela': 463, 'queijo mucarela': 463
   };
-  const APROX = new Set(['tilapia', 'file de tilapia', 'pescada']);
+  const APROX = new Set(['tilapia', 'file de tilapia', 'pescada', 'bife', 'bife grelhado', 'carne grelhada', 'bife de carne', 'carne']);
   const PREPARADO = /\b(cozid|grelhad|assad|refogad)/;
   const PROCESSADO = /\b(calda|doce|industrializad|enlatad|frit|instantane|polpa|suco|geleia|sorvete|cristalizad|desidratad)/;
   let temVersaoPronta = new Set();   // nomes principais que têm versão cozida/grelhada (ex.: batata)
@@ -38,7 +39,8 @@ const Nutricao = (() => {
   // Palavras da frase que não fazem parte do nome do alimento ("tem dois ovos", "comi uns...")
   const PALAVRAS_VAZIAS = new Set(['de', 'da', 'do', 'das', 'dos', 'com', 'e', 'a', 'o', 'as', 'os', 'um', 'uma', 'no', 'na', 'em',
     'tem', 'tinha', 'teve', 'comi', 'comeu', 'era', 'eram', 'foi', 'foram', 'mais', 'cerca', 'aproximadamente', 'uns', 'umas',
-    'so', 'apenas', 'meu', 'minha', 'meus', 'minhas', 'tambem', 'ai', 'aqui', 'isso', 'esse', 'essa']);
+    'so', 'apenas', 'meu', 'minha', 'meus', 'minhas', 'tambem', 'tbm', 'tb', 'ainda', 'depois', 'ai', 'aqui', 'isso', 'esse', 'essa',
+    'almocei', 'jantei', 'lanchei', 'tomei', 'bebi', 'hoje', 'ontem', 'agora']);
   // Singular simples para comparar: ovos -> ovo, fritos -> frito, feijoes -> feijao
   const sing = w => w.length > 3 ? w.replace(/(oes|aes)$/, 'ao').replace(/eses$/, 'es').replace(/(lh|[^e])eres$/, '$1er').replace(/s$/, '') : w;
   // Palavras que descrevem o pedaço/prato mas não precisam estar no nome da TACO
@@ -260,7 +262,8 @@ const Nutricao = (() => {
       const qtdTexto = g ? porUnidade + g[0] : m ? (m[2] === 'unidade' && !/unidade/.test(m[0]) ? `${String(qtd).replace('.', ',')} ${qtd > 1 ? 'unidades' : 'unidade'}` : m[0] + (tam ? ' ' + tam : '')) : '';
       const unidade = (g && /ml/.test(g[2])) || (medida && /^(copo|xicara)/.test(medida)) ? 'ml' : 'g';
       // texto do alimento sem sobras da quantidade ("rasa de farinha" -> "farinha")
-      const busca = resto.trim().split(/\s+/).filter((w, k, arr) => !(arr.slice(0, k + 1).every(x => PALAVRAS_VAZIAS.has(x) || GENERICAS.has(x)))).join(' ') || resto.trim();
+      const sobra = x => PALAVRAS_VAZIAS.has(x) || TAMANHOS.includes(x) || /^(rasa|cheia|medi[oa]s?|grandes?|pequen[oa]s?)$/.test(x);
+      const busca = resto.trim().split(/\s+/).filter((w, k, arr) => !arr.slice(0, k + 1).every(sobra)).join(' ') || resto.trim();
       return {texto: parte, busca, qtd, exato, foraDaTaco: !!foraDaTaco, alimento, gramas, unidade, qtdTexto, semDado: !!(alimento && alimento.kcal == null),
               semMedida: !!(alimento && alimento.kcal != null && !g && gramas == null)};
     }).filter(i => i.alimento || i.qtdTexto || i.texto.length > 2);
@@ -292,5 +295,6 @@ const Nutricao = (() => {
   }
 
   const porId = id => taco.find(a => a.id === id);
-  return {carregar, buscar, lerPrato, calcular, sugerir, medidasDe, ajustar, porId, fonte: 'TACO 4ª ed. (NEPA/UNICAMP, 2011)'};
+  const filtrar = f => taco.filter(a => a.kcal != null && f(a));
+  return {carregar, buscar, lerPrato, calcular, sugerir, medidasDe, ajustar, porId, filtrar, fonte: 'TACO 4ª ed. (NEPA/UNICAMP, 2011)'};
 })();
