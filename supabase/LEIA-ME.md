@@ -35,3 +35,10 @@ Ou pelo terminal, com a Supabase CLI: `supabase functions deploy interpretar-pra
 Preencha `app/config.js` com a URL da função
 (`https://SEU-PROJETO.supabase.co/functions/v1/interpretar-prato`) e a anon key.
 Sem isso o app continua funcionando com o leitor local.
+
+## 6. Preparações da nutricionista (opcional)
+Para cadastrar preparações que a TACO não tem (pizza de frango com catupiry, tapioca, receitas da clínica):
+1. **SQL Editor → New query**: cole `supabase/preparacoes.sql` e clique em **Run**.
+2. **Authentication → Users → Add user → Create new user**: seu e-mail e uma senha forte, marcando *Auto Confirm User*.
+3. No SQL Editor, rode (com o seu e-mail): `insert into public.admins (user_id) select id from auth.users where email = 'SEU-EMAIL';`
+4. Abra `app/admin.html` (…/rastreamento-metabolico/app/admin.html), entre e cadastre. O app das pacientes lê as preparações ao abrir.

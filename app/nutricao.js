@@ -63,12 +63,36 @@ const Nutricao = (() => {
       const a = taco.find(a => a.id === x.taco_id);
       if (a && a.kcal == null) Object.assign(a, {kcal: x.kcal, prot: x.prot, carbo: x.carbo, gord: x.gord, fibra: x.fibra ?? 0, fonte: x.fonte});
     }
+    await carregarPreparacoes();
     temVersaoPronta = new Set(taco.filter(a => PREPARADO.test(a.chave)).map(a => a.chave.split(' ')[0]));
     // Medidas vindas do Web Diet: liga ao alimento da TACO pelo nome (sem a marca entre parênteses)
     for (const x of medidas) if (x.taco_id == null && x.nome_webdiet && !x.sem_taco) {
       const a = buscar(x.nome_webdiet.replace(/\([^)]*\)/g, ' '));
       if (a) x.taco_id = a.id;
     }
+  }
+
+  // Preparações cadastradas pela Layane no Supabase (tela admin.html); ids 100000+.
+  // Sem internet, o app segue só com a TACO.
+  const ID_PREP = 100000;
+  async function carregarPreparacoes() {
+    const cfg = typeof window !== 'undefined' && window.LAY_CONFIG;
+    if (!cfg?.iaUrl || !cfg.supabaseAnonKey) return;
+    try {
+      const ctrl = new AbortController(); setTimeout(() => ctrl.abort(), 6000);
+      const r = await fetch(new URL(cfg.iaUrl).origin + '/rest/v1/preparacoes?select=*', {signal: ctrl.signal,
+        headers: {apikey: cfg.supabaseAnonKey, Authorization: 'Bearer ' + cfg.supabaseAnonKey}});
+      if (!r.ok) return;
+      for (const p of await r.json()) {
+        const id = ID_PREP + p.id;
+        taco.push({id, nome: p.nome, kcal: +p.kcal, prot: +p.prot, carbo: +p.carbo, gord: +p.gord, fibra: p.fibra == null ? 0 : +p.fibra,
+          chave: norm(p.nome), prep: true, fonte: 'preparação cadastrada pela nutricionista' + (p.fonte ? ` (${p.fonte})` : '')});
+        // nome e sinônimos passam a ser o padrão (inclusive os que antes ficavam fora, como tapioca e chia)
+        for (const n of [p.nome, ...(p.sinonimos || [])]) { const k = norm(n); if (k) { PADRAO[k] = id; APROX.delete(k); } }
+        (p.medidas || []).forEach((m, j) => m.medida && +m.gramas > 0 &&
+          medidas.push({taco_id: id, alimento: p.nome, medida: m.medida, gramas: +m.gramas, fonte: 'nutricionista', padrao: j === 0}));
+      }
+    } catch { /* sem internet: segue sem as preparações */ }
   }
 
   const buscar = texto => buscarDetalhe(texto).alimento;
@@ -116,13 +140,15 @@ const Nutricao = (() => {
       if (!querCru && PREPARADO.test(a.chave)) p += 0.5;
       if (PROCESSADO.test(a.chave) && !termos.some(t => PROCESSADO.test(t))) p -= 1;
       const todasBatem = termos.every(t => GENERICAS.has(t) || palavras.some(w => bate(t, w)));
+      if (todasBatem && a.prep) p += 0.5;                                // preparação da Layane ganha da TACO genérica
       if (todasBatem && tipoPadrao.length && tipoPadrao.every(w => palavras.map(sing).includes(w))) p += 0.5;
       p -= a.nome.length / 1000;                                         // desempate: nome mais simples
       if (p > pts) { pts = p; melhor = a; }
     }
     if (!(pts > 0.5)) return nada;   // o alimento principal já é obrigatório acima
     const ws = melhor.chave.split(' ');
-    return {alimento: melhor, exato: termos.every(t => GENERICAS.has(t) || ws.some(w => bate(t, w)))};
+    // numa preparação cadastrada, o modo de preparo ("assado") não precisa estar no nome
+    return {alimento: melhor, exato: termos.every(t => GENERICAS.has(t) || ws.some(w => bate(t, w)) || (melhor.prep && PREPARADO.test(t)))};
   }
 
   // Distância de edição (quantas letras trocar/incluir/tirar): "bije" -> "bife" = 1
@@ -220,7 +246,7 @@ const Nutricao = (() => {
     const dir = resto.join(' com ');
     const termos = norm(parte).split(' ').filter(t => t.length > 1 && !PALAVRAS_VAZIAS.has(t) && !(t in NUM) && !/^\d/.test(t) && !GENERICAS.has(t)).map(sing);
     const junto = buscar(parte), ws = junto ? junto.chave.split(' ').map(sing) : [];
-    const juntoNaTaco = !!junto && termos.every(t => ws.includes(t));
+    const juntoNaTaco = !!junto && termos.every(t => ws.includes(t) || (junto.prep && PREPARADO.test(t)));
     return juntoNaTaco || !buscar(dir) ? [parte] : [esq, dir];
   }
 

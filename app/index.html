@@ -109,6 +109,7 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
 .est-macros b{display:block;font-size:16px;color:var(--texto)}
 .est-itens{width:100%;border-collapse:collapse;font-size:13px}
 .est-itens td{padding:8px 10px;border-bottom:1px solid var(--verde-bg)}
+.est-itens small.aprox{display:block;font-size:11px;color:#8a6d2b;font-weight:400;margin-top:2px}
 .est-itens td:nth-child(2){color:var(--texto-muted);font-size:12px}
 .est-itens td:last-child{text-align:right;white-space:nowrap;font-weight:600;color:var(--verde)}
 .est-conf{font-size:12.5px;padding:9px 14px}
@@ -584,11 +585,12 @@ function desenharPrato(id) {
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
   const todosEmGramas = itens.every(i => i.calc && /\d\s*(g|ml)\b/.test(i.qtdTexto));
   const conf = !faltam && todosEmGramas ? ['Boa', 'quantidades em gramas', '#1f5c41', 'var(--verde-light)']
-             : !faltam ? ['Média', 'medidas caseiras convertidas', '#5E4F25', '#F3ECDA']
+             : !faltam ? ['Média', itens.some(i => !i.exato) ? 'inclui aproximação' : 'medidas caseiras convertidas', '#5E4F25', '#F3ECDA']
              : ['Parcial', `${faltam} ${faltam > 1 ? 'itens ficaram' : 'item ficou'} de fora do total`, '#842029', '#F8D7DA'];
   const qtdMostrada = i => esc(i.gramas != null && !/\d\s*(g|ml)\b/.test(i.qtdTexto) ? `${i.qtdTexto} (${r(i.gramas)}${i.unidade || 'g'})` : i.qtdTexto);
   const linha = (i, k) => {
-    const nome = i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`;
+    const nome = !i.alimento ? `<i>${esc(i.texto)}</i>`
+      : esc(i.alimento.nome) + (i.exato ? '' : `<small class="aprox">≈ aproximação para “${esc(i.busca || i.texto)}”</small>`);
     const valor = i.calc ? `~${r(i.calc.kcal)} kcal`
       : !i.alimento ? '<span class="falta">não encontrei</span>'
       : i.semDado ? '<span class="falta">TACO sem valores</span>'
@@ -608,7 +610,7 @@ function desenharPrato(id) {
       <b>📋 Comparando com o seu plano</b>
       <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
     </div>` : ''}
-    <p class="mini">Valores da ${Nutricao.fonte}${itens.some(i => i.alimento?.id >= 9000) ? '; itens que a TACO não tem, da tabela de Pinheiro et al. (4ª ed.)' : ''}. Medidas caseiras do Web Diet e de Pinheiro et al. Óleo do preparo e molhos só entram se você escrever.</p>
+    <p class="mini">Valores da ${Nutricao.fonte}${itens.some(i => i.alimento?.id >= 9000 && i.alimento.id < 100000) ? '; itens que a TACO não tem, da tabela de Pinheiro et al. (4ª ed.)' : ''}${itens.some(i => i.alimento?.prep) ? '; preparações cadastradas pela nutricionista' : ''}. Medidas caseiras do Web Diet e de Pinheiro et al. Óleo do preparo e molhos só entram se você escrever.</p>
     ${iaLigada() ? `<p class="mini">${viaIA ? '✨ Alimentos identificados pela Lay IA.' : `Leitor local${erroIA ? ` (IA indisponível: ${esc(erroIA)})` : ''}.`}</p>` : ''}`;
 }
 

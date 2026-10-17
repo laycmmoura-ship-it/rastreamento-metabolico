@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preparações | Lay IA</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#4B5344">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link href="fontes/fontes.css" rel="stylesheet">
+<style>
+:root{--verde:#4B5344;--verde-bg:#F6F5F0;--verde-light:#E7E9DF;--texto:#2B3127;--muted:#6B7062;--borda:#DDD8C9;--ouro:#A48E52;--ouro-escuro:#7D6A35;--erro:#842029}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--texto);font-size:14px}
+main{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+h1{font-family:'Great Vibes',cursive;font-weight:400;font-size:40px;color:var(--verde);line-height:1}
+h1 small{font-family:'Poppins',sans-serif;font-size:13px;letter-spacing:2px;color:var(--ouro-escuro);font-weight:600}
+h2{font-size:16px;color:var(--verde);margin-bottom:10px}
+.cartao{background:#fff;border:1px solid var(--borda);border-radius:16px;padding:16px;margin-top:16px}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+input,textarea{width:100%;font:inherit;padding:9px 11px;border:1px solid var(--borda);border-radius:10px;background:#fff;color:var(--texto)}
+input:focus,textarea:focus{outline:2px solid var(--ouro);border-color:transparent}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--borda);background:#fff;color:var(--verde);padding:8px 12px}
+button.principal{background:var(--verde);color:#fff;border-color:var(--verde);font-weight:600}
+button.perigo{color:var(--erro)}
+button:disabled{opacity:.5;cursor:default}
+.linha{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
+.linha>*{flex:1;min-width:0}
+.ing{border:1px dashed var(--borda);border-radius:12px;padding:10px;margin-top:8px}
+.ing .escolhido{font-size:13px;margin-top:6px;color:var(--verde);font-weight:600}
+.sugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.sugs button{font-size:12px;padding:5px 9px;border-radius:14px;background:var(--verde-light);border:none}
+.modos{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.modos label{display:flex;gap:6px;align-items:center;margin:0;font-size:13px;color:var(--texto);border:1px solid var(--borda);border-radius:10px;padding:8px 10px;cursor:pointer}
+.modos input{width:auto}
+.resumo{background:var(--verde-light);border-radius:12px;padding:12px;margin-top:12px;font-size:13px}
+.resumo b{color:var(--verde)}
+.aviso{color:var(--erro);font-size:13px;margin-top:8px}
+.ok{color:#1f5c41;font-size:13px;margin-top:8px}
+.lista-prep{list-style:none}
+.lista-prep li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--verde-light)}
+.lista-prep small{display:block;color:var(--muted);font-size:12px}
+.mini{font-size:12px;color:var(--muted);margin-top:6px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <h1>Lay <small>IA</small></h1>
+  <p class="mini">Área da nutricionista: preparações que entram no cálculo do “Meu prato”.</p>
+
+  <section class="cartao" id="telaLogin">
+    <h2>Entrar</h2>
+    <label for="email">E-mail</label><input id="email" type="email" autocomplete="username">
+    <label for="senha">Senha</label><input id="senha" type="password" autocomplete="current-password">
+    <div style="margin-top:12px"><button class="principal" id="btnEntrar">Entrar</button></div>
+    <p class="aviso" id="erroLogin" hidden></p>
+  </section>
+
+  <div id="telaAdmin" hidden>
+    <section class="cartao">
+      <div class="linha" style="align-items:center"><h2 style="margin:0">Preparações cadastradas</h2>
+        <div style="flex:0 0 auto"><button id="btnNova">+ Nova</button> <button id="btnSair">Sair</button></div></div>
+      <p class="aviso" id="avisoAdmin" hidden>Seu usuário ainda não tem permissão para cadastrar. Rode no SQL Editor do Supabase o comando do fim do arquivo <code>supabase/preparacoes.sql</code>, com o seu e-mail.</p>
+      <ul class="lista-prep" id="lista"><li>Carregando…</li></ul>
+    </section>
+
+    <section class="cartao" id="form">
+      <h2 id="tituloForm">Nova preparação</h2>
+      <label for="nome">Nome (como a paciente costuma escrever)</label>
+      <input id="nome" placeholder="Ex.: Pizza de frango com catupiry">
+      <label for="sinonimos">Outros nomes, separados por vírgula (opcional)</label>
+      <input id="sinonimos" placeholder="Ex.: pizza frango catupiry, pizza de frango">
+
+      <label>Como calcular</label>
+      <div class="modos">
+        <label><input type="radio" name="modo" value="ingredientes" checked> Pelos ingredientes (TACO)</label>
+        <label><input type="radio" name="modo" value="rotulo"> Pelo rótulo do produto</label>
+      </div>
+
+      <div id="blocoIng">
+        <label>Ingredientes da receita (peso cru ou como entra na receita)</label>
+        <div id="ingredientes"></div>
+        <button id="btnIng" style="margin-top:8px">+ Ingrediente</button>
+        <label for="rendimento">Peso da preparação pronta, em gramas (opcional)</label>
+        <input id="rendimento" type="number" inputmode="decimal" min="1" placeholder="Se deixar vazio, usa a soma dos ingredientes">
+        <p class="mini">Pese a receita pronta quando puder: assar e cozinhar mudam o peso (perda ou ganho de água).</p>
+      </div>
+
+      <div id="blocoRotulo" hidden>
+        <label>Valores do rótulo</label>
+        <div class="linha">
+          <div><label for="rPorcao">Porção (g)</label><input id="rPorcao" type="number" inputmode="decimal" placeholder="30"></div>
+          <div><label for="rKcal">kcal</label><input id="rKcal" type="number" inputmode="decimal"></div>
+          <div><label for="rProt">Proteína (g)</label><input id="rProt" type="number" inputmode="decimal"></div>
+        </div>
+        <div class="linha">
+          <div><label for="rCarbo">Carboidratos (g)</label><input id="rCarbo" type="number" inputmode="decimal"></div>
+          <div><label for="rGord">Gorduras totais (g)</label><input id="rGord" type="number" inputmode="decimal"></div>
+          <div><label for="rFibra">Fibra (g)</label><input id="rFibra" type="number" inputmode="decimal"></div>
+        </div>
+      </div>
+
+      <label>Medidas caseiras (como a paciente vai dizer a quantidade)</label>
+      <div id="medidas"></div>
+      <button id="btnMed" style="margin-top:8px">+ Medida</button>
+
+      <label for="fonte">Fonte ou observação (opcional)</label>
+      <input id="fonte" placeholder="Ex.: receita da clínica; rótulo da marca X">
+
+      <div class="resumo" id="resumo">Preencha os dados para ver os valores.</div>
+      <div style="margin-top:12px" class="linha">
+        <div style="flex:0 0 auto"><button class="principal" id="btnSalvar">Salvar</button></div>
+        <div style="flex:0 0 auto"><button id="btnCancelar">Limpar</button></div>
+      </div>
+      <p class="aviso" id="erroForm" hidden></p>
+      <p class="ok" id="okForm" hidden></p>
+    </section>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="nutricao.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const BASE = new URL(LAY_CONFIG.iaUrl).origin, ANON = LAY_CONFIG.supabaseAnonKey;
+const num = v => { const n = parseFloat(String(v).replace(',', '.')); return isFinite(n) ? n : null; };
+const r1 = n => Math.round(n * 10) / 10;
+
+let token = sessionStorage.getItem('lay_token');
+let editando = null, preps = [];
+
+async function api(caminho, opcoes = {}) {
+  const r = await fetch(BASE + caminho, {...opcoes, headers: {apikey: ANON, Authorization: 'Bearer ' + (token || ANON),
+    'Content-Type': 'application/json', ...(opcoes.headers || {})}});
+  if (r.status === 401) { sair(); throw new Error('Sessão expirada, entre de novo.'); }
+  const corpo = r.status === 204 ? null : await r.json().catch(() => null);
+  if (!r.ok) throw new Error(corpo?.message || corpo?.msg || corpo?.error_description || 'Erro ' + r.status);
+  return corpo;
+}
+
+// ===== Login =====
+$('btnEntrar').onclick = async () => {
+  $('erroLogin').hidden = true;
+  try {
+    const r = await fetch(BASE + '/auth/v1/token?grant_type=password', {method: 'POST',
+      headers: {apikey: ANON, 'Content-Type': 'application/json'},
+      body: JSON.stringify({email: $('email').value.trim(), password: $('senha').value})});
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error_description || j.msg || 'E-mail ou senha incorretos.');
+    token = j.access_token; sessionStorage.setItem('lay_token', token);
+    entrar();
+  } catch (e) { $('erroLogin').textContent = e.message; $('erroLogin').hidden = false; }
+};
+$('senha').addEventListener('keydown', e => e.key === 'Enter' && $('btnEntrar').click());
+function sair() { token = null; sessionStorage.removeItem('lay_token'); $('telaAdmin').hidden = true; $('telaLogin').hidden = false; }
+$('btnSair').onclick = sair;
+
+async function entrar() {
+  $('telaLogin').hidden = true; $('telaAdmin').hidden = false;
+  await Nutricao.carregar();
+  try {
+    const adm = await api('/rest/v1/admins?select=user_id');
+    $('avisoAdmin').hidden = adm.length > 0;
+  } catch (e) { $('avisoAdmin').hidden = false; }
+  await listar();
+  if (!$('ingredientes').children.length) limpar();
+}
+
+async function listar() {
+  try {
+    preps = await api('/rest/v1/preparacoes?select=*&order=nome');
+    $('lista').innerHTML = preps.length ? preps.map(p => `<li><div><b>${esc(p.nome)}</b>
+      <small>${Math.round(p.kcal)} kcal · P ${r1(p.prot)} g · C ${r1(p.carbo)} g · G ${r1(p.gord)} g por 100 g${p.medidas?.length ? ' · ' + p.medidas.map(m => esc(m.medida)).join(', ') : ''}</small></div>
+      <div style="flex:0 0 auto"><button data-editar="${p.id}">Editar</button> <button class="perigo" data-apagar="${p.id}">Apagar</button></div></li>`).join('')
+      : '<li>Nenhuma preparação ainda.</li>';
+  } catch (e) { $('lista').innerHTML = `<li class="aviso">${esc(e.message)}</li>`; }
+}
+
+$('lista').onclick = async e => {
+  const ed = e.target.dataset.editar, ap = e.target.dataset.apagar;
+  if (ed) carregarNoForm(preps.find(p => p.id == ed));
+  if (ap && confirm('Apagar esta preparação? Ela sai do cálculo do app.')) {
+    try { await api('/rest/v1/preparacoes?id=eq.' + ap, {method: 'DELETE'}); await listar(); if (editando == ap) limpar(); }
+    catch (er) { alert(er.message); }
+  }
+};
+
+// ===== Formulário =====
+const modo = () => document.querySelector('input[name=modo]:checked').value;
+document.querySelectorAll('input[name=modo]').forEach(r => r.onchange = () => {
+  $('blocoIng').hidden = modo() !== 'ingredientes'; $('blocoRotulo').hidden = modo() !== 'rotulo'; calcularResumo();
+});
+
+function addIngrediente(ing = {}) {
+  const d = document.createElement('div'); d.className = 'ing';
+  d.dataset.id = ing.taco_id || '';
+  d.innerHTML = `<div class="linha"><div style="flex:3"><input class="busca" placeholder="Buscar na TACO (ex.: peito de frango cozido)" value="${esc(ing.nome || '')}"></div>
+    <div style="flex:1"><input class="gramas" type="number" inputmode="decimal" placeholder="gramas" value="${ing.gramas ?? ''}"></div>
+    <div style="flex:0 0 auto"><button class="perigo remover" title="Remover">✕</button></div></div>
+    <div class="escolhido">${ing.taco_id ? '✓ ' + esc(Nutricao.porId(ing.taco_id)?.nome || ing.nome) : ''}</div><div class="sugs"></div>`;
+  const busca = d.querySelector('.busca'), sugs = d.querySelector('.sugs');
+  busca.oninput = () => {
+    d.dataset.id = ''; d.querySelector('.escolhido').textContent = '';
+    const ops = busca.value.trim().length > 1 ? Nutricao.sugerir(busca.value, 8).filter(a => a.kcal != null && !a.prep) : [];
+    sugs.innerHTML = ops.map(a => `<button data-id="${a.id}">${esc(a.nome)}</button>`).join('');
+    calcularResumo();
+  };
+  sugs.onclick = e => {
+    const id = e.target.dataset.id; if (!id) return;
+    d.dataset.id = id; const a = Nutricao.porId(+id);
+    busca.value = a.nome; d.querySelector('.escolhido').textContent = '✓ ' + a.nome; sugs.innerHTML = '';
+    calcularResumo();
+  };
+  d.querySelector('.gramas').oninput = calcularResumo;
+  d.querySelector('.remover').onclick = () => { d.remove(); calcularResumo(); };
+  $('ingredientes').appendChild(d);
+}
+
+function addMedida(m = {}) {
+  const d = document.createElement('div'); d.className = 'linha med'; d.style.marginTop = '6px';
+  d.innerHTML = `<div style="flex:3"><input class="mnome" placeholder="Ex.: fatia média" value="${esc(m.medida || '')}"></div>
+    <div style="flex:1"><input class="mg" type="number" inputmode="decimal" placeholder="gramas" value="${m.gramas ?? ''}"></div>
+    <div style="flex:0 0 auto"><button class="perigo">✕</button></div>`;
+  d.querySelectorAll('input').forEach(i => i.oninput = calcularResumo);
+  d.querySelector('button').onclick = () => { d.remove(); calcularResumo(); };
+  $('medidas').appendChild(d);
+}
+$('btnIng').onclick = () => addIngrediente();
+$('btnMed').onclick = () => addMedida();
+['rendimento', 'rPorcao', 'rKcal', 'rProt', 'rCarbo', 'rGord', 'rFibra', 'nome'].forEach(id => $(id).oninput = calcularResumo);
+
+// Valores por 100 g da preparação pronta; null se faltar dado
+function calcular() {
+  if (modo() === 'rotulo') {
+    const porcao = num($('rPorcao').value), v = ['rKcal', 'rProt', 'rCarbo', 'rGord'].map(id => num($(id).value));
+    if (!porcao || v.some(x => x == null)) return {erro: 'Preencha a porção e os valores do rótulo (kcal, proteína, carboidratos e gorduras).'};
+    const f = 100 / porcao, fibra = num($('rFibra').value);
+    return {kcal: v[0] * f, prot: v[1] * f, carbo: v[2] * f, gord: v[3] * f, fibra: fibra == null ? null : fibra * f, ingredientes: [], rendimento_g: null};
+  }
+  const ings = [...$('ingredientes').children].map(d => ({taco_id: +d.dataset.id || null, nome: d.querySelector('.busca').value.trim(), gramas: num(d.querySelector('.gramas').value)}));
+  const validos = ings.filter(i => i.taco_id && i.gramas > 0);
+  if (!validos.length) return {erro: 'Adicione ao menos um ingrediente escolhido da lista, com as gramas.'};
+  if (validos.length < ings.filter(i => i.nome || i.gramas).length) return {erro: 'Algum ingrediente está sem alimento escolhido da lista ou sem gramas.'};
+  const tot = {kcal: 0, prot: 0, carbo: 0, gord: 0, fibra: 0};
+  for (const i of validos) { const a = Nutricao.porId(i.taco_id); for (const k in tot) tot[k] += (a[k] || 0) * i.gramas / 100; i.nome = a.nome; }
+  const soma = validos.reduce((s, i) => s + i.gramas, 0), rend = num($('rendimento').value) || soma;
+  const f = 100 / rend;
+  return {kcal: tot.kcal * f, prot: tot.prot * f, carbo: tot.carbo * f, gord: tot.gord * f, fibra: tot.fibra * f, ingredientes: validos, rendimento_g: num($('rendimento').value), soma};
+}
+
+const medidasDoForm = () => [...$('medidas').children].map(d => ({medida: d.querySelector('.mnome').value.trim(), gramas: num(d.querySelector('.mg').value)})).filter(m => m.medida && m.gramas > 0);
+
+function calcularResumo() {
+  const v = calcular();
+  if (v.erro) { $('resumo').textContent = v.erro; return; }
+  const meds = medidasDoForm();
+  $('resumo').innerHTML = `<b>Por 100 g:</b> ${Math.round(v.kcal)} kcal · proteína ${r1(v.prot)} g · carboidratos ${r1(v.carbo)} g · gorduras ${r1(v.gord)} g${v.fibra != null ? ` · fibra ${r1(v.fibra)} g` : ''}`
+    + (v.soma ? `<br><span class="mini">Soma dos ingredientes: ${r1(v.soma)} g${v.rendimento_g ? ` · pronta: ${r1(v.rendimento_g)} g` : ''}</span>` : '')
+    + meds.map(m => `<br><b>1 ${esc(m.medida)} (${r1(m.gramas)} g):</b> ${Math.round(v.kcal * m.gramas / 100)} kcal`).join('');
+}
+
+function limpar() {
+  editando = null; $('tituloForm').textContent = 'Nova preparação';
+  ['nome', 'sinonimos', 'rendimento', 'rPorcao', 'rKcal', 'rProt', 'rCarbo', 'rGord', 'rFibra', 'fonte'].forEach(id => $(id).value = '');
+  $('ingredientes').innerHTML = ''; $('medidas').innerHTML = '';
+  document.querySelector('input[name=modo][value=ingredientes]').checked = true;
+  $('blocoIng').hidden = false; $('blocoRotulo').hidden = true;
+  addIngrediente(); addMedida(); calcularResumo();
+  $('erroForm').hidden = $('okForm').hidden = true;
+}
+$('btnCancelar').onclick = limpar;
+$('btnNova').onclick = () => { limpar(); $('form').scrollIntoView({behavior: 'smooth'}); };
+
+function carregarNoForm(p) {
+  limpar(); editando = p.id; $('tituloForm').textContent = 'Editando: ' + p.nome;
+  $('nome').value = p.nome; $('sinonimos').value = (p.sinonimos || []).join(', '); $('fonte').value = p.fonte || '';
+  document.querySelector(`input[name=modo][value=${p.modo}]`).checked = true;
+  $('blocoIng').hidden = p.modo !== 'ingredientes'; $('blocoRotulo').hidden = p.modo !== 'rotulo';
+  $('ingredientes').innerHTML = ''; (p.ingredientes || []).forEach(addIngrediente); if (!p.ingredientes?.length) addIngrediente();
+  $('rendimento').value = p.rendimento_g ?? '';
+  if (p.modo === 'rotulo') { $('rPorcao').value = 100; $('rKcal').value = r1(p.kcal); $('rProt').value = r1(p.prot); $('rCarbo').value = r1(p.carbo); $('rGord').value = r1(p.gord); $('rFibra').value = p.fibra == null ? '' : r1(p.fibra); }
+  $('medidas').innerHTML = ''; (p.medidas || []).forEach(addMedida); if (!p.medidas?.length) addMedida();
+  calcularResumo(); $('form').scrollIntoView({behavior: 'smooth'});
+}
+
+$('btnSalvar').onclick = async () => {
+  $('erroForm').hidden = $('okForm').hidden = true;
+  const v = calcular(), nome = $('nome').value.trim();
+  const erro = !nome ? 'Dê um nome para a preparação.' : v.erro;
+  if (erro) { $('erroForm').textContent = erro; $('erroForm').hidden = false; return; }
+  const corpo = {nome, sinonimos: $('sinonimos').value.split(',').map(s => s.trim()).filter(Boolean), modo: modo(),
+    ingredientes: v.ingredientes, rendimento_g: v.rendimento_g, medidas: medidasDoForm(),
+    kcal: r1(v.kcal), prot: r1(v.prot), carbo: r1(v.carbo), gord: r1(v.gord), fibra: v.fibra == null ? null : r1(v.fibra),
+    fonte: $('fonte').value.trim() || null, atualizado_em: new Date().toISOString()};
+  $('btnSalvar').disabled = true;
+  try {
+    if (editando) await api('/rest/v1/preparacoes?id=eq.' + editando, {method: 'PATCH', body: JSON.stringify(corpo), headers: {Prefer: 'return=minimal'}});
+    else await api('/rest/v1/preparacoes', {method: 'POST', body: JSON.stringify(corpo), headers: {Prefer: 'return=minimal'}});
+    await listar(); limpar();
+    $('okForm').textContent = `“${nome}” salva. Ela já entra no cálculo do app (feche e abra o app para atualizar).`; $('okForm').hidden = false;
+  } catch (e) { $('erroForm').textContent = e.message; $('erroForm').hidden = false; }
+  finally { $('btnSalvar').disabled = false; }
+};
+
+if (token) entrar();
+</script>
+</body>
+</html>
