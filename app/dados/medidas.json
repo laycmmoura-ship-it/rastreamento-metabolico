@@ -81,15 +81,15 @@
    "taco_id": 488,
    "alimento": "Ovo cozido",
    "medida": "unidade",
-   "gramas": null,
-   "fonte": ""
+   "gramas": 50,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): ovo de galinha, 1 unidade = 50 g"
   },
   {
    "taco_id": 490,
    "alimento": "Ovo frito",
    "medida": "unidade",
-   "gramas": null,
-   "fonte": ""
+   "gramas": 50,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): ovo de galinha, 1 unidade = 50 g (peso do ovo; óleo do preparo não incluído no peso)"
   },
   {
    "taco_id": 91,
@@ -141,8 +141,8 @@
    "taco_id": 53,
    "alimento": "Pão francês",
    "medida": "unidade",
-   "gramas": null,
-   "fonte": ""
+   "gramas": 50,
+   "fonte": "Web Diet (print da Layane, 17/10/2026)"
   },
   {
    "taco_id": 182,
@@ -228,6 +228,55 @@
    "gramas": null,
    "fonte": "",
    "padrao": false
+  },
+  {
+   "taco_id": 469,
+   "alimento": "Ricota",
+   "medida": "colher de sopa",
+   "gramas": 20,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): ricota light, 0,5 col. sopa = 10 g"
+  },
+  {
+   "taco_id": 471,
+   "alimento": "Café coado",
+   "medida": "xícara de café",
+   "gramas": 80,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): 1 xícara de café = 80 ml"
+  },
+  {
+   "taco_id": 457,
+   "alimento": "Leite desnatado UHT",
+   "medida": "copo americano pequeno",
+   "gramas": 165,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): 0,5 copo americano pequeno = 82,5 ml"
+  },
+  {
+   "taco_id": 458,
+   "alimento": "Leite integral",
+   "medida": "copo americano pequeno",
+   "gramas": 165,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): copo americano pequeno = 165 ml (medida do leite desnatado)"
+  },
+  {
+   "taco_id": 222,
+   "alimento": "Maçã Fuji",
+   "medida": "unidade média",
+   "gramas": 130,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): maçã, 1 unidade média = 130 g"
+  },
+  {
+   "taco_id": 221,
+   "alimento": "Maçã Argentina",
+   "medida": "unidade média",
+   "gramas": 130,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): maçã, 1 unidade média = 130 g"
+  },
+  {
+   "taco_id": 489,
+   "alimento": "Ovo cru",
+   "medida": "unidade",
+   "gramas": 50,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): ovo de galinha, 1 unidade = 50 g"
   }
  ]
 }

@@ -1,0 +1,15 @@
+{
+ "instrucoes": "Valores por 100 g/ml para alimentos sem dados na TACO. Sempre com a fonte. Só a nutricionista inclui itens aqui.",
+ "alimentos": [
+  {
+   "taco_id": 457,
+   "nome": "Leite, de vaca, desnatado, UHT",
+   "kcal": 37.6,
+   "prot": 3.0,
+   "carbo": 5.9,
+   "gord": 0.4,
+   "fibra": 0,
+   "fonte": "Web Diet (print da Layane, 17/10/2026): 82,5 ml = 31 kcal; P 2,5 g; L 0,3 g; C 4,9 g"
+  }
+ ]
+}

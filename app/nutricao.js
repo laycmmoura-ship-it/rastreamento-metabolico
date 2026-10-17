@@ -36,12 +36,18 @@ const Nutricao = (() => {
 
   async function carregar() {
     if (taco) return;
-    const [t, m] = await Promise.all([
+    const [t, m, c] = await Promise.all([
       fetch('dados/taco.json').then(r => r.json()),
-      fetch('dados/medidas.json').then(r => r.ok ? r.json() : {medidas: []}).catch(() => ({medidas: []}))
+      fetch('dados/medidas.json').then(r => r.ok ? r.json() : {medidas: []}).catch(() => ({medidas: []})),
+      fetch('dados/complementar.json').then(r => r.ok ? r.json() : {alimentos: []}).catch(() => ({alimentos: []}))
     ]);
     taco = t.alimentos.map(a => ({id: a[0], nome: a[1], kcal: a[3], prot: a[4], carbo: a[5], gord: a[6], fibra: a[7], chave: norm(a[1])}));
     medidas = m.medidas || [];
+    // Alimentos que a TACO deixou sem valores ("*"), completados com outra fonte citada
+    for (const x of c.alimentos || []) {
+      const a = taco.find(a => a.id === x.taco_id);
+      if (a && a.kcal == null) Object.assign(a, {kcal: x.kcal, prot: x.prot, carbo: x.carbo, gord: x.gord, fibra: x.fibra ?? 0, fonte: x.fonte});
+    }
     temVersaoPronta = new Set(taco.filter(a => PREPARADO.test(a.chave)).map(a => a.chave.split(' ')[0]));
   }
 
@@ -82,13 +88,13 @@ const Nutricao = (() => {
       p -= a.nome.length / 1000;                                         // desempate: nome mais simples
       if (p > pts) { pts = p; melhor = a; }
     }
-    return pts >= 1 ? melhor : null;
+    return pts > 0.5 ? melhor : null;   // o alimento principal já é obrigatório acima
   }
 
   // Gramas de uma medida caseira cadastrada (ex.: "colher de sopa" de arroz). null se não cadastrada.
   // Ex.: medida "colheres de sopa" + tamanho "rasa" -> procura "colher de sopa rasa" daquele alimento.
   // Sem tamanho informado, usa a medida marcada como padrão (ou a única cadastrada).
-  const TAMANHOS = ['rasa', 'cheia', 'nivelada', 'pequena', 'media', 'grande', 'pequeno', 'medio'];
+  const TAMANHOS = ['rasa', 'cheia', 'nivelada', 'pequena', 'media', 'grande', 'pequeno', 'medio', 'americano'];
   function gramasDaMedida(alimento, medida, tamanho) {
     const base = s => norm(s).split(' ').filter(w => !TAMANHOS.includes(w) && w !== 'de').map(sing).join(' ');
     const mb = base(medida);
@@ -105,7 +111,7 @@ const Nutricao = (() => {
   const NUM = {'um': 1, 'uma': 1, 'meia': 0.5, 'meio': 0.5, 'dois': 2, 'duas': 2, 'tres': 3, 'quatro': 4, 'cinco': 5};
   const RX_GRAMAS = /(\d+(?:[.,]\d+)?)\s*(g|gr|gramas?|ml)\b/;
   const RX_CONTAGEM = /^(\d+(?:[.,]\d+)?|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s+(?=[a-z])/;
-  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa))?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?|porcao|porcoes)\b/;
+  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa))?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?(?:\s+americanos?)?|porcao|porcoes)\b/;
 
   // "pão com manteiga" e "arroz com feijão" são dois alimentos; "frango com pele" é um só (existe assim na TACO).
   function separarCom(parte) {
