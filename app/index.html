@@ -509,13 +509,13 @@ function fraseDoItem(i) {
 async function analisarPrato(msg, foto) {
   const temFoto = !!foto;
   try { await Nutricao.carregar(); } catch { return demoPrato(msg, temFoto); }
-  let novos = null, viaIA = false;
+  let novos = null, viaIA = false, erroIA = null;
   if (iaLigada()) {
     try {
       const ia = await interpretarComIA(msg, foto);
       if (!ia.e_refeicao && !temFoto && !SOMAR.test(msg || '')) return respostaDuvida();
       if (ia.itens?.length) { novos = Nutricao.lerPrato(ia.itens.map(fraseDoItem).join(', ')); viaIA = true; }
-    } catch { /* sem internet ou IA fora: usa o leitor local */ }
+    } catch (e) { erroIA = e.name === 'AbortError' ? 'demorou demais' : e.message; /* sem internet ou IA fora: usa o leitor local */ }
   }
   if (!novos) novos = msg ? Nutricao.lerPrato(msg) : [];
   if (!novos.length) return demoPrato(msg, temFoto);
@@ -523,13 +523,13 @@ async function analisarPrato(msg, foto) {
   const anterior = SOMAR.test(msg) && ultimoPrato && pratos[ultimoPrato];
   const itens = anterior ? [...anterior.itens.map(i => ({...i})), ...novos] : novos;
   const id = proxPrato++;
-  pratos[id] = {itens, temFoto, somado: !!anterior, viaIA};
+  pratos[id] = {itens, temFoto, somado: !!anterior, viaIA, erroIA};
   ultimoPrato = id;
   return `<div class="prato-res" data-prato="${id}">${desenharPrato(id)}</div>`;
 }
 
 function desenharPrato(id) {
-  const {itens, temFoto, somado, viaIA} = pratos[id];
+  const {itens, temFoto, somado, viaIA, erroIA} = pratos[id];
   const tot = Nutricao.calcular(itens);
   const r = n => Math.round(n);
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
@@ -559,7 +559,8 @@ function desenharPrato(id) {
       <b>📋 Comparando com o seu plano</b>
       <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
     </div>` : ''}
-    <p class="mini">Valores da ${Nutricao.fonte}${itens.some(i => i.alimento?.id >= 9000) ? '; itens que a TACO não tem, da tabela de Pinheiro et al. (4ª ed.)' : ''}. Medidas caseiras do Web Diet e de Pinheiro et al. Óleo do preparo e molhos só entram se você escrever.</p>`;
+    <p class="mini">Valores da ${Nutricao.fonte}${itens.some(i => i.alimento?.id >= 9000) ? '; itens que a TACO não tem, da tabela de Pinheiro et al. (4ª ed.)' : ''}. Medidas caseiras do Web Diet e de Pinheiro et al. Óleo do preparo e molhos só entram se você escrever.</p>
+    ${iaLigada() ? `<p class="mini">${viaIA ? '✨ Alimentos identificados pela Lay IA.' : `Leitor local${erroIA ? ` (IA indisponível: ${esc(erroIA)})` : ''}.`}</p>` : ''}`;
 }
 
 // O que perguntar sobre um item: qual alimento (não achou / não tem certeza) ou qual medida (sem peso)

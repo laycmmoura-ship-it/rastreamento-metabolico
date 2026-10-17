@@ -1,6 +1,6 @@
-// Configuração da IA (preenchida quando o Supabase estiver pronto).
-// A "anon key" do Supabase é pública por natureza; a chave da Anthropic NUNCA vai aqui (fica nos Secrets do Supabase).
+// Configuração da IA. A "anon key" do Supabase é pública por natureza (vai no app);
+// a chave da Anthropic NUNCA vai aqui (fica nos Secrets do Supabase).
 window.LAY_CONFIG = {
-  iaUrl: '',          // ex.: https://SEU-PROJETO.supabase.co/functions/v1/interpretar-prato
-  supabaseAnonKey: '' // Supabase → Project Settings → API → anon public
+  iaUrl: 'https://jfnvfgrcrmgppfedkekj.supabase.co/functions/v1/interpretar-prato',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpmbnZmZ3Jjcm1ncHBmZWRrZWtqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIyNTIyMTcsImV4cCI6MjEwNzgyODIxN30.zjhSI5lozvFSyMOEs9hjLLSOBDoJaAwDTLsJXRZU1NA'
 };
