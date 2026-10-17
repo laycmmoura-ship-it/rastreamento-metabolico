@@ -24,7 +24,7 @@ Em **Edge Functions → Secrets** (ou Project Settings → Edge Functions), adic
 | Nome | Valor |
 |---|---|
 | `ANTHROPIC_API_KEY` | a chave do passo 1 |
-| `MODELO_PRATO` | opcional. Modelo do "Meu prato"; sem ele, usa `claude-haiku-5-5` |
+| `MODELO_PRATO` | opcional. Modelo do "Meu prato"; sem ele, usa `claude-sonnet-5-5` (mais barato: `claude-haiku-5-5`) |
 | `MODELO_CONVERSA` | opcional. Modelo da conversa; sem ele, usa `claude-opus-5-5` (ou o antigo `MODELO_IA`) |
 
 ## 4. Publicar a função
