@@ -463,7 +463,7 @@ async function analisarPrato(msg, temFoto) {
   if (!calculados.length) return `<p>Encontrei estes alimentos, mas <strong>ainda não consigo calcular as calorias</strong>:</p>
     <div class="estimativa"><table class="est-itens">${itens.map(i => `<tr><td>${i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`}</td><td>${esc(i.qtdTexto)}</td><td>${!i.alimento ? '<span class="falta">não está na TACO</span>' : i.semDado ? '<span class="falta">TACO sem valores para este alimento</span>' : '<span class="falta">medida sem peso cadastrado</span>'}</td></tr>`).join('')}</table></div>
     ${dicaGramas}`;
-  const todosEmGramas = itens.every(i => i.calc && /g|ml/.test(i.qtdTexto));
+  const todosEmGramas = itens.every(i => i.calc && /\d\s*(g|ml)\b/.test(i.qtdTexto));
   const conf = !faltam && todosEmGramas ? ['Boa', 'quantidades em gramas', '#1f5c41', 'var(--verde-light)']
              : !faltam ? ['Média', 'medidas caseiras convertidas', '#5E4F25', '#F3ECDA']
              : ['Parcial', `${faltam} ${faltam > 1 ? 'itens ficaram' : 'item ficou'} de fora do total`, '#842029', '#F8D7DA'];
@@ -473,7 +473,7 @@ async function analisarPrato(msg, temFoto) {
       : !i.alimento ? '<span class="falta">não está na TACO</span>'
       : i.semDado ? '<span class="falta">TACO sem valores para este alimento</span>'
       : '<span class="falta">medida sem peso cadastrado</span>';
-    return `<tr><td>${nome}</td><td>${esc(i.gramas != null && !/g|ml/.test(i.qtdTexto) ? `${i.qtdTexto} (${r(i.gramas)}g)` : i.qtdTexto)}</td><td>${valor}</td></tr>`;
+    return `<tr><td>${nome}</td><td>${esc(i.gramas != null && !/\d\s*(g|ml)\b/.test(i.qtdTexto) ? `${i.qtdTexto} (${r(i.gramas)}${i.unidade || 'g'})` : i.qtdTexto)}</td><td>${valor}</td></tr>`;
   };
   return `<p>Calculei pelos alimentos que você escreveu${temFoto ? ' (a leitura da foto entra quando a IA estiver conectada)' : ''}:</p>
     <div class="estimativa">

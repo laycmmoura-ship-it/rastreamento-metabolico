@@ -1,5 +1,5 @@
 {
- "instrucoes": "Preencha 'gramas' com o peso de UMA medida, conforme a referência que você usa (ex.: IBGE/POF ou a do seu software). Deixe null o que não quiser usar. 'taco_id' liga a medida ao alimento da TACO. 'padrao': true = usada quando a paciente não diz se é rasa ou cheia.",
+ "instrucoes": "Preencha 'gramas' com o peso de UMA medida, conforme a referência que você usa (ex.: IBGE/POF ou a do seu software). Deixe null o que não quiser usar. 'taco_id' liga a medida ao alimento da TACO. 'padrao': true = usada quando a paciente não diz se é rasa ou cheia. Entradas com 'nome_webdiet' vêm dos planos exportados do Web Diet (ferramentas/medidas_do_webdiet.py) e são ligadas à TACO pelo nome.",
  "medidas": [
   {
    "taco_id": 3,
@@ -277,6 +277,189 @@
    "medida": "unidade",
    "gramas": 50,
    "fonte": "Web Diet (print da Layane, 17/10/2026): ovo de galinha, 1 unidade = 50 g"
+  },
+  {
+   "nome_webdiet": "Aveia em flocos",
+   "medida": "colher de sopa cheia",
+   "gramas": 15.1,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 7
+  },
+  {
+   "nome_webdiet": "Banana prata",
+   "medida": "unidade grande",
+   "gramas": 100.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 182
+  },
+  {
+   "nome_webdiet": "Banana prata",
+   "medida": "unidade média",
+   "gramas": 65.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 182
+  },
+  {
+   "nome_webdiet": "Cacau em pó (Garoto)",
+   "medida": "colher de sopa",
+   "gramas": 10.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": null,
+   "sem_taco": true
+  },
+  {
+   "nome_webdiet": "Carne moída (acém) cozida sem óleo e sem sal",
+   "medida": "colher de sopa rasa",
+   "gramas": 15.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 326
+  },
+  {
+   "nome_webdiet": "Creme de ricota light (Vitalatte)",
+   "medida": "colher de sopa",
+   "gramas": 10.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": null,
+   "sem_taco": true
+  },
+  {
+   "nome_webdiet": "Doce de leite (Majestic)",
+   "medida": "colher de sopa",
+   "gramas": 20.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 501
+  },
+  {
+   "nome_webdiet": "Farelo de aveia oat bran (Quaker)",
+   "medida": "colher de sopa",
+   "gramas": 10.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": null,
+   "sem_taco": true
+  },
+  {
+   "nome_webdiet": "Farinha de aveia (Quaker)",
+   "medida": "colher de sopa cheia",
+   "gramas": 15.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": null,
+   "sem_taco": true
+  },
+  {
+   "nome_webdiet": "Farinha de milho para fubá crua",
+   "medida": "colher de sopa cheia",
+   "gramas": 20.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 43
+  },
+  {
+   "nome_webdiet": "Fermento químico em pó",
+   "medida": "colher de sopa rasa",
+   "gramas": 10.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 513
+  },
+  {
+   "nome_webdiet": "Goma de tapioca (Casas Pedro)",
+   "medida": "colher de sopa",
+   "gramas": 20.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": null,
+   "sem_taco": true
+  },
+  {
+   "nome_webdiet": "Iogurte natural desnatado",
+   "medida": "colher de sopa",
+   "gramas": 15.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 449
+  },
+  {
+   "nome_webdiet": "Leite de vaca UHT desnatado (Vigor)",
+   "medida": "copo americano duplo",
+   "gramas": 240.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 457
+  },
+  {
+   "nome_webdiet": "Leite de vaca desnatado fluído",
+   "medida": "copo americano duplo",
+   "gramas": 240.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 457
+  },
+  {
+   "nome_webdiet": "Maçã Argentina com casca",
+   "medida": "unidade média",
+   "gramas": 130.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 221
+  },
+  {
+   "nome_webdiet": "Mel",
+   "medida": "colher de sopa rasa",
+   "gramas": 15.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 507
+  },
+  {
+   "nome_webdiet": "Molho de tomate caseiro com sal",
+   "medida": "colher de sopa cheia",
+   "gramas": 20.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": null,
+   "sem_taco": true
+  },
+  {
+   "nome_webdiet": "Ovo de galinha branco cru",
+   "medida": "unidade média",
+   "gramas": 50.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 489
+  },
+  {
+   "nome_webdiet": "Ovo de galinha cozido com sal",
+   "medida": "unidade média",
+   "gramas": 50.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 488
+  },
+  {
+   "nome_webdiet": "Pão de forma",
+   "medida": "fatia média",
+   "gramas": 25.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": null,
+   "sem_taco": true
+  },
+  {
+   "nome_webdiet": "Queijo muçarela/mussarela",
+   "medida": "fatia média",
+   "gramas": 20.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 463
+  },
+  {
+   "nome_webdiet": "Requeijão light (Danúbio)",
+   "medida": "colher de sopa cheia",
+   "gramas": 30.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 468
+  },
+  {
+   "nome_webdiet": "Requeijão light (Danúbio)",
+   "medida": "colher de sopa rasa",
+   "gramas": 15.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": 468
+  },
+  {
+   "nome_webdiet": "Semente de chia",
+   "medida": "colher de sopa cheia",
+   "gramas": 25.0,
+   "fonte": "Web Diet – plano exportado em PDF (17/10/2026)",
+   "taco_id": null,
+   "sem_taco": true
   }
  ]
 }
