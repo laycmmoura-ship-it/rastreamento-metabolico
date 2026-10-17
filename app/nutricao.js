@@ -151,14 +151,15 @@ const Nutricao = (() => {
         if (porMedida) gramas = porMedida * qtd;
       }
       const qtdTexto = g ? porUnidade + g[0] : m ? (m[2] === 'unidade' && !/unidade/.test(m[0]) ? `${String(qtd).replace('.', ',')} ${qtd > 1 ? 'unidades' : 'unidade'}` : m[0] + (tam ? ' ' + tam : '')) : '';
-      return {texto: parte, alimento, gramas, qtdTexto, semMedida: !!(alimento && !g && gramas == null)};
+      return {texto: parte, alimento, gramas, qtdTexto, semDado: !!(alimento && alimento.kcal == null),
+              semMedida: !!(alimento && alimento.kcal != null && !g && gramas == null)};
     }).filter(i => i.alimento || i.qtdTexto || i.texto.length > 2);
   }
 
   function calcular(itens) {
     const tot = {kcal: 0, prot: 0, carbo: 0, gord: 0, fibra: 0};
     for (const i of itens) {
-      if (!i.alimento || i.gramas == null) continue;
+      if (!i.alimento || i.gramas == null || i.alimento.kcal == null) continue;
       i.calc = {};
       for (const k in tot) { i.calc[k] = i.alimento[k] * i.gramas / 100; tot[k] += i.calc[k]; }
     }

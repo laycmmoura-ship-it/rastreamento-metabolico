@@ -22,6 +22,10 @@ def gerar(pasta):
         n = nutr[r['id']]
         i = int(r['id'])
         # [id, nome, categoria, kcal, proteína, carboidrato, lipídeos, fibra] por 100 g
+        # Sem kcal no CSV = "*" no PDF (amostra em análise): fica null, nunca 0.
+        if not n['kcal'].strip():
+            alimentos.append([i, r['name'], int(r['categoryId']), None, None, None, None, None])
+            continue
         alimentos.append([i, r['name'], int(r['categoryId']), num(n['kcal']), num(n['protein']),
                           num(n['carbohydrates']), num(n['lipids']), FIBRA_DO_PDF.get(i, num(n['dietaryFiber']))])
     return {

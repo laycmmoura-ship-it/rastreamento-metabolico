@@ -461,7 +461,7 @@ async function analisarPrato(msg, temFoto) {
   const semPeso = itens.filter(i => i.semMedida);
   const dicaGramas = semPeso.length ? `<p class="mini">📏 <strong>${semPeso.map(i => esc(i.qtdTexto)).join(', ')}</strong>: essa medida ainda não tem peso cadastrado pela Layane. Se souber o peso, escreva em gramas (ex.: <em>“2 ovos de 50g”</em> ou <em>“30g de farinha”</em>).</p>` : '';
   if (!calculados.length) return `<p>Encontrei estes alimentos, mas <strong>ainda não consigo calcular as calorias</strong>:</p>
-    <div class="estimativa"><table class="est-itens">${itens.map(i => `<tr><td>${i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`}</td><td>${esc(i.qtdTexto)}</td><td>${i.alimento ? '<span class="falta">medida sem peso cadastrado</span>' : '<span class="falta">não está na TACO</span>'}</td></tr>`).join('')}</table></div>
+    <div class="estimativa"><table class="est-itens">${itens.map(i => `<tr><td>${i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`}</td><td>${esc(i.qtdTexto)}</td><td>${!i.alimento ? '<span class="falta">não está na TACO</span>' : i.semDado ? '<span class="falta">TACO sem valores para este alimento</span>' : '<span class="falta">medida sem peso cadastrado</span>'}</td></tr>`).join('')}</table></div>
     ${dicaGramas}`;
   const todosEmGramas = itens.every(i => i.calc && /g|ml/.test(i.qtdTexto));
   const conf = !faltam && todosEmGramas ? ['Boa', 'quantidades em gramas', '#1f5c41', 'var(--verde-light)']
@@ -471,6 +471,7 @@ async function analisarPrato(msg, temFoto) {
     const nome = i.alimento ? esc(i.alimento.nome) : `<i>${esc(i.texto)}</i>`;
     const valor = i.calc ? `~${r(i.calc.kcal)} kcal`
       : !i.alimento ? '<span class="falta">não está na TACO</span>'
+      : i.semDado ? '<span class="falta">TACO sem valores para este alimento</span>'
       : '<span class="falta">medida sem peso cadastrado</span>';
     return `<tr><td>${nome}</td><td>${esc(i.gramas != null && !/g|ml/.test(i.qtdTexto) ? `${i.qtdTexto} (${r(i.gramas)}g)` : i.qtdTexto)}</td><td>${valor}</td></tr>`;
   };
