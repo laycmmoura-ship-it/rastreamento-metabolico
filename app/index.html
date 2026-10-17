@@ -251,6 +251,7 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
   <div class="info">Em caso de sintomas fortes ou dúvidas sobre medicamentos, fale com a Layane ou com seu médico.</div>
 </nav>
 
+<script src="config.js"></script>
 <script src="nutricao.js"></script>
 <script>
 // ====== Configuração ======
@@ -447,14 +448,13 @@ function gerarDemo(modo, msg, foto) {
       <li>ℹ️ Porção: compare a porção do rótulo com o quanto você realmente consome.</li></ul>
       <p>Na versão final, eu leio os números da sua foto e comparo com o seu plano.</p>`;
   }
-  if (foto || ehRefeicao(msg)) return analisarPrato(msg, !!foto);
+  if (foto || ehRefeicao(msg) || (iaLigada() && !ehPergunta(msg))) return analisarPrato(msg, foto);
   if (/como descrev/i.test(msg)) return `<p>É bem simples! Escreva <strong>a refeição</strong> e <strong>cada alimento com a quantidade</strong> em medida caseira:</p>
       <ul><li>🍚 colheres de sopa (cheias ou rasas) de arroz, macarrão, purê</li>
       <li>🫘 conchas de feijão</li><li>🍗 filé, pedaço ou unidades da carne (pequeno, médio, grande)</li>
       <li>🥗 salada: pode dizer “à vontade”</li><li>🫒 se usou azeite, molho ou queijo por cima</li></ul>
       <p>Fotografe o prato <strong>de cima</strong>, com o talher ao lado. Ajuda a ter noção do tamanho.</p>`;
-  return `<p>Boa pergunta! No protótipo eu ainda não tenho as respostas reais. Na versão final, vou responder com base nas orientações da Layane e no seu plano.</p>
-    <p>Se for algo sobre medicamentos, exames ou sintomas, sempre fale com a Layane ou com seu médico. 💚</p>`;
+  return respostaDuvida();
 }
 
 // Cálculo real pela TACO quando a paciente escreve os alimentos; sem descrição, mostra o exemplo
@@ -467,28 +467,69 @@ let ultimoPrato = null;
 const SOMAR = /^\s*(e\s+)?(tbm|tb|tamb[eé]m|mais|ainda|depois)\b/i;
 
 // A mensagem descreve o que a paciente comeu? (perguntas como "posso trocar arroz por batata?" não)
+const ehPergunta = msg => !msg || /\?\s*$/.test(msg) || /^\s*(posso|pode|qual|quais|como|quanto|quando|por ?que|o que|é bom|e se|devo|tem problema)\b/i.test(msg);
 function ehRefeicao(msg) {
-  if (!msg || /\?\s*$/.test(msg) || /^\s*(posso|pode|qual|quais|como|quanto|quando|por ?que|o que|é bom|e se|devo|tem problema)\b/i.test(msg)) return false;
+  if (ehPergunta(msg)) return false;
   if (/col\.|colher|concha|fil[eé]|fatia|peda[cç]o|bife|unidade|x[ií]cara|copo|\d+\s*(g|ml)\b/i.test(msg)) return true;
   if (/\b(comi|almocei|jantei|lanchei|tomei|bebi)\b/i.test(msg) || SOMAR.test(msg)) return true;
   return false;
 }
 
-async function analisarPrato(msg, temFoto) {
+function respostaDuvida() {
+  return `<p>Boa pergunta! No protótipo eu ainda não tenho as respostas reais. Na versão final, vou responder com base nas orientações da Layane e no seu plano.</p>
+    <p>Se for algo sobre medicamentos, exames ou sintomas, sempre fale com a Layane ou com seu médico. 💚</p>`;
+}
+
+// ====== IA (Supabase Edge Function "interpretar-prato") ======
+const iaLigada = () => !!(window.LAY_CONFIG && LAY_CONFIG.iaUrl);
+
+// A IA só devolve a lista (alimento, quantidade, medida); a conta é feita aqui pela TACO e pelas medidas.
+async function interpretarComIA(msg, foto) {
+  const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 20000);
+  try {
+    const r = await fetch(LAY_CONFIG.iaUrl, {
+      method: 'POST', signal: ctrl.signal,
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${LAY_CONFIG.supabaseAnonKey}`, 'apikey': LAY_CONFIG.supabaseAnonKey},
+      body: JSON.stringify({texto: msg || '', imagem: foto || undefined})
+    });
+    if (!r.ok) throw new Error('IA ' + r.status);
+    return await r.json();
+  } finally { clearTimeout(t); }
+}
+
+// Transforma cada item da IA numa frase curta que o leitor de medidas já entende
+function fraseDoItem(i) {
+  const n = i.quantidade == null ? '' : i.quantidade === 0.5 ? 'meia' : String(i.quantidade).replace('.', ',');
+  const med = (i.medida || '').trim();
+  const comida = [i.alimento, i.preparo].filter(Boolean).join(' ');
+  if (/^(g|gramas?|ml)$/i.test(med) && n) return `${n}${med.toLowerCase().startsWith('m') ? 'ml' : 'g'} de ${comida}`;
+  return [n, med, i.tamanho, med ? 'de' : '', comida].filter(Boolean).join(' ');
+}
+
+async function analisarPrato(msg, foto) {
+  const temFoto = !!foto;
   try { await Nutricao.carregar(); } catch { return demoPrato(msg, temFoto); }
-  const novos = msg ? Nutricao.lerPrato(msg) : [];
+  let novos = null, viaIA = false;
+  if (iaLigada()) {
+    try {
+      const ia = await interpretarComIA(msg, foto);
+      if (!ia.e_refeicao && !temFoto && !SOMAR.test(msg || '')) return respostaDuvida();
+      if (ia.itens?.length) { novos = Nutricao.lerPrato(ia.itens.map(fraseDoItem).join(', ')); viaIA = true; }
+    } catch { /* sem internet ou IA fora: usa o leitor local */ }
+  }
+  if (!novos) novos = msg ? Nutricao.lerPrato(msg) : [];
   if (!novos.length) return demoPrato(msg, temFoto);
   // "tbm comi um pedaço de bife": soma ao prato anterior desta conversa
   const anterior = SOMAR.test(msg) && ultimoPrato && pratos[ultimoPrato];
   const itens = anterior ? [...anterior.itens.map(i => ({...i})), ...novos] : novos;
   const id = proxPrato++;
-  pratos[id] = {itens, temFoto, somado: !!anterior};
+  pratos[id] = {itens, temFoto, somado: !!anterior, viaIA};
   ultimoPrato = id;
   return `<div class="prato-res" data-prato="${id}">${desenharPrato(id)}</div>`;
 }
 
 function desenharPrato(id) {
-  const {itens, temFoto, somado} = pratos[id];
+  const {itens, temFoto, somado, viaIA} = pratos[id];
   const tot = Nutricao.calcular(itens);
   const r = n => Math.round(n);
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
@@ -506,7 +547,7 @@ function desenharPrato(id) {
     return `<tr${perguntas(i).length ? ' class="duvida"' : ''}><td>${nome}</td><td>${qtdMostrada(i)}</td><td>${valor}</td></tr>`;
   };
   const blocos = itens.map((i, k) => perguntaHtml(id, i, k)).join('');
-  return `<p>${somado ? 'Somei ao que você já tinha me contado. Refeição completa' : calculados.length ? 'Calculei pelos alimentos que você escreveu' : 'Encontrei estes alimentos'}${temFoto ? ' (a leitura da foto entra quando a IA estiver conectada)' : ''}:</p>
+  return `<p>${somado ? 'Somei ao que você já tinha me contado. Refeição completa' : calculados.length ? 'Calculei pelos alimentos que você escreveu' : 'Encontrei estes alimentos'}${temFoto && !viaIA ? ' (a leitura da foto entra quando a IA estiver conectada)' : viaIA && temFoto ? ' e pela foto' : ''}:</p>
     <div class="estimativa">
       ${calculados.length ? `<div class="est-topo"><span>${faltam ? 'Total parcial' : 'Total estimado'}</span><b>${r(tot.kcal)} kcal</b></div>
       <div class="est-macros"><div><b>${r(tot.prot)}g</b>proteína</div><div><b>${r(tot.carbo)}g</b>carbo</div><div><b>${r(tot.gord)}g</b>gordura</div></div>` : ''}
