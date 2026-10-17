@@ -26,7 +26,11 @@ const Nutricao = (() => {
   const PROCESSADO = /\b(calda|doce|industrializad|enlatad|frit|instantane|polpa|suco|geleia|sorvete|cristalizad|desidratad)/;
   let temVersaoPronta = new Set();   // nomes principais que têm versão cozida/grelhada (ex.: batata)
 
-  const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+  const CORRECOES = {bije: 'bife', bifi: 'bife', fejao: 'feijao', fijao: 'feijao', arros: 'arroz', aroz: 'arroz', frago: 'frango',
+    franco: 'frango', patinio: 'patinho', mandiocca: 'mandioca', macarao: 'macarrao', iorgute: 'iogurte', iogute: 'iogurte'};
+  const corrige = s => s.split(' ').map(w => CORRECOES[w] || w).join(' ');
+  const norm = s => corrige(normBase(s));
+  const normBase = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
     .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
   // Palavras da frase que não fazem parte do nome do alimento ("tem dois ovos", "comi uns...")
   const PALAVRAS_VAZIAS = new Set(['de', 'da', 'do', 'das', 'dos', 'com', 'e', 'a', 'o', 'as', 'os', 'um', 'uma', 'no', 'na', 'em',
@@ -69,7 +73,9 @@ const Nutricao = (() => {
     // 1) nome comum conhecido, só quando o texto não traz outro detalhe (ex.: "batata frita" não é "batata")
     const sk = k => k.split(' ').filter(w => !PALAVRAS_VAZIAS.has(w)).map(sing).join(' ');
     const chave = Object.keys(PADRAO).filter(k => (' ' + qs + ' ').includes(' ' + sk(k) + ' ')).sort((a, b) => b.length - a.length)[0];
-    if (chave && termos.every(t => sk(chave).split(' ').includes(t) || GENERICAS.has(t)))
+    // palavras que já estão no nome do alimento padrão também contam ("feijão cozido" = Feijão, carioca, cozido)
+    const alvoPadrao = chave && PADRAO[chave] != null ? (taco.find(a => a.id === PADRAO[chave])?.chave || '').split(' ').map(sing) : [];
+    if (chave && termos.every(t => sk(chave).split(' ').includes(t) || GENERICAS.has(t) || alvoPadrao.includes(t)))
       return PADRAO[chave] == null ? null : taco.find(a => a.id === PADRAO[chave]);
     // 2) pontuação por palavras em comum (aceita plural/feminino: cozido ~ cozida)
     // Iguais ignorando masculino/feminino (cozido = cozida); "cacau" não bate com "cação"
@@ -123,6 +129,12 @@ const Nutricao = (() => {
       const alvo = semPreparo(alimento.chave);
       doAlimento = medidas.filter(x => daMedida(x) && semPreparo(taco.find(a => a.id === x.taco_id)?.chave || '') === alvo);
     }
+    if (!doAlimento.length && /^pedaco/.test(mb)) {
+      for (const alt of ['bife', 'file']) {
+        doAlimento = medidas.filter(x => x.taco_id === alimento.id && x.gramas && base(x.medida).startsWith(alt));
+        if (doAlimento.length) break;
+      }
+    }
     if (!doAlimento.length) return null;
     if (tamanho) {
       const t = sing(tamanho);
@@ -157,7 +169,10 @@ const Nutricao = (() => {
   function lerPrato(texto) {
     const t = texto.replace(/½/g, ' meia ').replace(/^\s*(caf[eé] da manh[aã]|almo[cç]o|jantar|lanche|ceia)\s*:?/i, '');
     const QTD = '(?=\\d|um |uma |dois |duas |tr[eê]s |quatro |cinco |meia |meio )';
-    const partes = t.split(new RegExp(`\\s+e\\s+|,|;|\\+|\\n|\\s+(?:com|mais)\\s+${QTD}`, 'i')).map(norm).filter(Boolean)
+    const MED = '(?:col|colher|concha|fil[eé]|bife|fatia|unidade|peda[cç]o|x[ií]cara|copo|escumadeira|folha|dosador|scoop|por[cç])';
+    const NOVA_QTD = `(?<!\\bde)\\s+(?=(?:\\d+(?:[.,]\\d+)?|um|uma|dois|duas|tr[eê]s|quatro|cinco|meia|meio)\\s+${MED})`;
+    const NOVO_NUM = `(?<!\\bde)\\s+(?=\\d+(?:[.,]\\d+)?\\s+(?!g\\b|gr\\b|gramas?\\b|ml\\b)[a-zà-ú])`;  // "2 ovos 1 banana"
+    const partes = t.split(new RegExp(`\\s+e\\s+|,|;|\\+|\\n|\\s+(?:com|mais)\\s+${QTD}|${NOVA_QTD}|${NOVO_NUM}`, 'i')).map(norm).filter(Boolean)
       .flatMap(separarCom);
     return partes.map(parte => {
       // tira palavras de conversa do começo ("tem dois ovos" -> "dois ovos")

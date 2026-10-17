@@ -1588,6 +1588,294 @@
    "gramas": 355,
    "livro": "pinheiro",
    "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Batata-doce cozida, p. 9"
+  },
+  {
+   "taco_id": 335,
+   "alimento": "Carne, bovina, capa de contra-filé, com gordura, grelhada",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 335,
+   "alimento": "Carne, bovina, capa de contra-filé, com gordura, grelhada",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 335,
+   "alimento": "Carne, bovina, capa de contra-filé, com gordura, grelhada",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 337,
+   "alimento": "Carne, bovina, capa de contra-filé, sem gordura, grelhada",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 337,
+   "alimento": "Carne, bovina, capa de contra-filé, sem gordura, grelhada",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 337,
+   "alimento": "Carne, bovina, capa de contra-filé, sem gordura, grelhada",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 342,
+   "alimento": "Carne, bovina, contra-filé de costela, grelhado",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 342,
+   "alimento": "Carne, bovina, contra-filé de costela, grelhado",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 342,
+   "alimento": "Carne, bovina, contra-filé de costela, grelhado",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 344,
+   "alimento": "Carne, bovina, contra-filé, com gordura, grelhado",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 344,
+   "alimento": "Carne, bovina, contra-filé, com gordura, grelhado",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 344,
+   "alimento": "Carne, bovina, contra-filé, com gordura, grelhado",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 346,
+   "alimento": "Carne, bovina, contra-filé, sem gordura, grelhado",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 346,
+   "alimento": "Carne, bovina, contra-filé, sem gordura, grelhado",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 346,
+   "alimento": "Carne, bovina, contra-filé, sem gordura, grelhado",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 356,
+   "alimento": "Carne, bovina, fígado, grelhado",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 356,
+   "alimento": "Carne, bovina, fígado, grelhado",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 356,
+   "alimento": "Carne, bovina, fígado, grelhado",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 358,
+   "alimento": "Carne, bovina, filé mingnon, sem gordura, grelhado",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 358,
+   "alimento": "Carne, bovina, filé mingnon, sem gordura, grelhado",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 358,
+   "alimento": "Carne, bovina, filé mingnon, sem gordura, grelhado",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 368,
+   "alimento": "Carne, bovina, maminha, grelhada",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 368,
+   "alimento": "Carne, bovina, maminha, grelhada",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 368,
+   "alimento": "Carne, bovina, maminha, grelhada",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 370,
+   "alimento": "Carne, bovina, miolo de alcatra, sem gordura, grelhado",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 370,
+   "alimento": "Carne, bovina, miolo de alcatra, sem gordura, grelhado",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 370,
+   "alimento": "Carne, bovina, miolo de alcatra, sem gordura, grelhado",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 377,
+   "alimento": "Carne, bovina, patinho, sem gordura, grelhado",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 377,
+   "alimento": "Carne, bovina, patinho, sem gordura, grelhado",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 377,
+   "alimento": "Carne, bovina, patinho, sem gordura, grelhado",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 381,
+   "alimento": "Carne, bovina, picanha, com gordura, grelhada",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 381,
+   "alimento": "Carne, bovina, picanha, com gordura, grelhada",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 381,
+   "alimento": "Carne, bovina, picanha, com gordura, grelhada",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 383,
+   "alimento": "Carne, bovina, picanha, sem gordura, grelhada",
+   "medida": "bife grande",
+   "gramas": 150,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 383,
+   "alimento": "Carne, bovina, picanha, sem gordura, grelhada",
+   "medida": "bife médio",
+   "gramas": 100,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
+  },
+  {
+   "taco_id": 383,
+   "alimento": "Carne, bovina, picanha, sem gordura, grelhada",
+   "medida": "bife pequeno",
+   "gramas": 80,
+   "livro": "pinheiro",
+   "fonte": "Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo Alimentar em Medidas Caseiras. 4ª ed. São Paulo: Atheneu – Bife, p. 11"
   }
  ],
  "fontes": {
