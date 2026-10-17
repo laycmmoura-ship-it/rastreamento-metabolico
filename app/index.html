@@ -272,10 +272,10 @@ const MODOS = {
   },
   mercado: {
     nome: 'Lay no Mercado', ic: '🛒', cor: 'var(--merc)', bg: 'var(--merc-bg)',
-    desc: 'Analiso rótulos de iogurtes, barrinhas, pães e outros produtos.',
+    desc: 'Analiso rótulos de whey, iogurtes, barrinhas, pães e outros produtos.',
     abertura: 'Bora decifrar esse rótulo! 🛒 Tira uma foto da tabela nutricional e da lista de ingredientes do produto.',
     placeholder: 'Ex.: essa barrinha é boa para o lanche?',
-    sugestoes: ['O que olhar num iogurte?', 'Como escolher um pão integral?']
+    sugestoes: ['Como escolher um whey?', 'O que olhar num iogurte?']
   },
   duvidas: {
     nome: 'Meu prato e dúvidas', ic: '📸', cor: 'var(--duv)', bg: 'var(--duv-bg)',
@@ -410,7 +410,9 @@ const emergencia = () => `<p>Fico preocupada com o que você me contou, e quero 
 
 async function responder(modo, msg, foto) {
   if (msg && RISCO.test(msg)) return emergencia();
-  if (msg && !foto && CLINICO.test(msg) && !(modo === 'duvidas' && ehRefeicao(msg))) return encaminhar();
+  // whey: a análise do rótulo é liberada ("esse suplemento whey é bom?"); dose e uso continuam com a Layane, pela IA
+  const semWhey = msg && /\bwhey\b/i.test(msg) ? msg.replace(/\bsuplement\w*/gi, '') : msg;
+  if (msg && !foto && CLINICO.test(semWhey) && !(modo === 'duvidas' && ehRefeicao(msg))) return encaminhar();
   if (!iaLigada()) return respostaDemo(modo, msg, foto);
   if (modo === 'duvidas') return gerarDemo(modo, msg, foto);  // prato pela TACO; dúvidas caem em conversarComIA
   return conversarComIA(modo, msg, foto);
