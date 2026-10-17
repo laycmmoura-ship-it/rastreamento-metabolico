@@ -7,14 +7,17 @@
 //
 // Segredos (Supabase → Project Settings → Edge Functions → Secrets):
 //   ANTHROPIC_API_KEY  chave da API da Anthropic (nunca vai para o app nem para o GitHub)
-//   MODELO_IA          opcional; padrão claude-opus-5-5. Para testar o mais barato: claude-haiku-5-5
+//   MODELO_PRATO       opcional; modelo do "Meu prato" (só lista alimentos). Padrão claude-haiku-5-5 (o mais barato)
+//   MODELO_CONVERSA    opcional; modelo da conversa (Chef, Restaurante, Mercado, Dúvidas). Padrão claude-opus-5-5
+//   MODELO_IA          nome antigo de MODELO_CONVERSA (ainda vale)
 //   ORIGENS            opcional; sites que podem chamar a função, separados por vírgula
 
 import Anthropic from "npm:@anthropic-ai/sdk";
 import { z } from "npm:zod";
 import { zodOutputFormat } from "npm:@anthropic-ai/sdk/helpers/zod";
 
-const MODELO = Deno.env.get("MODELO_IA") ?? "claude-opus-5-5";
+const MODELO_PRATO = Deno.env.get("MODELO_PRATO") ?? "claude-haiku-5-5";
+const MODELO_CONVERSA = Deno.env.get("MODELO_CONVERSA") ?? Deno.env.get("MODELO_IA") ?? "claude-opus-5-5";
 const ORIGENS = (Deno.env.get("ORIGENS") ??
   "https://laycmmoura-ship-it.github.io,http://localhost:8000,http://localhost:8766").split(",").map((s) => s.trim());
 
@@ -125,7 +128,7 @@ Deno.serve(async (req) => {
       }
       if (anteriores.length && anteriores[anteriores.length - 1].role === "user") anteriores.pop();
       const r = await client.messages.parse({
-        model: MODELO,
+        model: MODELO_CONVERSA,
         max_tokens: 4000,
         system: VOZ + "\n\n" + MODOS[modo],
         output_config: { effort: "low", format: zodOutputFormat(Conversa) },
@@ -137,7 +140,7 @@ Deno.serve(async (req) => {
     }
 
     const r = await client.messages.parse({
-      model: MODELO,
+      model: MODELO_PRATO,
       max_tokens: 4000,
       system: INSTRUCOES,
       output_config: { effort: "low", format: zodOutputFormat(Saida) },

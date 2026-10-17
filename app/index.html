@@ -495,6 +495,9 @@ function gerarDemo(modo, msg, foto) {
       <p>Na versão final, eu leio os números da sua foto e comparo com o seu plano.</p>`;
   }
   // Com a IA ligada, ela decide se é refeição (e_refeicao); só perguntas com "?" vão direto para a resposta de dúvida
+  // Com a IA ligada: pergunta clara vai direto pra conversa (uma chamada só); o resto passa pelo prato,
+  // e a IA do prato diz se era refeição (e_refeicao)
+  if (iaLigada() && !foto && ehPergunta(msg) && !ehRefeicao(msg) && !/como descrev/i.test(msg)) return conversarComIA('duvidas', msg, null);
   if (foto || ehRefeicao(msg) || (iaLigada() && !/\?\s*$/.test(msg))) return analisarPrato(msg, foto);
   if (/como descrev/i.test(msg)) return `<p>É bem simples! Escreva <strong>a refeição</strong> e <strong>cada alimento com a quantidade</strong> em medida caseira:</p>
       <ul><li>🍚 colheres de sopa (cheias ou rasas) de arroz, macarrão, purê</li>
@@ -559,8 +562,13 @@ function fraseDoItem(i) {
 async function analisarPrato(msg, foto) {
   const temFoto = !!foto;
   try { await Nutricao.carregar(); } catch { return demoPrato(msg, temFoto); }
-  let novos = null, viaIA = false, erroIA = null;
-  if (iaLigada()) {
+  let novos = null, viaIA = false, erroIA = null, semIA = false;
+  // Frase simples que o leitor local entendeu por inteiro (alimento certo e gramas de cada item): não gasta IA
+  if (!foto && ehRefeicao(msg)) {
+    const local = Nutricao.lerPrato(msg);
+    if (local.length && local.every(i => i.alimento && i.exato && i.gramas != null && !i.foraDaTaco && !i.semDado)) { novos = local; semIA = true; }
+  }
+  if (iaLigada() && !novos) {
     try {
       const ia = await interpretarComIA(msg, foto);
       if (!ia.e_refeicao && !temFoto && !SOMAR.test(msg || '')) return conversarComIA('duvidas', msg, null);
@@ -573,13 +581,13 @@ async function analisarPrato(msg, foto) {
   const anterior = SOMAR.test(msg) && ultimoPrato && pratos[ultimoPrato];
   const itens = anterior ? [...anterior.itens.map(i => ({...i})), ...novos] : novos;
   const id = proxPrato++;
-  pratos[id] = {itens, temFoto, soFoto: temFoto && !msg, somado: !!anterior, viaIA, erroIA};
+  pratos[id] = {itens, temFoto, soFoto: temFoto && !msg, somado: !!anterior, viaIA, erroIA, semIA};
   ultimoPrato = id;
   return `<div class="prato-res" data-prato="${id}">${desenharPrato(id)}</div>`;
 }
 
 function desenharPrato(id) {
-  const {itens, temFoto, soFoto, somado, viaIA, erroIA} = pratos[id];
+  const {itens, temFoto, soFoto, somado, viaIA, erroIA, semIA} = pratos[id];
   const tot = Nutricao.calcular(itens);
   const r = n => Math.round(n);
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
@@ -611,7 +619,7 @@ function desenharPrato(id) {
       <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
     </div>` : ''}
     <p class="mini">Valores da ${Nutricao.fonte}${itens.some(i => i.alimento?.id >= 9000 && i.alimento.id < 100000) ? '; itens que a TACO não tem, da tabela de Pinheiro et al. (4ª ed.)' : ''}${itens.some(i => i.alimento?.prep) ? '; preparações cadastradas pela nutricionista' : ''}. Medidas caseiras do Web Diet e de Pinheiro et al. Óleo do preparo e molhos só entram se você escrever.</p>
-    ${iaLigada() ? `<p class="mini">${viaIA ? '✨ Alimentos identificados pela Lay IA.' : `Leitor local${erroIA ? ` (IA indisponível: ${esc(erroIA)})` : ''}.`}</p>` : ''}`;
+    ${iaLigada() ? `<p class="mini">${viaIA ? '✨ Alimentos identificados pela Lay IA.' : semIA ? '✓ Entendi direto pela tabela, sem precisar da IA.' : `Leitor local${erroIA ? ` (IA indisponível: ${esc(erroIA)})` : ''}.`}</p>` : ''}`;
 }
 
 // O que perguntar sobre um item: qual alimento (não achou / não tem certeza) ou qual medida (sem peso)

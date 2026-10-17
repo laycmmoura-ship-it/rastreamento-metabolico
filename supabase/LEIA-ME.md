@@ -24,7 +24,8 @@ Em **Edge Functions → Secrets** (ou Project Settings → Edge Functions), adic
 | Nome | Valor |
 |---|---|
 | `ANTHROPIC_API_KEY` | a chave do passo 1 |
-| `MODELO_IA` | opcional. Sem ele, usa `claude-opus-5-5`. Para testar o mais barato: `claude-haiku-5-5` |
+| `MODELO_PRATO` | opcional. Modelo do "Meu prato"; sem ele, usa `claude-haiku-5-5` |
+| `MODELO_CONVERSA` | opcional. Modelo da conversa; sem ele, usa `claude-opus-5-5` (ou o antigo `MODELO_IA`) |
 
 ## 4. Publicar a função
 Pelo painel: **Edge Functions → Deploy a new function**, nome `interpretar-prato`, e cole o conteúdo de
