@@ -69,6 +69,7 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
 .chip-modo{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;margin:0 auto 14px;width:fit-content}
 .centro{display:flex;justify-content:center}
 
+.btn-wa{display:inline-block;margin-top:10px;background:#25D366;color:#fff;font-weight:600;font-size:14px;padding:9px 14px;border-radius:20px;text-decoration:none}
 .ranking{margin-top:8px;display:flex;flex-direction:column;gap:8px}
 .rank-item{display:flex;gap:10px;background:var(--verde-bg);border-radius:12px;padding:10px}
 .rank-pos{width:26px;height:26px;border-radius:50%;background:var(--verde);color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -254,16 +255,11 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
 <script src="config.js"></script>
 <script src="nutricao.js"></script>
 <script>
-// ====== Configuração ======
-// Quando a IA estiver conectada, troque MODO_DEMO para false e aponte API_URL para o servidor.
-const MODO_DEMO = true;
-const API_URL = '/api/chat';
-
 const MODOS = {
   chef: {
     nome: 'Chef Lay', ic: '🍳', cor: 'var(--chef)', bg: 'var(--chef-bg)',
     desc: 'Receitas práticas com o que você tem em casa, sem sair do plano.',
-    abertura: 'Vamos cozinhar! 🍳 Me conta quais ingredientes você tem aí (pode separar por vírgula) e se é para café, almoço, lanche ou jantar.',
+    abertura: 'Vamos cozinhar! 🍳 Me conta quais ingredientes você tem aí (pode separar por vírgula) e se é pra café, almoço, lanche ou jantar.',
     placeholder: 'Ex.: ovo, abobrinha, queijo, tomate',
     sugestoes: ['Tenho frango, arroz e brócolis', 'Lanche rápido com iogurte', 'Jantar leve com ovos']
   },
@@ -276,10 +272,10 @@ const MODOS = {
   },
   mercado: {
     nome: 'Lay no Mercado', ic: '🛒', cor: 'var(--merc)', bg: 'var(--merc-bg)',
-    desc: 'Analiso rótulos de whey, barrinhas, iogurtes e outros produtos.',
+    desc: 'Analiso rótulos de iogurtes, barrinhas, pães e outros produtos.',
     abertura: 'Bora decifrar esse rótulo! 🛒 Tira uma foto da tabela nutricional e da lista de ingredientes do produto.',
     placeholder: 'Ex.: essa barrinha é boa para o lanche?',
-    sugestoes: ['Como escolher um whey?', 'O que olhar num iogurte?']
+    sugestoes: ['O que olhar num iogurte?', 'Como escolher um pão integral?']
   },
   duvidas: {
     nome: 'Meu prato e dúvidas', ic: '📸', cor: 'var(--duv)', bg: 'var(--duv-bg)',
@@ -380,7 +376,7 @@ async function enviar(textoForcado) {
 
   const pensando = addMsg('ia', '<div class="digitando"><i></i><i></i><i></i></div>');
   try {
-    const resposta = MODO_DEMO ? await respostaDemo(modoAtual, msg, foto) : await respostaAPI(modoAtual, historico);
+    const resposta = await responder(modoAtual, msg, foto);
     pensando.remove();
     addMsg('ia', resposta);
     historico.push({papel:'ia', texto: resposta});
@@ -398,14 +394,60 @@ function adivinharModo(msg) {
   return 'duvidas';
 }
 
-// Conexão real (etapa 2): o servidor guarda a chave da IA e as orientações da Layane.
-async function respostaAPI(modo, hist) {
-  const r = await fetch(API_URL, {
-    method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({modo, mensagens: hist})
-  });
-  if (!r.ok) throw new Error('erro ' + r.status);
-  return (await r.json()).html;
+// Medicamentos, suplementos, sinais e sintomas: a Lay IA não responde, encaminha para a Layane
+// (a IA também tem essa regra; aqui é a primeira barreira, sem gastar chamada)
+const RISCO = /\b(me matar|suic[ií]d\w*|n[aã]o quero (mais )?viver|me machucar|tirar (a )?minha vida)\b/i;
+const CLINICO = /\b(rem[eé]dios?|medica[cç](ao|ão|oes|ões)|medicamentos?|suplement\w*|creatina|col[aá]geno|ozempic|mounjaro|monjaro|wegovy|saxenda|tirzepatida|semaglutida|liraglutida|canetas?|anticoncepciona(l|is)|sintomas?|tontura|enjo[oô]|n[aá]useas?|v[oô]mit\w*|diarr[eé]ia|sangramento|febre|desmai\w*|palpita[cç]\w*|falta de ar|dor(es)? (de|no|na|nos|nas)\b)/i;
+
+function botaoWhatsApp() {
+  const n = (window.LAY_CONFIG?.whatsapp || '').replace(/\D/g, '');
+  return n ? `<a class="btn-wa" href="https://wa.me/${n}" target="_blank" rel="noopener">💬 Falar com a Layane no WhatsApp</a>` : '';
+}
+const encaminhar = () => `<p>Essa pergunta precisa de um olhar individual, e por aqui eu não consigo te responder com segurança.</p>
+  <p>Fala com a Layane no WhatsApp que ela te orienta direitinho 😊</p>${botaoWhatsApp()}`;
+const emergencia = () => `<p>Fico preocupada com o que você me contou, e quero que você tenha apoio agora.</p>
+  <p>Liga pro <strong>CVV, 188</strong> (gratuito, 24h) ou, se for urgente, pro <strong>SAMU, 192</strong>. E fala com a Layane também 💚</p>${botaoWhatsApp()}`;
+
+async function responder(modo, msg, foto) {
+  if (msg && RISCO.test(msg)) return emergencia();
+  if (msg && !foto && CLINICO.test(msg) && !(modo === 'duvidas' && ehRefeicao(msg))) return encaminhar();
+  if (!iaLigada()) return respostaDemo(modo, msg, foto);
+  if (modo === 'duvidas') return gerarDemo(modo, msg, foto);  // prato pela TACO; dúvidas caem em conversarComIA
+  return conversarComIA(modo, msg, foto);
+}
+
+// Texto simples da IA → HTML seguro (**negrito**, listas com "- ", parágrafos)
+function formatar(t) {
+  const neg = s => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  return esc(t.trim()).split(/\n{2,}/).map(bloco => {
+    // linhas "- item" seguidas viram lista; as outras, parágrafo
+    const grupos = [];
+    for (const l of bloco.split('\n')) {
+      const item = /^\s*[-•]\s+/.test(l), ult = grupos[grupos.length - 1];
+      if (ult && ult.lista === item) ult.linhas.push(l); else grupos.push({lista: item, linhas: [l]});
+    }
+    return grupos.map(g => g.lista
+      ? `<ul>${g.linhas.map(l => `<li>${neg(l.replace(/^\s*[-•]\s+/, ''))}</li>`).join('')}</ul>`
+      : `<p>${g.linhas.map(neg).join('<br>')}</p>`).join('');
+  }).join('');
+}
+const textoDe = html => { const d = document.createElement('div'); d.innerHTML = html; return d.innerText.trim(); };
+
+async function conversarComIA(modo, msg, foto) {
+  const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 45000);
+  try {
+    const mensagens = historico.slice(0, -1).slice(-8).map(h => ({papel: h.papel, texto: h.papel === 'ia' ? textoDe(h.texto) : (h.texto || '')}));
+    const r = await fetch(LAY_CONFIG.iaUrl, {
+      method: 'POST', signal: ctrl.signal,
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${LAY_CONFIG.supabaseAnonKey}`, 'apikey': LAY_CONFIG.supabaseAnonKey},
+      body: JSON.stringify({modo, texto: msg || '', imagem: foto || undefined, mensagens})
+    });
+    if (!r.ok) throw new Error('IA ' + r.status);
+    const ia = await r.json();
+    return formatar(ia.texto || '') + (ia.encaminhar_layane ? botaoWhatsApp() : '');
+  } catch {
+    return '<p>Não consegui responder agora 😕 Tenta de novo daqui a pouquinho. Se for urgente, fala com a Layane.</p>' + botaoWhatsApp();
+  } finally { clearTimeout(t); }
 }
 
 // ====== Respostas de exemplo (somente protótipo) ======
@@ -455,7 +497,7 @@ function gerarDemo(modo, msg, foto) {
       <li>🫘 conchas de feijão</li><li>🍗 filé, pedaço ou unidades da carne (pequeno, médio, grande)</li>
       <li>🥗 salada: pode dizer “à vontade”</li><li>🫒 se usou azeite, molho ou queijo por cima</li></ul>
       <p>Fotografe o prato <strong>de cima</strong>, com o talher ao lado. Ajuda a ter noção do tamanho.</p>`;
-  return respostaDuvida();
+  return iaLigada() ? conversarComIA('duvidas', msg, foto) : respostaDuvida();
 }
 
 // Cálculo real pela TACO quando a paciente escreve os alimentos; sem descrição, mostra o exemplo
@@ -485,7 +527,7 @@ function respostaDuvida() {
 
 // ====== IA (Supabase Edge Function "interpretar-prato") ======
 const iaLigada = () => !!(window.LAY_CONFIG && LAY_CONFIG.iaUrl);
-if (iaLigada()) document.getElementById('avisoDemo').textContent = 'Versão de teste: a Lay IA já lê o seu prato; as outras respostas ainda são exemplos.';
+if (iaLigada()) document.getElementById('avisoDemo').textContent = 'Versão de teste: a Lay IA pode errar. Na dúvida, fale com a Layane.';
 
 // A IA só devolve a lista (alimento, quantidade, medida); a conta é feita aqui pela TACO e pelas medidas.
 async function interpretarComIA(msg, foto) {
@@ -517,7 +559,7 @@ async function analisarPrato(msg, foto) {
   if (iaLigada()) {
     try {
       const ia = await interpretarComIA(msg, foto);
-      if (!ia.e_refeicao && !temFoto && !SOMAR.test(msg || '')) return respostaDuvida();
+      if (!ia.e_refeicao && !temFoto && !SOMAR.test(msg || '')) return conversarComIA('duvidas', msg, null);
       if (ia.itens?.length) { novos = Nutricao.lerPrato(ia.itens.map(fraseDoItem).join(', ')); viaIA = true; }
     } catch (e) { erroIA = e.name === 'AbortError' ? 'demorou demais' : e.message; /* sem internet ou IA fora: usa o leitor local */ }
   }

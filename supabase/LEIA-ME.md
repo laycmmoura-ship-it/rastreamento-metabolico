@@ -1,5 +1,11 @@
 # Ligar a IA do app (Supabase + Claude)
 
+A mesma função atende o "Meu prato" (lista de alimentos para o cálculo pela TACO) e a conversa dos
+modos Chef, Restaurante, Mercado e Dúvidas (campo `modo`), no tom da Layane. Regras da conversa:
+não fala de medicamentos, suplementos, sinais ou sintomas, e encaminha para a Layane no WhatsApp
+(o app também barra essas palavras antes de chamar a IA). Depois de mudar o `index.ts`, publique de
+novo (Edge Functions → interpretar-prato → Code → colar → Deploy).
+
 A função `interpretar-prato` recebe a frase ou a foto da refeição, pede ao Claude só a **lista de
 alimentos e quantidades** e devolve para o app. As calorias continuam sendo calculadas no app,
 pela TACO e pelas medidas caseiras (Web Diet e Pinheiro et al.). A chave da IA fica só no Supabase.
