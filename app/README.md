@@ -46,8 +46,8 @@ Abra http://localhost:8000/app/
   Os ícones do celular (`apple-touch-icon.png`, `icon-192.png`, `icon-512.png`) usam o mesmo símbolo.
 
 ## Medidas caseiras (`app/dados/medidas.json`)
-Cada medida traz a fonte. Ordem de preferência quando há mais de uma: Web Diet (print e planos exportados)
-e depois o livro abaixo.
+Cada medida traz a fonte. Ordem de preferência quando há mais de uma: Web Diet (print e planos exportados),
+depois o livro de Pinheiro et al. e por último a tabela do IBGE.
 - **Web Diet**: pesos tirados de prints e de planos exportados em PDF pela nutricionista
   (`ferramentas/medidas_do_webdiet.py`).
 - **Pinheiro ABV, Lacerda EMA, Benzecry EH, Gomes MCS, Costa VM. Tabela para Avaliação de Consumo
@@ -55,6 +55,12 @@ e depois o livro abaixo.
   30 alimentos comuns, com a página citada em cada item. O livro não é distribuído aqui.
   Conferência: cada peso lido por OCR só foi aceito quando batia com as kcal da mesma linha do livro;
   os demais foram lidos diretamente nas páginas.
+- **IBGE. Pesquisa de Orçamentos Familiares 2008-2009: Tabela de Medidas Referidas para os Alimentos
+  Consumidos no Brasil. Rio de Janeiro: IBGE, 2011.** Cerca de 1.450 medidas de 231 alimentos da TACO
+  (ferramentas `ibge_1_ler_tabela.py`, `ibge_2_ligar_taco.js`, `ibge_3_juntar_medidas.py`). Só entram os
+  alimentos ligados à TACO com todas as palavras iguais (mais alguns nomes regionais conferidos à mão,
+  como açaí, farofa, pão de sal e peixe de água doce); linhas "grama/quilo" e pesos de colher implausíveis
+  ficam de fora; não sobrescrevem medidas do Web Diet nem de Pinheiro. O PDF não é distribuído aqui.
 - **Alimentos que a TACO não tem** (`app/dados/complementar.json`, campo `novos`, ids 9001+): 74 alimentos
   comuns e sem marca (macarrão cozido, pão de forma, peixes, ovo mexido, grão-de-bico, purê, strogonoff,
   lasanha, pizzas, bolos, biscoitos, sopas…), com kcal e macros por 100 g de Pinheiro et al. (4ª ed.) e a

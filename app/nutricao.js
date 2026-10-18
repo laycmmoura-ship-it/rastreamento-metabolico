@@ -22,10 +22,11 @@ const Nutricao = (() => {
     'bife': 377, 'bife grelhado': 377, 'carne grelhada': 377, 'bife de carne': 377, 'carne': 377,
     'cacau': null, 'cacau em po': null, 'chia': null, 'semente de chia': null, 'tapioca': null, 'goma de tapioca': null,
     'whey': null, 'whey protein': null, 'farinha de aveia': null,
+    'pao de sal': 53, 'pao careca': 53, 'peixe assado': 9009, 'peixe grelhado': 9009, 'acai': 168, 'acai na tigela': 168,
     // grafias comuns que a TACO escreve diferente
     'mussarela': 463, 'mucarela': 463, 'muzzarela': 463, 'queijo mussarela': 463, 'queijo mucarela': 463
   };
-  const APROX = new Set(['tilapia', 'file de tilapia', 'pescada', 'bife', 'bife grelhado', 'carne grelhada', 'bife de carne', 'carne']);
+  const APROX = new Set(['peixe assado', 'peixe grelhado', 'tilapia', 'file de tilapia', 'pescada', 'bife', 'bife grelhado', 'carne grelhada', 'bife de carne', 'carne']);
   const PREPARADO = /\b(cozid|grelhad|assad|refogad)/;
   const PROCESSADO = /\b(calda|doce|industrializad|enlatad|frit|instantane|polpa|suco|geleia|sorvete|cristalizad|desidratad)/;
   let temVersaoPronta = new Set();   // nomes principais que têm versão cozida/grelhada (ex.: batata)
@@ -45,7 +46,7 @@ const Nutricao = (() => {
   const sing = w => w.length > 3 ? w.replace(/(oes|aes)$/, 'ao').replace(/eses$/, 'es').replace(/(lh|[^e])eres$/, '$1er').replace(/s$/, '') : w;
   // Palavras que descrevem o pedaço/prato mas não precisam estar no nome da TACO
   const GENERICAS = new Set(['file', 'files', 'pedaco', 'fatia', 'salada', 'porcao', 'bife', 'prato', 'pouco', 'pouca',
-    'rasa', 'cheia', 'nivelada', 'pequena', 'pequeno', 'media', 'medio', 'grande', 'duplo', 'dupla', 'americano', 'tigela', 'pote', 'banda']);
+    'rasa', 'cheia', 'nivelada', 'pequena', 'pequeno', 'media', 'medio', 'grande', 'duplo', 'dupla', 'americano', 'tigela', 'pote', 'banda', 'posta']);
 
   async function carregar() {
     if (taco) return;
@@ -237,7 +238,7 @@ const Nutricao = (() => {
   const NUM = {'um': 1, 'uma': 1, 'meia': 0.5, 'meio': 0.5, 'dois': 2, 'duas': 2, 'tres': 3, 'quatro': 4, 'cinco': 5};
   const RX_GRAMAS = /(\d+(?:[.,]\d+)?)\s*(g|gr|gramas?|ml)\b/;
   const RX_CONTAGEM = /^(\d+(?:[.,]\d+)?|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s+(?=[a-z])/;
-  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa|cafe|servir))?|escumadeiras?|folhas?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?(?:\s+americanos?)?|dosador(?:es)?|scoops?|porcao|porcoes)\b/;
+  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa|cafe|servir))?|escumadeiras?|folhas?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?(?:\s+americanos?)?|dosador(?:es)?|scoops?|porcao|porcoes|tigelas?|postas?|canecas?|cumbucas?|pires|tacas?|potes?|garfadas?|pegador(?:es)?|pratos?(?:\s+(?:fundos?|rasos?|de sobremesa))?)\b/;
 
   // "pão com manteiga" e "arroz com feijão" são dois alimentos; "frango com pele" é um só (existe assim na TACO).
   function separarCom(parte) {
@@ -254,7 +255,7 @@ const Nutricao = (() => {
   function lerPrato(texto) {
     const t = texto.replace(/½/g, ' meia ').replace(/^\s*(caf[eé] da manh[aã]|almo[cç]o|jantar|lanche|ceia)\s*:?/i, '');
     const QTD = '(?=\\d|um |uma |dois |duas |tr[eê]s |quatro |cinco |meia |meio )';
-    const MED = '(?:col|colher|concha|fil[eé]|bife|fatia|unidade|peda[cç]o|x[ií]cara|copo|escumadeira|folha|dosador|scoop|por[cç])';
+    const MED = '(?:col|colher|concha|fil[eé]|bife|fatia|unidade|peda[cç]o|x[ií]cara|copo|escumadeira|folha|dosador|scoop|por[cç]|tigela|posta|caneca|cumbuca|pires|ta[cç]a|pote|garfada|pegador|prato)';
     const NOVA_QTD = `(?<!\\bde)\\s+(?=(?:\\d+(?:[.,]\\d+)?|um|uma|dois|duas|tr[eê]s|quatro|cinco|meia|meio)\\s+${MED})`;
     const NOVO_NUM = `(?<!\\bde)\\s+(?=\\d+(?:[.,]\\d+)?\\s+(?!g\\b|gr\\b|gramas?\\b|ml\\b)[a-zà-ú])`;  // "2 ovos 1 banana"
     const partes = t.split(new RegExp(`\\s+e\\s+|,|;|\\+|\\n|\\s+(?:com|mais)\\s+${QTD}|${NOVA_QTD}|${NOVO_NUM}`, 'i')).map(norm).filter(Boolean)
