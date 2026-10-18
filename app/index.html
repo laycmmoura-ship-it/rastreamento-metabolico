@@ -556,7 +556,7 @@ async function interpretarComIA(msg, foto) {
     const r = await fetch(LAY_CONFIG.iaUrl, {
       method: 'POST', signal: ctrl.signal,
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${LAY_CONFIG.supabaseAnonKey}`, 'apikey': LAY_CONFIG.supabaseAnonKey},
-      body: JSON.stringify({texto: msg || '', imagens: foto || undefined})
+      body: JSON.stringify({texto: msg || '', imagens: foto || undefined, ...contextoPrato()})
     });
     if (!r.ok) throw new Error('IA ' + r.status);
     return await r.json();
@@ -568,6 +568,11 @@ async function interpretarComIA(msg, foto) {
 function itensDaIA(lista) {
   return lista.flatMap(it => {
     let r = Nutricao.lerPrato(fraseDoItem(it));
+    // medida que o leitor não conhece ("ponta de faca"): tenta só o nome do alimento, com o peso que a IA estimou
+    if (r.length === 1 && !r[0].alimento && it.gramas_estimados > 0) {
+      const [s] = Nutricao.lerPrato(fraseDoItem({...it, quantidade: null, medida: null, tamanho: null}));
+      if (s?.alimento) { s.texto = r[0].texto; s.qtdTexto = ''; s.gramas = null; r = [s]; }
+    }
     if (r.length !== 1) return r;
     let [i] = r;
     if (it.equivalente && (!i.alimento || i.foraDaTaco)) {
@@ -596,11 +601,21 @@ async function estimativasRestaurante(lista) {
   return `<div class="estimativas">${cards}</div><p class="mini">Estimativa por pessoa: porções estimadas pela Lay IA a partir do cardápio, calorias pela ${Nutricao.fonte}. O preparo do restaurante (óleo, molhos) pode mudar bastante o valor.</p>`;
 }
 
+// A refeição já registrada nesta conversa vai junto, pra IA entender correções ("o queijo é muçarela", "faltou o pão")
+function contextoPrato() {
+  const ant = ultimoPrato && pratos[ultimoPrato];
+  if (!ant) return {};
+  const anterior = ant.itens.map(i => `- ${i.texto}${i.alimento ? ` (calculado como ${i.alimento.nome}` + (i.gramas != null ? `, ${Math.round(i.gramas)} g)` : ', sem peso)') : ' (não encontrado na tabela)'}`).join('\n');
+  const mensagens = historico.slice(0, -1).filter(h => h.papel === 'eu' && h.texto).slice(-4).map(h => ({papel: 'eu', texto: h.texto}));
+  return {anterior, mensagens};
+}
+
 // Transforma cada item da IA numa frase curta que o leitor de medidas já entende
 function fraseDoItem(i) {
   const n = i.quantidade == null ? '' : i.quantidade === 0.5 ? 'meia' : String(i.quantidade).replace('.', ',');
   const med = (i.medida || '').trim();
-  const comida = [i.alimento, i.preparo].filter(Boolean).join(' ');
+  const bebida = /^(suco|vitamina|caf|leite|ch[aá] |refrigerante|[aá]gua)/i.test(i.alimento || '');
+  const comida = [i.alimento, bebida && /^crua?$/i.test(i.preparo || '') ? null : i.preparo].filter(Boolean).join(' ');
   if (/^(g|gramas?|ml)$/i.test(med) && n) return `${n}${med.toLowerCase().startsWith('m') ? 'ml' : 'g'} de ${comida}`;
   return [n, med, i.tamanho, med ? 'de' : '', comida].filter(Boolean).join(' ');
 }
@@ -608,9 +623,9 @@ function fraseDoItem(i) {
 async function analisarPrato(msg, foto) {
   const temFoto = !!foto;
   try { await Nutricao.carregar(); } catch { return demoPrato(msg, temFoto); }
-  let novos = null, viaIA = false, erroIA = null, semIA = false;
+  let novos = null, viaIA = false, erroIA = null, semIA = false, acaoIA = null;
   // Frase simples que o leitor local entendeu por inteiro (alimento certo e gramas de cada item): não gasta IA
-  if (!foto && ehRefeicao(msg)) {
+  if (!foto && ehRefeicao(msg) && !(iaLigada() && ultimoPrato)) {   // com refeição na conversa, a IA vê se é correção
     const local = Nutricao.lerPrato(msg);
     if (local.length && local.every(i => i.alimento && i.exato && i.gramas != null && !i.foraDaTaco && !i.semDado)) { novos = local; semIA = true; }
   }
@@ -618,22 +633,24 @@ async function analisarPrato(msg, foto) {
     try {
       const ia = await interpretarComIA(msg, foto);
       if (!ia.e_refeicao && !temFoto && !SOMAR.test(msg || '')) return conversarComIA('duvidas', msg, null);
-      if (ia.itens?.length) { novos = itensDaIA(ia.itens); viaIA = true; }
+      if (ia.itens?.length) { novos = itensDaIA(ia.itens); viaIA = true; acaoIA = ia.acao; }
     } catch (e) { erroIA = e.name === 'AbortError' ? 'demorou demais' : e.message; /* sem internet ou IA fora: usa o leitor local */ }
   }
   if (!novos) novos = msg ? Nutricao.lerPrato(msg) : [];
   if (!novos.length) return demoPrato(msg, temFoto);
   // "tbm comi um pedaço de bife": soma ao prato anterior desta conversa
-  const anterior = SOMAR.test(msg) && ultimoPrato && pratos[ultimoPrato];
+  // "corrige": a IA devolve a refeição inteira já corrigida; "soma" (ou "tbm comi..."): junta ao prato anterior
+  const corrigido = acaoIA === 'corrige' && ultimoPrato && pratos[ultimoPrato];
+  const anterior = !corrigido && (acaoIA === 'soma' || (!acaoIA && SOMAR.test(msg))) && ultimoPrato && pratos[ultimoPrato];
   const itens = anterior ? [...anterior.itens.map(i => ({...i})), ...novos] : novos;
   const id = proxPrato++;
-  pratos[id] = {itens, temFoto, soFoto: temFoto && !msg, somado: !!anterior, viaIA, erroIA, semIA};
+  pratos[id] = {itens, temFoto: temFoto || !!corrigido?.temFoto, soFoto: temFoto && !msg, somado: !!anterior, corrigido: !!corrigido, viaIA, erroIA, semIA};
   ultimoPrato = id;
   return `<div class="prato-res" data-prato="${id}">${desenharPrato(id)}</div>`;
 }
 
 function desenharPrato(id) {
-  const {itens, temFoto, soFoto, somado, viaIA, erroIA, semIA} = pratos[id];
+  const {itens, temFoto, soFoto, somado, corrigido, viaIA, erroIA, semIA} = pratos[id];
   const tot = Nutricao.calcular(itens);
   const r = n => Math.round(n);
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
@@ -652,7 +669,7 @@ function desenharPrato(id) {
     return `<tr${perguntas(i).length ? ' class="duvida"' : ''}><td>${nome}</td><td>${qtdMostrada(i)}</td><td>${valor}</td></tr>`;
   };
   const blocos = itens.map((i, k) => perguntaHtml(id, i, k)).join('');
-  return `<p>${somado ? 'Somei ao que você já tinha me contado. Refeição completa' : soFoto && viaIA ? 'Pela foto, identifiquei' : calculados.length ? 'Calculei pelos alimentos que você escreveu' : 'Encontrei estes alimentos'}${soFoto && viaIA ? '' : temFoto && !viaIA ? ' (a leitura da foto entra quando a IA estiver conectada)' : viaIA && temFoto ? ' e pela foto' : ''}:</p>
+  return `<p>${corrigido ? 'Corrigi a refeição com o que você me explicou. Ficou assim' : somado ? 'Somei ao que você já tinha me contado. Refeição completa' : soFoto && viaIA ? 'Pela foto, identifiquei' : calculados.length ? 'Calculei pelos alimentos que você escreveu' : 'Encontrei estes alimentos'}${corrigido || somado || (soFoto && viaIA) ? '' : temFoto && !viaIA ? ' (a leitura da foto entra quando a IA estiver conectada)' : viaIA && temFoto ? ' e pela foto' : ''}:</p>
     <div class="estimativa">
       ${calculados.length ? `<div class="est-topo"><span>${faltam ? 'Total parcial' : 'Total estimado'}</span><b>${r(tot.kcal)} kcal</b></div>
       <div class="est-macros"><div><b>${r(tot.prot)}g</b>proteína</div><div><b>${r(tot.carbo)}g</b>carbo</div><div><b>${r(tot.gord)}g</b>gordura</div></div>` : ''}

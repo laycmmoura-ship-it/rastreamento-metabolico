@@ -33,7 +33,8 @@ const Item = z.object({
   equivalente: z.string().nullable().describe("alimento simples e comum mais parecido, como estaria numa tabela de composição (ex.: tambaqui assado -> peixe assado; açaí na tigela -> açaí polpa; vinagrete -> salada de tomate com cebola); null se o próprio nome já é simples"),
 });
 const Saida = z.object({
-  e_refeicao: z.boolean().describe("true se a mensagem descreve algo que a pessoa comeu ou bebeu"),
+  e_refeicao: z.boolean().describe("true se a mensagem descreve algo que a pessoa comeu ou bebeu, ou corrige/completa a refeição anterior"),
+  acao: z.enum(["nova", "corrige", "soma"]).describe("nova = outra refeição; corrige = a paciente está corrigindo ou completando a refeição anterior desta conversa (devolva a lista COMPLETA já corrigida); soma = comeu mais alguma coisa além da anterior (devolva só o que é novo)"),
   itens: z.array(Item),
 });
 
@@ -42,11 +43,15 @@ Regras:
 - Liste cada alimento separado, mesmo sem vírgula entre eles ("2 colheres de arroz uma concha de feijão" são dois itens).
 - Corrija erros de digitação ("bije" = bife, "fejão" = feijão) e use o nome comum em português.
 - Quantidade e medida exatamente como a pessoa disse. "Um pedaço médio" = quantidade 1, medida pedaço, tamanho médio.
-- Preparações compostas que a pessoa nomeou como um prato (strogonoff, lasanha, feijoada, pizza) ficam como um item só.
+- Pratos típicos com nome próprio (strogonoff, lasanha, feijoada, pizza, maniçoba, baião de dois) ficam como um item só.
+- Sanduíche, misto, tapioca recheada, cuscuz recheado, salada montada, açaí com complementos: separe nos componentes, cada um com quantidade e gramas_estimados (ex.: misto quente = pão de forma 2 fatias 50 g, queijo muçarela 1 fatia 20 g, presunto 1 fatia 15 g, manteiga 5 g).
+- Bebidas: preparo null ("suco de laranja", não "suco de laranja cru"). Se der pra ver, diga se é natural ou de caixinha no nome.
+- gramas_estimados: preencha SEMPRE com a melhor estimativa do peso total do item (porção típica de adulto se a pessoa não disse a quantidade). Copo de suco: some só o líquido.
 - Ingredientes óbvios do preparo que ela não citou (óleo, sal) NÃO entram.
 - Recipiente não é alimento: "tigela de açaí" = alimento açaí, medida tigela; "copo de suco" = suco, medida copo.
 - Pratos regionais e preparações (tambaqui, baião de dois, farofa, vinagrete, maniçoba): mantenha o nome e preencha equivalente com o alimento simples mais parecido.
 - Se houver foto (pode ter mais de uma, da mesma refeição): identifique os alimentos visíveis e estime a quantidade em medida caseira (colher de sopa, concha, unidade, fatia...) e em gramas_estimados. Se o texto disser a quantidade, vale o texto.
+- Conversa: se vier "Refeição já registrada nesta conversa", a mensagem atual pode estar corrigindo ou completando essa refeição ("o queijo é muçarela", "você esqueceu o pão", "eram 2 fatias", "não sei o peso, estima"). Nesse caso acao = corrige e devolva a refeição inteira já corrigida, mantendo o que estava certo. Se ela contar outra coisa que comeu junto ("também tomei um café"), acao = soma. Se for claramente outra refeição, acao = nova.
 - Não calcule calorias nem dê conselhos: só a lista.
 - Se a mensagem for uma pergunta ou não falar de comida, e_refeicao = false e itens = [].`;
 
@@ -109,7 +114,7 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors(origem) });
   if (req.method !== "POST") return resposta({ erro: "use POST" }, 405, origem);
 
-  let entrada: { texto?: string; imagem?: string; imagens?: string[]; modo?: string; mensagens?: { papel: string; texto: string }[] };
+  let entrada: { texto?: string; imagem?: string; imagens?: string[]; modo?: string; mensagens?: { papel: string; texto: string }[]; anterior?: string };
   try { entrada = await req.json(); } catch { return resposta({ erro: "JSON inválido" }, 400, origem); }
   const texto = (entrada.texto ?? "").slice(0, 1000).trim();
   // até 4 fotos por mensagem (ex.: cardápio de várias páginas)
@@ -124,7 +129,11 @@ Deno.serve(async (req) => {
     if (!m || m[2].length > 5_000_000) return resposta({ erro: "imagem inválida ou grande demais" }, 400, origem);
     conteudo.push({ type: "image", source: { type: "base64", media_type: m[1] as "image/jpeg", data: m[2] } });
   }
-  conteudo.push({ type: "text", text: texto || (modo ? "Analise a foto." : "Liste os alimentos da foto.") });
+  // no "Meu prato", a refeição já registrada e as últimas falas da paciente entram como contexto (pra entender correções)
+  const anterior = !modo ? String(entrada.anterior ?? "").slice(0, 2000).trim() : "";
+  const falas = !modo ? (entrada.mensagens ?? []).filter((m) => m.papel !== "ia").slice(-4).map((m) => String(m.texto ?? "").slice(0, 300).trim()).filter(Boolean) : [];
+  const contexto = anterior ? `Refeição já registrada nesta conversa:\n${anterior}\n` + (falas.length ? `Mensagens anteriores da paciente: ${falas.map((f) => `"${f}"`).join(" | ")}\n` : "") + "\nMensagem atual: " : "";
+  conteudo.push({ type: "text", text: contexto + (texto || (modo ? "Analise a foto." : "Liste os alimentos da foto.")) });
 
   try {
     if (modo) {
@@ -154,9 +163,10 @@ Deno.serve(async (req) => {
 
     const r = await client.messages.parse({
       model: MODELO_PRATO,
-      max_tokens: 4000,
+      max_tokens: 8000,
       system: INSTRUCOES,
-      output_config: { effort: "low", format: zodOutputFormat(Saida) },
+      // foto ou correção pedem mais raciocínio; frase simples segue rápida e barata
+      output_config: { effort: imagens.length || anterior ? "medium" : "low", format: zodOutputFormat(Saida) },
       messages: [{ role: "user", content: conteudo }],
     });
     if (r.stop_reason === "refusal") return resposta({ erro: "recusado", categoria: r.stop_details?.category ?? null }, 422, origem);
