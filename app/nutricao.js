@@ -45,7 +45,7 @@ const Nutricao = (() => {
   const sing = w => w.length > 3 ? w.replace(/(oes|aes)$/, 'ao').replace(/eses$/, 'es').replace(/(lh|[^e])eres$/, '$1er').replace(/s$/, '') : w;
   // Palavras que descrevem o pedaço/prato mas não precisam estar no nome da TACO
   const GENERICAS = new Set(['file', 'files', 'pedaco', 'fatia', 'salada', 'porcao', 'bife', 'prato', 'pouco', 'pouca',
-    'rasa', 'cheia', 'nivelada', 'pequena', 'pequeno', 'media', 'medio', 'grande', 'duplo', 'dupla', 'americano']);
+    'rasa', 'cheia', 'nivelada', 'pequena', 'pequeno', 'media', 'medio', 'grande', 'duplo', 'dupla', 'americano', 'tigela', 'pote', 'banda']);
 
   async function carregar() {
     if (taco) return;

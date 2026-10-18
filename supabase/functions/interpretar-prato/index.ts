@@ -29,6 +29,8 @@ const Item = z.object({
   quantidade: z.number().nullable().describe("número de medidas; meia = 0.5; null se não disse"),
   medida: z.string().nullable().describe("medida caseira no singular (colher de sopa, colher de servir, concha, escumadeira, unidade, fatia, pedaço, filé, bife, xícara, copo, folha) ou g / ml; null se não disse"),
   tamanho: z.string().nullable().describe("rasa, cheia, pequeno, médio, grande, duplo... ou null"),
+  gramas_estimados: z.number().nullable().describe("peso aproximado em gramas do item inteiro (toda a quantidade), estimado por você; preencha sempre que houver foto, cardápio com peso, prato regional ou medida pouco comum"),
+  equivalente: z.string().nullable().describe("alimento simples e comum mais parecido, como estaria numa tabela de composição (ex.: tambaqui assado -> peixe assado; açaí na tigela -> açaí polpa; vinagrete -> salada de tomate com cebola); null se o próprio nome já é simples"),
 });
 const Saida = z.object({
   e_refeicao: z.boolean().describe("true se a mensagem descreve algo que a pessoa comeu ou bebeu"),
@@ -42,13 +44,20 @@ Regras:
 - Quantidade e medida exatamente como a pessoa disse. "Um pedaço médio" = quantidade 1, medida pedaço, tamanho médio.
 - Preparações compostas que a pessoa nomeou como um prato (strogonoff, lasanha, feijoada, pizza) ficam como um item só.
 - Ingredientes óbvios do preparo que ela não citou (óleo, sal) NÃO entram.
-- Se houver foto: identifique os alimentos visíveis e estime a quantidade em medida caseira (colher de sopa, concha, unidade, fatia...). Se o texto disser a quantidade, vale o texto.
+- Recipiente não é alimento: "tigela de açaí" = alimento açaí, medida tigela; "copo de suco" = suco, medida copo.
+- Pratos regionais e preparações (tambaqui, baião de dois, farofa, vinagrete, maniçoba): mantenha o nome e preencha equivalente com o alimento simples mais parecido.
+- Se houver foto (pode ter mais de uma, da mesma refeição): identifique os alimentos visíveis e estime a quantidade em medida caseira (colher de sopa, concha, unidade, fatia...) e em gramas_estimados. Se o texto disser a quantidade, vale o texto.
 - Não calcule calorias nem dê conselhos: só a lista.
 - Se a mensagem for uma pergunta ou não falar de comida, e_refeicao = false e itens = [].`;
 
 const Conversa = z.object({
   texto: z.string().describe("resposta para a paciente, em texto simples; pode usar **negrito** e listas com '- '"),
   encaminhar_layane: z.boolean().describe("true quando o assunto precisa da Layane (clínico, medicamento, suplemento, sintoma, mudar o plano, ou você não sabe)"),
+  estimativas: z.array(z.object({
+    nome: z.string().describe("nome do prato como está no cardápio"),
+    porcao: z.string().describe("o que conta como 1 pessoa, ex.: '1/2 do prato (serve 2)' ou '1 prato individual'"),
+    itens: z.array(Item).describe("o que vai no prato de UMA pessoa, com gramas_estimados de cada componente"),
+  })).describe("só no modo Restaurante: os pratos indicados, decompostos por pessoa, pra o app calcular as calorias pela TACO; nos outros modos, lista vazia"),
 });
 
 const VOZ = `Você é a Lay IA, assistente virtual da nutricionista Layane Moura (Santarém-PA, saúde hormonal feminina, emagrecimento e obesidade). Você conversa com as pacientes dela pelo app.
@@ -74,7 +83,9 @@ Se não souber, diga que não sabe e encaminhe pra Layane. Nunca invente.`;
 
 const MODOS: Record<string, string> = {
   chef: `Modo Chef: a paciente diz os ingredientes que tem e você sugere UMA receita simples e saudável com eles (pode acrescentar temperos básicos, sal, alho, cebola, ervas, um fio de azeite). Formato: nome da receita em **negrito**, ingredientes em lista com medidas caseiras, modo de preparo em poucos passos. Lembre que a porção deve seguir as quantidades do plano dela.`,
-  restaurante: `Modo Restaurante: a paciente manda a foto do cardápio (ou escreve as opções) e o que quer priorizar. Indique as 2 ou 3 melhores escolhas do próprio cardápio, explicando em uma linha cada (proteína, preparo, vegetais), e diga o que é melhor evitar e um ajuste simples ("molho à parte", "troca a fritas por salada"). Sem calorias exatas. Se não tiver foto nem opções, peça a foto do cardápio.`,
+  restaurante: `Modo Restaurante: a paciente manda fotos do cardápio (podem ser várias páginas; leia todas) ou escreve as opções, e diz o que quer priorizar, ou qual prato escolheu. Indique as 2 ou 3 melhores escolhas do próprio cardápio, explicando em uma linha cada (proteína, preparo, vegetais), diga o que é melhor evitar e um ajuste simples ("molho à parte", "troca a fritas por salada"). Se ela disser qual prato escolheu, foque nele.
+Calorias: NÃO escreva números de calorias no texto. Em vez disso, preencha estimativas com cada prato indicado (e o escolhido, se houver): decomponha em componentes simples (peixe assado, arroz branco, feijão, farofa, batata...) com gramas_estimados por pessoa, usando o peso e o "serve N pessoas" do cardápio quando houver. O app calcula pela tabela TACO e mostra junto da tua resposta. No texto, pode dizer que a estimativa por pessoa aparece logo abaixo.
+Se não tiver foto nem opções, peça a foto do cardápio.`,
   mercado: `Modo Mercado: a paciente manda a foto do rótulo (tabela nutricional e ingredientes) ou pergunta como escolher um produto. Leia o que está na foto e comente de forma objetiva: proteína e fibras por porção, açúcar adicionado, sódio, gordura saturada, lupa frontal, ordem dos ingredientes, tamanho da porção. Compare com uma opção mais simples quando fizer sentido. Suplementos (whey, creatina, colágeno, cápsulas etc.): pode ler o rótulo e explicar de forma objetiva o que ele mostra, por exemplo, no whey, proteína por dose (scoop) e a proporção de proteína na dose (24 g em 30 g = 80%), se é concentrado, isolado ou hidrolisado, carboidratos e açúcares, gorduras, sódio, adoçantes, aromatizantes, espessantes e a ordem dos ingredientes. Se mandar dois rótulos, pode mostrar as diferenças lado a lado. NUNCA diga qual usar, qual é melhor, se ela deve usar, quanto, quando ou por quanto tempo, nem dê nota ou ranking: termine dizendo que a escolha e o uso é com a Layane, no plano dela, e marque encaminhar_layane = true. Se a foto estiver ilegível, peça outra.`,
   duvidas: `Modo Dúvidas: responda dúvidas gerais de alimentação do dia a dia (substituições, como montar o prato, como descrever a refeição pro app, organização das refeições). Se a pergunta depender do plano individual dela, diga o princípio geral e que a quantidade certa está no plano ou com a Layane.`,
 };
@@ -98,18 +109,19 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors(origem) });
   if (req.method !== "POST") return resposta({ erro: "use POST" }, 405, origem);
 
-  let entrada: { texto?: string; imagem?: string; modo?: string; mensagens?: { papel: string; texto: string }[] };
+  let entrada: { texto?: string; imagem?: string; imagens?: string[]; modo?: string; mensagens?: { papel: string; texto: string }[] };
   try { entrada = await req.json(); } catch { return resposta({ erro: "JSON inválido" }, 400, origem); }
   const texto = (entrada.texto ?? "").slice(0, 1000).trim();
-  const imagem = entrada.imagem ?? "";
-  if (!texto && !imagem) return resposta({ erro: "envie texto ou imagem" }, 400, origem);
+  // até 4 fotos por mensagem (ex.: cardápio de várias páginas)
+  const imagens = (Array.isArray(entrada.imagens) ? entrada.imagens : entrada.imagem ? [entrada.imagem] : []).slice(0, 4);
+  if (!texto && !imagens.length) return resposta({ erro: "envie texto ou imagem" }, 400, origem);
   const modo = entrada.modo && entrada.modo !== "prato" ? entrada.modo : null;
   if (modo && !MODOS[modo]) return resposta({ erro: "modo inválido" }, 400, origem);
 
   const conteudo: Anthropic.ContentBlockParam[] = [];
-  if (imagem) {
-    const m = imagem.match(/^data:(image\/(?:jpeg|png|webp|gif));base64,(.+)$/);
-    if (!m || m[2].length > 7_000_000) return resposta({ erro: "imagem inválida ou grande demais" }, 400, origem);
+  for (const imagem of imagens) {
+    const m = String(imagem).match(/^data:(image\/(?:jpeg|png|webp|gif));base64,(.+)$/);
+    if (!m || m[2].length > 5_000_000) return resposta({ erro: "imagem inválida ou grande demais" }, 400, origem);
     conteudo.push({ type: "image", source: { type: "base64", media_type: m[1] as "image/jpeg", data: m[2] } });
   }
   conteudo.push({ type: "text", text: texto || (modo ? "Analise a foto." : "Liste os alimentos da foto.") });
@@ -129,13 +141,14 @@ Deno.serve(async (req) => {
       if (anteriores.length && anteriores[anteriores.length - 1].role === "user") anteriores.pop();
       const r = await client.messages.parse({
         model: MODELO_CONVERSA,
-        max_tokens: 4000,
+        max_tokens: 8000,
         system: VOZ + "\n\n" + MODOS[modo],
         output_config: { effort: "low", format: zodOutputFormat(Conversa) },
         messages: [...anteriores, { role: "user", content: conteudo }],
       });
       if (r.stop_reason === "refusal") return resposta({ erro: "recusado" }, 422, origem);
       if (!r.parsed_output) return resposta({ erro: "resposta fora do formato" }, 502, origem);
+      if (modo !== "restaurante") r.parsed_output.estimativas = [];
       return resposta({ ...r.parsed_output, modelo: r.model, uso: r.usage }, 200, origem);
     }
 

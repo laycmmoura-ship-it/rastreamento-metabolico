@@ -90,6 +90,18 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
 .preview{display:none;align-items:center;gap:10px;margin-bottom:8px;background:var(--verde-bg);border-radius:12px;padding:6px}
 .preview.show{display:flex}
 .preview img{width:48px;height:48px;object-fit:cover;border-radius:8px}
+.miniaturas{display:flex;gap:4px}
+.bolha .fotos{display:grid;grid-template-columns:repeat(2,1fr);gap:4px}
+.bolha .fotos img{width:100%;aspect-ratio:1;object-fit:cover}
+.estimativas{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.est-rest{border:1px solid var(--borda);border-radius:12px;padding:10px 12px;background:var(--branco)}
+.est-rest .topo-est{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.est-rest .topo-est b{color:var(--verde)}
+.est-rest .kcal{font-weight:700;color:var(--verde);white-space:nowrap}
+.est-rest small{display:block;color:var(--texto-muted);font-size:11.5px;margin-top:2px}
+.est-rest details{margin-top:6px;font-size:12px}
+.est-rest summary{cursor:pointer;color:var(--ouro-escuro)}
+.est-rest li{margin-left:16px}
 .preview span{flex:1;font-size:12.5px;color:var(--texto-muted)}
 .preview button{border:none;background:none;font-size:18px;color:var(--texto-muted);cursor:pointer;padding:4px 8px}
 .linha{display:flex;align-items:flex-end;gap:8px}
@@ -225,13 +237,13 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
 
   <footer class="entrada">
     <div class="preview" id="preview">
-      <img id="previewImg" alt="Foto anexada">
-      <span>Foto anexada</span>
+      <div class="miniaturas" id="miniaturas"></div>
+      <span id="previewTxt">Foto anexada</span>
       <button id="btnTirarFoto" aria-label="Remover foto">✕</button>
     </div>
     <div class="linha">
       <button class="btn-icone" id="btnFoto" aria-label="Enviar foto">📷</button>
-      <input type="file" id="arquivo" accept="image/*" hidden>
+      <input type="file" id="arquivo" accept="image/*" multiple hidden>
       <textarea id="texto" rows="1" placeholder="Escreva sua mensagem…"></textarea>
       <button class="btn-enviar" id="btnEnviar" aria-label="Enviar" disabled>➤</button>
     </div>
@@ -267,7 +279,7 @@ const MODOS = {
   restaurante: {
     nome: 'Lay no Restaurante', ic: '🍽️', cor: 'var(--rest)', bg: 'var(--rest-bg)',
     desc: 'Mande a foto do cardápio e eu indico as melhores opções para você.',
-    abertura: 'Saiu para comer? 🍽️ Me manda uma foto ou o PDF do cardápio e me diz o que você quer priorizar (ex.: mais proteína, algo mais leve).',
+    abertura: 'Saiu pra comer? 🍽️ Me manda as fotos do cardápio (pode mandar até 4 páginas de uma vez) e me diz o que quer priorizar, ou qual prato escolheu. Eu indico as melhores opções e estimo as calorias por pessoa.',
     placeholder: 'Ex.: quero algo com mais proteína',
     sugestoes: ['Mais proteína', 'Algo mais leve', 'Estou com muita fome']
   },
@@ -291,7 +303,8 @@ const MODOS = {
 let modoAtual = null;   // null = tela inicial
 let voltarPara = null;  // tela para onde o botão ← leva
 let historico = [];     // [{papel:'eu'|'ia', texto, imagem}]
-let fotoPendente = null;
+let fotoPendente = [];   // até 4 fotos por mensagem (ex.: cardápio de várias páginas)
+const MAX_FOTOS = 4;
 
 const $ = id => document.getElementById(id);
 const conteudo = $('conteudo'), texto = $('texto'), btnEnviar = $('btnEnviar');
@@ -366,12 +379,12 @@ function mostrarSugestoes(lista) {
 // ====== Envio ======
 async function enviar(textoForcado) {
   const msg = (textoForcado ?? texto.value).trim();
-  if (!msg && !fotoPendente) return;
-  if (!modoAtual) abrirModo(fotoPendente && !msg ? 'duvidas' : adivinharModo(msg));
+  if (!msg && !fotoPendente.length) return;
+  if (!modoAtual) abrirModo(fotoPendente.length && !msg ? 'duvidas' : adivinharModo(msg));
   document.querySelectorAll('.sugestoes').forEach(e => e.remove());
 
-  const foto = fotoPendente;
-  addMsg('eu', (foto ? `<img src="${foto}" alt="Foto enviada">` : '') + (msg ? `<p>${esc(msg)}</p>` : ''));
+  const foto = fotoPendente.length ? [...fotoPendente] : null;   // lista de fotos (ou null)
+  addMsg('eu', (foto ? (foto.length > 1 ? `<div class="fotos">${foto.map(f => `<img src="${f}" alt="Foto enviada">`).join('')}</div>` : `<img src="${foto[0]}" alt="Foto enviada">`) : '') + (msg ? `<p>${esc(msg)}</p>` : ''));
   historico.push({papel:'eu', texto: msg, imagem: foto});
   texto.value = ''; limparFoto(); ajustarAltura(); atualizarBotao();
 
@@ -444,11 +457,11 @@ async function conversarComIA(modo, msg, foto) {
     const r = await fetch(LAY_CONFIG.iaUrl, {
       method: 'POST', signal: ctrl.signal,
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${LAY_CONFIG.supabaseAnonKey}`, 'apikey': LAY_CONFIG.supabaseAnonKey},
-      body: JSON.stringify({modo, texto: msg || '', imagem: foto || undefined, mensagens})
+      body: JSON.stringify({modo, texto: msg || '', imagens: foto || undefined, mensagens})
     });
     if (!r.ok) throw new Error('IA ' + r.status);
     const ia = await r.json();
-    return formatar(ia.texto || '') + (ia.encaminhar_layane ? botaoWhatsApp() : '');
+    return formatar(ia.texto || '') + (ia.estimativas?.length ? await estimativasRestaurante(ia.estimativas) : '') + (ia.encaminhar_layane ? botaoWhatsApp() : '');
   } catch {
     return '<p>Não consegui responder agora 😕 Tenta de novo daqui a pouquinho. Se for urgente, fala com a Layane.</p>' + botaoWhatsApp();
   } finally { clearTimeout(t); }
@@ -543,11 +556,44 @@ async function interpretarComIA(msg, foto) {
     const r = await fetch(LAY_CONFIG.iaUrl, {
       method: 'POST', signal: ctrl.signal,
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${LAY_CONFIG.supabaseAnonKey}`, 'apikey': LAY_CONFIG.supabaseAnonKey},
-      body: JSON.stringify({texto: msg || '', imagem: foto || undefined})
+      body: JSON.stringify({texto: msg || '', imagens: foto || undefined})
     });
     if (!r.ok) throw new Error('IA ' + r.status);
     return await r.json();
   } finally { clearTimeout(t); }
+}
+
+// Itens da IA -> itens calculáveis pela TACO. Sem medida caseira cadastrada, usa o peso que a IA estimou;
+// alimento que a tabela não tem (tambaqui, vinagrete) tenta o equivalente simples que a IA sugeriu, como aproximação
+function itensDaIA(lista) {
+  return lista.flatMap(it => {
+    let r = Nutricao.lerPrato(fraseDoItem(it));
+    if (r.length !== 1) return r;
+    let [i] = r;
+    if (it.equivalente && (!i.alimento || i.foraDaTaco)) {
+      const [e] = Nutricao.lerPrato(fraseDoItem({...it, alimento: it.equivalente, preparo: null}));
+      if (e?.alimento && !e.foraDaTaco) { e.texto = i.texto; e.busca = i.busca || it.alimento; e.exato = false; i = e; }
+    }
+    if (i.alimento && i.gramas == null && it.gramas_estimados > 0) {
+      i.gramas = it.gramas_estimados; i.gramasIA = true; i.semMedida = false; i.unidade = 'g';
+      const medIA = [it.quantidade == null ? '' : String(it.quantidade).replace('.', ','), it.medida, it.tamanho].filter(Boolean).join(' ');
+      i.qtdTexto = (medIA ? medIA + ' ' : '') + `(≈ ${Math.round(it.gramas_estimados)} g, peso estimado)`;
+    }
+    return [i];
+  });
+}
+
+async function estimativasRestaurante(lista) {
+  try { await Nutricao.carregar(); } catch { return ''; }
+  const r = n => Math.round(n);
+  const cards = lista.map(p => {
+    const itens = itensDaIA(p.itens || []), tot = Nutricao.calcular(itens);
+    const fora = itens.filter(i => !i.calc).map(i => i.texto);
+    return `<div class="est-rest"><div class="topo-est"><b>${esc(p.nome)}</b><span class="kcal">≈ ${r(tot.kcal)} kcal</span></div>
+      <small>${esc(p.porcao || 'por pessoa')} · P ${r(tot.prot)} g · C ${r(tot.carbo)} g · G ${r(tot.gord)} g${fora.length ? ` · sem cálculo: ${esc(fora.join(', '))}` : ''}</small>
+      <details><summary>Como calculei</summary><ul>${itens.map(i => `<li>${esc(i.alimento?.nome || i.texto)}${i.exato ? '' : ' (aproximação)'}: ${i.gramas != null ? r(i.gramas) + ' g' : 'sem peso'}${i.calc ? ` · ${r(i.calc.kcal)} kcal` : ''}</li>`).join('')}</ul></details></div>`;
+  }).join('');
+  return `<div class="estimativas">${cards}</div><p class="mini">Estimativa por pessoa: porções estimadas pela Lay IA a partir do cardápio, calorias pela ${Nutricao.fonte}. O preparo do restaurante (óleo, molhos) pode mudar bastante o valor.</p>`;
 }
 
 // Transforma cada item da IA numa frase curta que o leitor de medidas já entende
@@ -572,7 +618,7 @@ async function analisarPrato(msg, foto) {
     try {
       const ia = await interpretarComIA(msg, foto);
       if (!ia.e_refeicao && !temFoto && !SOMAR.test(msg || '')) return conversarComIA('duvidas', msg, null);
-      if (ia.itens?.length) { novos = Nutricao.lerPrato(ia.itens.map(fraseDoItem).join(', ')); viaIA = true; }
+      if (ia.itens?.length) { novos = itensDaIA(ia.itens); viaIA = true; }
     } catch (e) { erroIA = e.name === 'AbortError' ? 'demorou demais' : e.message; /* sem internet ou IA fora: usa o leitor local */ }
   }
   if (!novos) novos = msg ? Nutricao.lerPrato(msg) : [];
@@ -591,9 +637,9 @@ function desenharPrato(id) {
   const tot = Nutricao.calcular(itens);
   const r = n => Math.round(n);
   const calculados = itens.filter(i => i.calc), faltam = itens.length - calculados.length;
-  const todosEmGramas = itens.every(i => i.calc && /\d\s*(g|ml)\b/.test(i.qtdTexto));
+  const todosEmGramas = itens.every(i => i.calc && !i.gramasIA && /\d\s*(g|ml)\b/.test(i.qtdTexto));
   const conf = !faltam && todosEmGramas ? ['Boa', 'quantidades em gramas', '#1f5c41', 'var(--verde-light)']
-             : !faltam ? ['Média', itens.some(i => !i.exato) ? 'inclui aproximação' : 'medidas caseiras convertidas', '#5E4F25', '#F3ECDA']
+             : !faltam ? ['Média', itens.some(i => !i.exato) ? 'inclui aproximação' : itens.some(i => i.gramasIA) ? 'inclui peso estimado' : 'medidas caseiras convertidas', '#5E4F25', '#F3ECDA']
              : ['Parcial', `${faltam} ${faltam > 1 ? 'itens ficaram' : 'item ficou'} de fora do total`, '#842029', '#F8D7DA'];
   const qtdMostrada = i => esc(i.gramas != null && !/\d\s*(g|ml)\b/.test(i.qtdTexto) ? `${i.qtdTexto} (${r(i.gramas)}${i.unidade || 'g'})` : i.qtdTexto);
   const linha = (i, k) => {
@@ -707,20 +753,26 @@ function demoPrato(msg, temFoto) {
 // ====== Foto ======
 $('btnFoto').onclick = () => $('arquivo').click();
 $('arquivo').onchange = e => {
-  const f = e.target.files[0];
-  if (!f) return;
-  const leitor = new FileReader();
-  leitor.onload = () => reduzirImagem(leitor.result, 1280).then(url => {
-    fotoPendente = url;
-    $('previewImg').src = url;
-    $('preview').classList.add('show');
-    atualizarBotao();
-  });
-  leitor.readAsDataURL(f);
+  const arquivos = [...e.target.files].slice(0, MAX_FOTOS - fotoPendente.length);
   e.target.value = '';
+  arquivos.forEach(f => {
+    const leitor = new FileReader();
+    leitor.onload = () => reduzirImagem(leitor.result, 1280).then(url => {
+      if (fotoPendente.length < MAX_FOTOS) fotoPendente.push(url);
+      mostrarPreview();
+    });
+    leitor.readAsDataURL(f);
+  });
 };
+function mostrarPreview() {
+  $('miniaturas').innerHTML = fotoPendente.map(u => `<img src="${u}" alt="Foto anexada">`).join('');
+  const n = fotoPendente.length;
+  $('previewTxt').textContent = n > 1 ? `${n} fotos anexadas${n < MAX_FOTOS ? ' (toque em 📷 pra mais)' : ''}` : `Foto anexada${MAX_FOTOS > 1 ? ' (pode mandar até 4)' : ''}`;
+  $('preview').classList.toggle('show', n > 0);
+  atualizarBotao();
+}
 $('btnTirarFoto').onclick = () => { limparFoto(); atualizarBotao(); };
-function limparFoto() { fotoPendente = null; $('preview').classList.remove('show'); }
+function limparFoto() { fotoPendente = []; $('preview').classList.remove('show'); }
 
 // Reduz fotos grandes do celular antes de enviar (economiza internet e custo da IA).
 function reduzirImagem(src, max) {
@@ -740,7 +792,7 @@ function reduzirImagem(src, max) {
 
 // ====== Entrada de texto ======
 function ajustarAltura() { texto.style.height = 'auto'; texto.style.height = Math.min(texto.scrollHeight, 120) + 'px'; }
-function atualizarBotao() { btnEnviar.disabled = !texto.value.trim() && !fotoPendente; }
+function atualizarBotao() { btnEnviar.disabled = !texto.value.trim() && !fotoPendente.length; }
 texto.addEventListener('input', () => { ajustarAltura(); atualizarBotao(); });
 texto.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); enviar(); } });
 btnEnviar.onclick = () => enviar();
