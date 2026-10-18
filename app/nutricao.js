@@ -20,13 +20,17 @@ const Nutricao = (() => {
     // aproximações: o app pergunta antes de usar (tilápia não tem na TACO nem no livro)
     'tilapia': 9009, 'file de tilapia': 9009, 'pescada': 9009,
     'bife': 377, 'bife grelhado': 377, 'carne grelhada': 377, 'bife de carne': 377, 'carne': 377,
-    'cacau': null, 'cacau em po': null, 'chia': null, 'semente de chia': null, 'tapioca': null, 'goma de tapioca': null,
+    'cacau': null, 'cacau em po': null, 'chia': null, 'semente de chia': null,
+    // POF 2008-2009 (IBGE), alimentos que a TACO não tem (ids = código IBGE × 100 + preparo)
+    'tapioca': 650151699, 'goma de tapioca': 650151699, 'tapioca de goma': 650151699, 'farinha de tapioca': 650151099,
+    'vinagrete': 707920299, 'pirao': 850660199, 'beiju': 690450299,
+    'tambaqui': 740010104, 'tambaqui assado': 740010104, 'pirarucu': 740010104, 'peixe de agua doce': 740010199,
     'whey': null, 'whey protein': null, 'farinha de aveia': null,
-    'pao de sal': 53, 'pao careca': 53, 'peixe assado': 9009, 'peixe grelhado': 9009, 'acai': 168, 'acai na tigela': 168,
+    'pao de sal': 53, 'pao careca': 53, 'peixe assado': 740010104, 'peixe grelhado': 740010103, 'acai': 168, 'acai na tigela': 168,
     // grafias comuns que a TACO escreve diferente
     'mussarela': 463, 'mucarela': 463, 'muzzarela': 463, 'queijo mussarela': 463, 'queijo mucarela': 463
   };
-  const APROX = new Set(['peixe assado', 'peixe grelhado', 'tilapia', 'file de tilapia', 'pescada', 'bife', 'bife grelhado', 'carne grelhada', 'bife de carne', 'carne']);
+  const APROX = new Set(['tambaqui', 'tambaqui assado', 'pirarucu', 'peixe assado', 'peixe grelhado', 'tilapia', 'file de tilapia', 'pescada', 'bife', 'bife grelhado', 'carne grelhada', 'bife de carne', 'carne']);
   const PREPARADO = /\b(cozid|grelhad|assad|refogad)/;
   const PROCESSADO = /\b(calda|doce|industrializad|enlatad|frit|instantane|polpa|suco|geleia|sorvete|cristalizad|desidratad)/;
   let temVersaoPronta = new Set();   // nomes principais que têm versão cozida/grelhada (ex.: batata)
@@ -38,7 +42,7 @@ const Nutricao = (() => {
   const normBase = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
     .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
   // Palavras da frase que não fazem parte do nome do alimento ("tem dois ovos", "comi uns...")
-  const PALAVRAS_VAZIAS = new Set(['de', 'da', 'do', 'das', 'dos', 'com', 'e', 'a', 'o', 'as', 'os', 'um', 'uma', 'no', 'na', 'em',
+  const PALAVRAS_VAZIAS = new Set(['de', 'da', 'do', 'das', 'dos', 'com', 'ao', 'e', 'a', 'o', 'as', 'os', 'um', 'uma', 'no', 'na', 'em',
     'tem', 'tinha', 'teve', 'comi', 'comeu', 'era', 'eram', 'foi', 'foram', 'mais', 'cerca', 'aproximadamente', 'uns', 'umas',
     'so', 'apenas', 'meu', 'minha', 'meus', 'minhas', 'tambem', 'tbm', 'tb', 'ainda', 'depois', 'ai', 'aqui', 'isso', 'esse', 'essa',
     'almocei', 'jantei', 'lanchei', 'tomei', 'bebi', 'hoje', 'ontem', 'agora']);
@@ -50,15 +54,20 @@ const Nutricao = (() => {
 
   async function carregar() {
     if (taco) return;
-    const [t, m, c] = await Promise.all([
+    const [t, m, c, ib] = await Promise.all([
       fetch('dados/taco.json').then(r => r.json()),
       fetch('dados/medidas.json').then(r => r.ok ? r.json() : {medidas: []}).catch(() => ({medidas: []})),
-      fetch('dados/complementar.json').then(r => r.ok ? r.json() : {alimentos: []}).catch(() => ({alimentos: []}))
+      fetch('dados/complementar.json').then(r => r.ok ? r.json() : {alimentos: []}).catch(() => ({alimentos: []})),
+      fetch('dados/ibge.json').then(r => r.ok ? r.json() : {alimentos: []}).catch(() => ({alimentos: []}))
     ]);
     taco = t.alimentos.map(a => ({id: a[0], nome: a[1], kcal: a[3], prot: a[4], carbo: a[5], gord: a[6], fibra: a[7], chave: norm(a[1])}));
     medidas = m.medidas || [];
     // Alimentos que a TACO não tem (ex.: macarrão cozido), de outra fonte citada; ids 9001+
     for (const x of c.novos || []) taco.push({id: x.id, nome: x.nome, kcal: x.kcal, prot: x.prot, carbo: x.carbo, gord: x.gord, fibra: x.fibra ?? 0, chave: norm(x.nome), fonte: x.fonte});
+    // Alimentos que a TACO não tem, da POF 2008-2009 do IBGE (pratos regionais, preparações), com as medidas caseiras do IBGE
+    for (const [id, nome, kcal, prot, carbo, gord, fibra] of ib.alimentos || [])
+      taco.push({id, nome, kcal, prot, carbo, gord, fibra: fibra ?? 0, chave: norm(nome), ibge: true, fonte: 'IBGE, POF 2008-2009'});
+    for (const [id, medida, gramas] of ib.medidas || []) medidas.push({taco_id: id, medida, gramas, livro: 'ibge'});
     // Alimentos que a TACO deixou sem valores ("*"), completados com outra fonte citada
     for (const x of c.alimentos || []) {
       const a = taco.find(a => a.id === x.taco_id);
@@ -119,7 +128,7 @@ const Nutricao = (() => {
     const raiz = w => w.length >= 5 ? w.replace(/[aoe]$/, '') : w;
     const bate = (t, w) => { w = sing(w); return w === t || raiz(w) === raiz(t); };
     const querCru = termos.includes('cru') || termos.includes('crua');
-    let melhor = null, pts = 0;
+    let melhor = null, pts = 0, melhorTaco = null, ptsTaco = 0;
     for (const a of taco) {
       const palavras = a.chave.split(' ');
       // O alimento principal (1ª palavra importante) precisa estar no nome: tilápia ≠ merluza.
@@ -142,10 +151,14 @@ const Nutricao = (() => {
       if (PROCESSADO.test(a.chave) && !termos.some(t => PROCESSADO.test(t))) p -= 1;
       const todasBatem = termos.every(t => GENERICAS.has(t) || palavras.some(w => bate(t, w)));
       if (todasBatem && a.prep) p += 0.5;                                // preparação da Layane ganha da TACO genérica
+      if (a.ibge) p -= 0.2;                                              // no empate, a TACO (fonte principal) vence o IBGE
       if (todasBatem && tipoPadrao.length && tipoPadrao.every(w => palavras.map(sing).includes(w))) p += 0.5;
       p -= a.nome.length / 1000;                                         // desempate: nome mais simples
       if (p > pts) { pts = p; melhor = a; }
+      if (todasBatem && !a.ibge && p > ptsTaco) { ptsTaco = p; melhorTaco = a; }
     }
+    // a TACO é a fonte principal: se ela tem um alimento com todas as palavras, ele vence o do IBGE
+    if (melhor?.ibge && melhorTaco && ptsTaco > 0.5) { melhor = melhorTaco; pts = ptsTaco; }
     if (!(pts > 0.5)) return nada;   // o alimento principal já é obrigatório acima
     const ws = melhor.chave.split(' ');
     // numa preparação cadastrada, o modo de preparo ("assado") não precisa estar no nome

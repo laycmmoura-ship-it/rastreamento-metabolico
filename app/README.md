@@ -61,6 +61,13 @@ depois o livro de Pinheiro et al. e por último a tabela do IBGE.
   alimentos ligados à TACO com todas as palavras iguais (mais alguns nomes regionais conferidos à mão,
   como açaí, farofa, pão de sal e peixe de água doce); linhas "grama/quilo" e pesos de colher implausíveis
   ficam de fora; não sobrescrevem medidas do Web Diet nem de Pinheiro. O PDF não é distribuído aqui.
+- **Alimentos que nem a TACO nem Pinheiro têm** (`app/dados/ibge.json`, ids = código IBGE × 100 + preparo):
+  cerca de 1.690 alimentos e preparações da **POF 2008-2009 do IBGE** (Tabelas de Composição Nutricional dos
+  Alimentos Consumidos no Brasil, Tabela 1: kcal, proteína, lipídios, carboidrato e fibra por 100 g; Rio de
+  Janeiro: IBGE, 2011), como tapioca de goma, vinagrete, pirão, beiju, peixe de água doce, com as medidas
+  caseiras do mesmo alimento na Tabela de Medidas Referidas. Quem já tem equivalente conferido na TACO fica de
+  fora, e na busca a TACO vence o IBGE quando as duas têm o alimento. O "açaí" do IBGE (fruto, 262 kcal) não
+  entra: vale o açaí polpa da TACO. Ferramentas `ibge_4_ler_composicao.py` e `ibge_5_juntar_composicao.py`.
 - **Alimentos que a TACO não tem** (`app/dados/complementar.json`, campo `novos`, ids 9001+): 74 alimentos
   comuns e sem marca (macarrão cozido, pão de forma, peixes, ovo mexido, grão-de-bico, purê, strogonoff,
   lasanha, pizzas, bolos, biscoitos, sopas…), com kcal e macros por 100 g de Pinheiro et al. (4ª ed.) e a
