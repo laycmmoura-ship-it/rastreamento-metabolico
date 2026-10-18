@@ -149,13 +149,16 @@ const Nutricao = (() => {
       if (!querCru && /\bcrua?\b/.test(a.chave) && temVersaoPronta.has(principal)) p -= 1.5;
       if (!querCru && PREPARADO.test(a.chave)) p += 0.5;
       if (PROCESSADO.test(a.chave) && !termos.some(t => PROCESSADO.test(t))) p -= 1;
+      if (/\b(concentrad|envasad)/.test(a.chave) && !termos.some(t => /^(concentrad|envasad|caixinha)/.test(t))) p -= 0.6;
       const todasBatem = termos.every(t => GENERICAS.has(t) || palavras.some(w => bate(t, w)));
+      if (a.ibge && !todasBatem) continue;                               // IBGE é complemento: só entra quando bate por inteiro
       if (todasBatem && a.prep) p += 0.5;                                // preparação da Layane ganha da TACO genérica
       if (a.ibge) p -= 0.2;                                              // no empate, a TACO (fonte principal) vence o IBGE
       if (todasBatem && tipoPadrao.length && tipoPadrao.every(w => palavras.map(sing).includes(w))) p += 0.5;
       p -= a.nome.length / 1000;                                         // desempate: nome mais simples
       if (p > pts) { pts = p; melhor = a; }
-      if (todasBatem && !a.ibge && p > ptsTaco) { ptsTaco = p; melhorTaco = a; }
+      // (suco "concentrado, envasado" da TACO não vale por suco natural)
+      if (todasBatem && !a.ibge && p > ptsTaco && !(/\b(concentrad|envasad)/.test(a.chave) && !termos.some(t => /^(concentrad|envasad|caixinha)/.test(t)))) { ptsTaco = p; melhorTaco = a; }
     }
     // a TACO é a fonte principal: se ela tem um alimento com todas as palavras, ele vence o do IBGE
     if (melhor?.ibge && melhorTaco && ptsTaco > 0.5) { melhor = melhorTaco; pts = ptsTaco; }

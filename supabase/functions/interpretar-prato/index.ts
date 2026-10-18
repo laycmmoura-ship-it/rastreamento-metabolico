@@ -46,7 +46,9 @@ Regras:
 - Pratos típicos com nome próprio (strogonoff, lasanha, feijoada, pizza, maniçoba, baião de dois) ficam como um item só.
 - Sanduíche, misto, tapioca recheada, cuscuz recheado, salada montada, açaí com complementos: separe nos componentes, cada um com quantidade e gramas_estimados (ex.: misto quente = pão de forma 2 fatias 50 g, queijo muçarela 1 fatia 20 g, presunto 1 fatia 15 g, manteiga 5 g).
 - Bebidas: preparo null ("suco de laranja", não "suco de laranja cru"). Se der pra ver, diga se é natural ou de caixinha no nome.
+- quantidade e medida caseira: preencha sempre que der (1 fatia, 2 colheres de sopa, 1 copo, 1 unidade), mesmo vindo de foto. O app usa o peso oficial da medida quando tem.
 - gramas_estimados: preencha SEMPRE com a melhor estimativa do peso total do item (porção típica de adulto se a pessoa não disse a quantidade). Copo de suco: some só o líquido.
+- Porções de referência (não exagere): 1 fatia de queijo muçarela ou prato ≈ 20 g; 1 fatia de presunto ≈ 15 g; 1 fatia de pão de forma ≈ 25 g; pão francês ≈ 50 g; manteiga ou requeijão na ponta da faca ≈ 5 g; 1 ovo ≈ 50 g; copo de suco 200 a 300 ml; colher de sopa de arroz ≈ 25 g; concha de feijão ≈ 140 g. Num sanduíche comum, conte 1 fatia de cada recheio, a não ser que se veja ou a pessoa diga mais.
 - Ingredientes óbvios do preparo que ela não citou (óleo, sal) NÃO entram.
 - Recipiente não é alimento: "tigela de açaí" = alimento açaí, medida tigela; "copo de suco" = suco, medida copo.
 - Pratos regionais e preparações (tambaqui, baião de dois, farofa, vinagrete, maniçoba): mantenha o nome e preencha equivalente com o alimento simples mais parecido.
@@ -58,6 +60,7 @@ Regras:
 const Conversa = z.object({
   texto: z.string().describe("resposta para a paciente, em texto simples; pode usar **negrito** e listas com '- '"),
   encaminhar_layane: z.boolean().describe("true quando o assunto precisa da Layane (clínico, medicamento, suplemento, sintoma, mudar o plano, ou você não sabe)"),
+  foto_e_refeicao: z.boolean().describe("só no modo Restaurante: true se a foto mostra comida ou bebida já servida (prato, lanche, copo), e não um cardápio; nos outros modos, false"),
   estimativas: z.array(z.object({
     nome: z.string().describe("nome do prato como está no cardápio"),
     porcao: z.string().describe("o que conta como 1 pessoa, ex.: '1/2 do prato (serve 2)' ou '1 prato individual'"),
@@ -90,6 +93,8 @@ const MODOS: Record<string, string> = {
   chef: `Modo Chef: a paciente diz os ingredientes que tem e você sugere UMA receita simples e saudável com eles (pode acrescentar temperos básicos, sal, alho, cebola, ervas, um fio de azeite). Formato: nome da receita em **negrito**, ingredientes em lista com medidas caseiras, modo de preparo em poucos passos. Lembre que a porção deve seguir as quantidades do plano dela.`,
   restaurante: `Modo Restaurante: a paciente manda fotos do cardápio (podem ser várias páginas; leia todas) ou escreve as opções, e diz o que quer priorizar, ou qual prato escolheu. Indique as 2 ou 3 melhores escolhas do próprio cardápio, explicando em uma linha cada (proteína, preparo, vegetais), diga o que é melhor evitar e um ajuste simples ("molho à parte", "troca a fritas por salada"). Se ela disser qual prato escolheu, foque nele.
 Calorias: NÃO escreva números de calorias no texto. Em vez disso, preencha estimativas com cada prato indicado (e o escolhido, se houver): decomponha em componentes simples (peixe assado, arroz branco, feijão, farofa, batata...) com gramas_estimados por pessoa, usando o peso e o "serve N pessoas" do cardápio quando houver. O app calcula pela tabela TACO e mostra junto da tua resposta. No texto, pode dizer que a estimativa por pessoa aparece logo abaixo.
+Porções por pessoa realistas: 1 fatia de queijo ≈ 20 g, 1 fatia de presunto ≈ 15 g, pão francês ≈ 50 g, filé de peixe ou carne de restaurante 120 a 200 g, colher de servir de arroz ≈ 45 g.
+Se a foto for de comida já servida (o prato ou lanche que ela vai comer, e não um cardápio), marque foto_e_refeicao = true e escreva só uma frase curta: o app vai registrar a refeição.
 Se não tiver foto nem opções, peça a foto do cardápio.`,
   mercado: `Modo Mercado: a paciente manda a foto do rótulo (tabela nutricional e ingredientes) ou pergunta como escolher um produto. Leia o que está na foto e comente de forma objetiva: proteína e fibras por porção, açúcar adicionado, sódio, gordura saturada, lupa frontal, ordem dos ingredientes, tamanho da porção. Compare com uma opção mais simples quando fizer sentido. Suplementos (whey, creatina, colágeno, cápsulas etc.): pode ler o rótulo e explicar de forma objetiva o que ele mostra, por exemplo, no whey, proteína por dose (scoop) e a proporção de proteína na dose (24 g em 30 g = 80%), se é concentrado, isolado ou hidrolisado, carboidratos e açúcares, gorduras, sódio, adoçantes, aromatizantes, espessantes e a ordem dos ingredientes. Se mandar dois rótulos, pode mostrar as diferenças lado a lado. NUNCA diga qual usar, qual é melhor, se ela deve usar, quanto, quando ou por quanto tempo, nem dê nota ou ranking: termine dizendo que a escolha e o uso é com a Layane, no plano dela, e marque encaminhar_layane = true. Se a foto estiver ilegível, peça outra.`,
   duvidas: `Modo Dúvidas: responda dúvidas gerais de alimentação do dia a dia (substituições, como montar o prato, como descrever a refeição pro app, organização das refeições). Se a pergunta depender do plano individual dela, diga o princípio geral e que a quantidade certa está no plano ou com a Layane.`,
@@ -157,7 +162,7 @@ Deno.serve(async (req) => {
       });
       if (r.stop_reason === "refusal") return resposta({ erro: "recusado" }, 422, origem);
       if (!r.parsed_output) return resposta({ erro: "resposta fora do formato" }, 502, origem);
-      if (modo !== "restaurante") r.parsed_output.estimativas = [];
+      if (modo !== "restaurante") { r.parsed_output.estimativas = []; r.parsed_output.foto_e_refeicao = false; }
       return resposta({ ...r.parsed_output, modelo: r.model, uso: r.usage }, 200, origem);
     }
 

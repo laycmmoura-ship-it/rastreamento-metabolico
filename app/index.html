@@ -430,6 +430,8 @@ async function responder(modo, msg, foto) {
   if (clinico && !foto && !(modo === 'duvidas' && ehRefeicao(msg))) return encaminhar();
   if (!iaLigada()) return respostaDemo(modo, msg, foto);
   if (modo === 'duvidas') return gerarDemo(modo, msg, foto);  // prato pela TACO; dúvidas caem em conversarComIA
+  // no Restaurante, depois de registrar um prato, as próximas falas podem ser correções ("o suco é de maracujá")
+  if (modo === 'restaurante' && !foto && ultimoPrato) return analisarPrato(msg, null, 'restaurante');
   return conversarComIA(modo, msg, foto);
 }
 
@@ -461,6 +463,8 @@ async function conversarComIA(modo, msg, foto) {
     });
     if (!r.ok) throw new Error('IA ' + r.status);
     const ia = await r.json();
+    // foto de comida servida (não de cardápio) no Restaurante: registra como refeição, igual ao "Meu prato"
+    if (modo === 'restaurante' && foto && ia.foto_e_refeicao) return analisarPrato(msg, foto, 'restaurante');
     return formatar(ia.texto || '') + (ia.estimativas?.length ? await estimativasRestaurante(ia.estimativas) : '') + (ia.encaminhar_layane ? botaoWhatsApp() : '');
   } catch {
     return '<p>Não consegui responder agora 😕 Tenta de novo daqui a pouquinho. Se for urgente, fala com a Layane.</p>' + botaoWhatsApp();
@@ -620,7 +624,7 @@ function fraseDoItem(i) {
   return [n, med, i.tamanho, med ? 'de' : '', comida].filter(Boolean).join(' ');
 }
 
-async function analisarPrato(msg, foto) {
+async function analisarPrato(msg, foto, modoConversa = 'duvidas') {
   const temFoto = !!foto;
   try { await Nutricao.carregar(); } catch { return demoPrato(msg, temFoto); }
   let novos = null, viaIA = false, erroIA = null, semIA = false, acaoIA = null;
@@ -632,7 +636,7 @@ async function analisarPrato(msg, foto) {
   if (iaLigada() && !novos) {
     try {
       const ia = await interpretarComIA(msg, foto);
-      if (!ia.e_refeicao && !temFoto && !SOMAR.test(msg || '')) return conversarComIA('duvidas', msg, null);
+      if (!ia.e_refeicao && !temFoto && !SOMAR.test(msg || '')) return conversarComIA(modoConversa, msg, null);
       if (ia.itens?.length) { novos = itensDaIA(ia.itens); viaIA = true; acaoIA = ia.acao; }
     } catch (e) { erroIA = e.name === 'AbortError' ? 'demorou demais' : e.message; /* sem internet ou IA fora: usa o leitor local */ }
   }
