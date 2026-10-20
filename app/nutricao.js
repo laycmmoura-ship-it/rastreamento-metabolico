@@ -73,7 +73,7 @@ const Nutricao = (() => {
     for (const [id, medida, gramas] of ib.medidas || []) medidas.push({taco_id: id, medida, gramas, livro: 'ibge'});
     // Produtos de marca (tabelas nutricionais públicas de restaurantes); a medida "unidade" é a porção do produto
     (mc.itens || []).forEach((x, k) => {
-      const id = 3000000 + k, apelido = x.marca === 'bk' ? ' bk burger king' : '';
+      const id = 3000000 + k, apelido = x.marca === 'bk' ? ' bk burger king' : x.marca === 'borelli' ? ' borelli sorvete' : '';
       taco.push({id, nome: x.nome, kcal: x.kcal, prot: x.prot, carbo: x.carbo, gord: x.gord, fibra: x.fibra ?? 0, chave: norm(x.nome + apelido), marca: x.marca, fonte: (mc.fontes || {})[x.marca]});
       for (const med of ['unidade', 'porcao']) medidas.push({taco_id: id, medida: med, gramas: x.porcao, livro: x.marca, padrao: med === 'unidade'});
     });
@@ -124,7 +124,7 @@ const Nutricao = (() => {
     if (!termos.length) return nada;
     const qs = termos.join(' ');
     // sorvete de qualquer sabor: a tabela só tem o sorvete genérico (IBGE), então o sabor vira aproximação
-    const sorv = /^(sorvete|gelato|sorbet|picole)$/.test(termos[0]) && termos.length > 1 && PADRAO[termos[0]];
+    const sorv = /^(sorvete|gelato|sorbet|picole)$/.test(termos[0]) && termos.length > 1 && !termos.includes('borelli') && PADRAO[termos[0]];
     if (sorv) return {alimento: taco.find(a => a.id === sorv) || null, exato: false};
     // 1) nome comum conhecido, só quando o texto não traz outro detalhe (ex.: "batata frita" não é "batata")
     const sk = k => k.split(' ').filter(w => !PALAVRAS_VAZIAS.has(w)).map(sing).join(' ');

@@ -73,6 +73,11 @@ depois o livro de Pinheiro et al. e por último a tabela do IBGE.
   porção do produto (`ferramentas/marcas_1_ler_bk.py`, `marcas_2_juntar.py`). Conferido por Atwater; "Molho Grogu"
   (603 kcal em 26 g) ficou de fora por erro evidente na tabela. Só entram quando todas as palavras batem, e não passam
   na frente da TACO para alimentos genéricos ("batata frita" continua TACO; "batata frita do bk" usa o BK).
+  **Gelato Borelli**: tabela do site (gelatoborelli.com.br/tabela-nutricional), transcrita de prints em 20/10/2026
+  (`ferramentas/marcas_3_borelli.py`): 59 gelatos ao leite, 19 sorbets, 21 zero açúcar e 6 extras, porção de 60 g
+  por sabor (usada também como "bola" quando a paciente não diz o peso). Conferido por Atwater; a única divergência
+  (Paçoca zero açúcar, 97 kcal × macros ≈ 81) foi mantida como está na fonte. A lista zero açúcar e os extras vieram
+  incompletos nos prints.
 - **Alimentos que a TACO não tem** (`app/dados/complementar.json`, campo `novos`, ids 9001+): 74 alimentos
   comuns e sem marca (macarrão cozido, pão de forma, peixes, ovo mexido, grão-de-bico, purê, strogonoff,
   lasanha, pizzas, bolos, biscoitos, sopas…), com kcal e macros por 100 g de Pinheiro et al. (4ª ed.) e a
