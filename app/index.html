@@ -215,6 +215,59 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
 .menu button:hover,.menu a:hover{background:var(--verde-bg)}
 .menu .sep{height:1px;background:var(--borda);margin:8px 0}
 .menu .info{font-size:12px;color:var(--texto-muted);line-height:1.5;margin-top:auto}
+/* diário */
+.diario-pergunta{margin-top:10px;border-top:1px dashed var(--borda);padding-top:10px}
+.diario-pergunta p{font-size:13px;margin-bottom:6px}
+.diario-pergunta .linha-salvar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.diario-pergunta select{font:inherit;font-size:13px;padding:7px 8px;border:1px solid var(--borda);border-radius:10px;background:var(--branco);color:var(--texto)}
+.btn-diario{font:inherit;font-size:13px;font-weight:600;border:none;border-radius:10px;padding:8px 12px;background:var(--verde);color:#fff;cursor:pointer}
+.btn-diario.leve{background:var(--verde-light);color:var(--verde)}
+.salvo{font-size:13px;color:#1f5c41}
+.salvo button{font:inherit;font-size:12.5px;border:none;background:none;color:var(--ouro-escuro);text-decoration:underline;cursor:pointer;padding:0 0 0 4px}
+.banner-diario{width:100%;display:flex;align-items:center;gap:12px;background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;cursor:pointer;text-align:left;font-family:inherit;box-shadow:var(--shadow)}
+.banner-diario .ic{font-size:24px}
+.banner-diario b{display:block;color:var(--verde);font-size:15px}
+.banner-diario span{font-size:12.5px;color:var(--texto-muted)}
+.banner-diario .seta{margin-left:auto;color:var(--ouro-escuro);font-size:20px}
+.dia-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.dia-nav button{font:inherit;border:1px solid var(--borda);background:var(--branco);border-radius:10px;padding:6px 12px;color:var(--verde);cursor:pointer}
+.dia-nav button:disabled{opacity:.35}
+.dia-nav b{font-size:15px}
+.abas{display:flex;gap:6px;margin-bottom:14px}
+.abas button{flex:1;font:inherit;font-size:13.5px;font-weight:600;padding:9px;border-radius:12px;border:1px solid var(--borda);background:var(--branco);color:var(--texto-muted);cursor:pointer}
+.abas button.on{background:var(--verde);border-color:var(--verde);color:#fff}
+.tot-dia{background:var(--verde);color:#fff;border-radius:var(--radius);padding:14px 16px;margin-bottom:12px}
+.tot-dia .kcal{font-size:28px;font-weight:600}
+.tot-dia .kcal small{font-size:13px;font-weight:400;opacity:.85}
+.tot-dia .macros{display:flex;gap:16px;margin-top:6px;font-size:12.5px;opacity:.95}
+.tot-dia .macros b{font-size:15px;display:block}
+.ref-bloco{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:10px 14px;margin-bottom:10px}
+.ref-bloco h3{font-size:14px;color:var(--verde);display:flex;justify-content:space-between;margin-bottom:4px}
+.ref-bloco h3 span{color:var(--texto-muted);font-weight:500;font-size:13px}
+.reg{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-top:1px solid var(--verde-bg);font-size:13px}
+.reg:first-of-type{border-top:none}
+.reg div{flex:1}
+.reg small{display:block;color:var(--texto-muted);font-size:12px;margin-top:2px}
+.reg .k{font-weight:600;color:var(--verde);white-space:nowrap}
+.reg button{border:none;background:none;color:var(--texto-muted);font-size:15px;cursor:pointer;padding:0 2px}
+.ref-vazia{font-size:12.5px;color:var(--texto-muted)}
+.semana-graf{background:var(--branco);border:1px solid var(--borda);border-radius:var(--radius);padding:14px 12px 10px;margin-bottom:12px}
+.barras{display:flex;align-items:flex-end;gap:2px;height:150px;border-bottom:1px solid var(--borda)}
+.barras .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;cursor:pointer;background:none;border:none;padding:0 3px;font:inherit}
+.barras .bar{width:100%;max-width:30px;background:var(--verde);border-radius:4px 4px 0 0;min-height:0}
+.barras .col.hoje .bar{background:var(--ouro)}
+.barras .col.sel .bar{outline:2px solid var(--ouro-escuro);outline-offset:1px}
+.dias{display:flex;gap:2px;margin-top:4px}
+.dias span{flex:1;text-align:center;font-size:11px;color:var(--texto-muted)}
+.graf-info{font-size:12.5px;color:var(--texto);margin-top:8px;min-height:18px;text-align:center}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.tile{background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:10px 12px}
+.tile small{display:block;font-size:11.5px;color:var(--texto-muted)}
+.tile b{font-size:19px;color:var(--texto)}
+.tile span{font-size:12px;color:var(--texto-muted)}
+.tabela-semana{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--branco);border-radius:12px;overflow:hidden}
+.tabela-semana td,.tabela-semana th{padding:6px 8px;border-bottom:1px solid var(--verde-bg);text-align:right}
+.tabela-semana td:first-child,.tabela-semana th:first-child{text-align:left}
 </style>
 </head>
 <body>
@@ -255,6 +308,7 @@ body{font-family:'Poppins',sans-serif;background:var(--verde-bg);color:var(--tex
 <nav class="menu" id="menu" aria-label="Menu">
   <img class="menu-logo" src="marca/logo-horizontal.jpg" alt="Layane Moura · Nutricionista Clínica · CRN 18985">
   <button data-ir="inicio">🏠 Início</button>
+  <button data-ir="diario">📒 Meu diário</button>
   <button data-ir="receitas">📖 Receitas</button>
   <button data-modo="chef">🍳 Chef Lay</button>
   <button data-modo="restaurante">🍽️ Lay no Restaurante</button>
@@ -325,6 +379,7 @@ function telaInicio() {
       <h2>${oi}! <em>Como posso te ajudar hoje?</em></h2>
       <p>Sou a assistente virtual da Layane. Te ajudo a seguir o plano em casa, no restaurante e no mercado.</p>
     </div>
+    ${bannerDiario()}
     <button class="banner-receitas" data-ir="receitas">
       <div class="ic">📖</div>
       <div><strong>Receitas</strong><span>Ideias práticas para o seu dia a dia</span></div>
@@ -597,12 +652,14 @@ async function estimativasRestaurante(lista) {
   const r = n => Math.round(n);
   const cards = lista.map(p => {
     const itens = itensDaIA(p.itens || []), tot = Nutricao.calcular(itens);
+    const k = proxEscolha++; escolhas[k] = {titulo: p.nome, itens};
     const fora = itens.filter(i => !i.calc).map(i => i.texto);
     const calc = itens.filter(i => i.calc).length;
     const kcalTxt = !calc ? 'sem cálculo' : `≈ ${r(tot.kcal)} kcal${fora.length ? ' (parcial)' : ''}`;
     return `<div class="est-rest"><div class="topo-est"><b>${esc(p.nome)}</b><span class="kcal">${kcalTxt}</span></div>
       <small>${esc(p.porcao || 'por pessoa')} · P ${r(tot.prot)} g · C ${r(tot.carbo)} g · G ${r(tot.gord)} g${fora.length ? ` · sem cálculo: ${esc(fora.join(', '))}` : ''}</small>
-      <details><summary>Como calculei</summary><ul>${itens.map(i => `<li>${esc(i.alimento?.nome || i.texto)}${i.exato ? '' : ' (aproximação)'}: ${i.gramas != null ? r(i.gramas) + ' g' : 'sem peso'}${i.calc ? ` · ${r(i.calc.kcal)} kcal` : ''}</li>`).join('')}</ul></details></div>`;
+      <details><summary>Como calculei</summary><ul>${itens.map(i => `<li>${esc(i.alimento?.nome || i.texto)}${i.exato ? '' : ' (aproximação)'}: ${i.gramas != null ? r(i.gramas) + ' g' : 'sem peso'}${i.calc ? ` · ${r(i.calc.kcal)} kcal` : ''}</li>`).join('')}</ul></details>
+      ${calc ? `<div class="diario-pergunta" id="de-${k}">${blocoSalvarEscolha(k)}</div>` : ''}</div>`;
   }).join('');
   return `<div class="estimativas">${cards}</div><p class="mini">Estimativa por pessoa: porções estimadas pela Lay IA a partir do cardápio, calorias pela ${Nutricao.fonte}. O preparo do restaurante (óleo, molhos) pode mudar bastante o valor.</p>`;
 }
@@ -650,7 +707,9 @@ async function analisarPrato(msg, foto, modoConversa = 'duvidas') {
   const anterior = !corrigido && (acaoIA === 'soma' || (!acaoIA && SOMAR.test(msg))) && ultimoPrato && pratos[ultimoPrato];
   const itens = anterior ? [...anterior.itens.map(i => ({...i})), ...novos] : novos;
   const id = proxPrato++;
-  pratos[id] = {itens, temFoto: temFoto || !!corrigido?.temFoto, soFoto: temFoto && !msg, somado: !!anterior, corrigido: !!corrigido, viaIA, erroIA, semIA};
+  const base = (corrigido || anterior) ? ultimoPrato : null;
+  pratos[id] = {itens, temFoto: temFoto || !!corrigido?.temFoto, soFoto: temFoto && !msg, somado: !!anterior, corrigido: !!corrigido, viaIA, erroIA, semIA,
+    cadeia: [...(base && pratos[base]?.cadeia || []), `${SESSAO}:${id}`]};
   ultimoPrato = id;
   return `<div class="prato-res" data-prato="${id}">${desenharPrato(id)}</div>`;
 }
@@ -688,6 +747,7 @@ function desenharPrato(id) {
       <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
     </div>` : ''}
     <p class="mini">Valores da ${Nutricao.fonte}${itens.some(i => i.alimento?.id >= 9000 && i.alimento.id < 100000) ? '; itens que a TACO não tem, da tabela de Pinheiro et al. (4ª ed.)' : ''}${itens.some(i => i.alimento?.ibge) ? '; itens que a TACO não tem, da POF 2008-2009 (IBGE)' : ''}${itens.some(i => i.alimento?.marca) ? '; produtos de marca pela tabela nutricional do próprio restaurante' : ''}${itens.some(i => i.alimento?.prep) ? '; preparações cadastradas pela nutricionista' : ''}. Medidas caseiras do Web Diet, de Pinheiro et al. e do IBGE. Óleo do preparo e molhos só entram se você escrever.</p>
+    ${calculados.length ? `<div class="diario-pergunta" id="dp-${id}">${blocoSalvar(id)}</div>` : ''}
     ${iaLigada() ? `<p class="mini">${viaIA ? '✨ Alimentos identificados pela Lay IA.' : semIA ? '✓ Entendi direto pela tabela, sem precisar da IA.' : `Leitor local${erroIA ? ` (IA indisponível: ${esc(erroIA)})` : ''}.`}</p>` : ''}`;
 }
 
@@ -820,12 +880,133 @@ texto.addEventListener('input', () => { ajustarAltura(); atualizarBotao(); });
 texto.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); enviar(); } });
 btnEnviar.onclick = () => enviar();
 
+// ====== Diário alimentar (fica salvo só neste celular) ======
+const SESSAO = Date.now().toString(36);
+const DIARIO_KEY = 'lay_diario_v1';
+const REFEICOES = ['Café da manhã', 'Lanche da manhã', 'Almoço', 'Lanche da tarde', 'Jantar', 'Ceia'];
+const escolhas = {}; let proxEscolha = 1;
+const lerDiario = () => { try { return JSON.parse(localStorage.getItem(DIARIO_KEY)) || []; } catch { return []; } };
+const gravarDiario = d => { try { localStorage.setItem(DIARIO_KEY, JSON.stringify(d)); return true; } catch { return false; } };
+const diaISO = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const refeicaoAgora = () => { const h = new Date().getHours(); return h < 10 ? 0 : h < 12 ? 1 : h < 15 ? 2 : h < 18 ? 3 : h < 21 ? 4 : 5; };
+const seletorRefeicao = sel => `<select aria-label="Refeição">${REFEICOES.map((r, i) => `<option value="${i}"${i === sel ? ' selected' : ''}>${r}</option>`).join('')}</select>`;
+const somaRegistro = itens => itens.reduce((t, i) => ({kcal: t.kcal + i.kcal, prot: t.prot + i.prot, carbo: t.carbo + i.carbo, gord: t.gord + i.gord}), {kcal: 0, prot: 0, carbo: 0, gord: 0});
+const itensParaDiario = itens => itens.filter(i => i.calc).map(i => ({nome: i.alimento.nome, qtd: i.qtdTexto || '', gramas: Math.round(i.gramas),
+  kcal: i.calc.kcal, prot: i.calc.prot, carbo: i.calc.carbo, gord: i.calc.gord}));
+
+function blocoSalvar(id) {
+  const reg = lerDiario().find(e => e.cadeia?.includes(`${SESSAO}:${id}`) && e.prato === `${SESSAO}:${id}`);
+  if (reg) return `<span class="salvo">✓ Salvo no diário · ${REFEICOES[reg.refeicao]}<button data-ir="diario">ver meu dia</button></span>`;
+  const sub = pratos[id].cadeia.length > 1 && lerDiario().some(e => e.cadeia?.some(c => pratos[id].cadeia.includes(c)));
+  return `<p>📒 Foi isso que você comeu?${sub ? ' Salvar substitui o registro anterior desta refeição.' : ''}</p>
+    <div class="linha-salvar">${seletorRefeicao(refeicaoAgora())}<button class="btn-diario" data-salvar-prato="${id}">Salvar no diário</button></div>`;
+}
+function blocoSalvarEscolha(k) {
+  if (escolhas[k].salvo != null) return `<span class="salvo">✓ Salvo no diário · ${REFEICOES[escolhas[k].salvo]}<button data-ir="diario">ver meu dia</button></span>`;
+  return `<div class="linha-salvar">${seletorRefeicao(refeicaoAgora())}<button class="btn-diario leve" data-salvar-escolha="${k}">Escolhi este · salvar no diário</button></div>`;
+}
+function salvarNoDiario(reg) {
+  // um prato corrigido ("o suco é de maracujá") substitui o registro da versão anterior
+  const d = lerDiario().filter(e => !(reg.cadeia && e.cadeia?.some(c => reg.cadeia.includes(c))));
+  d.push(reg);
+  return gravarDiario(d);
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-salvar-prato], [data-salvar-escolha]');
+  if (!b) return;
+  const caixa = b.closest('.diario-pergunta'), refeicao = +caixa.querySelector('select').value;
+  const agora = new Date(), base = {id: Date.now(), data: diaISO(agora), hora: agora.toTimeString().slice(0, 5), refeicao};
+  let ok;
+  if (b.dataset.salvarPrato) {
+    const id = +b.dataset.salvarPrato, p = pratos[id], itens = itensParaDiario(p.itens);
+    ok = salvarNoDiario({...base, titulo: itens.map(i => i.nome.split(',')[0]).slice(0, 4).join(', '), itens, tot: somaRegistro(itens),
+      origem: p.temFoto ? 'foto' : 'texto', prato: `${SESSAO}:${id}`, cadeia: p.cadeia});
+    if (ok) caixa.innerHTML = blocoSalvar(id);
+  } else {
+    const k = +b.dataset.salvarEscolha, esc0 = escolhas[k], itens = itensParaDiario(esc0.itens);
+    ok = salvarNoDiario({...base, titulo: esc0.titulo, itens, tot: somaRegistro(itens), origem: 'restaurante'});
+    if (ok) { esc0.salvo = refeicao; caixa.innerHTML = blocoSalvarEscolha(k); }
+  }
+  if (!ok) caixa.insertAdjacentHTML('beforeend', '<p class="mini">Não consegui salvar neste celular (modo privado ou memória cheia).</p>');
+});
+
+function bannerDiario() {
+  const hoje = lerDiario().filter(e => e.data === diaISO());
+  const kcal = Math.round(hoje.reduce((s, e) => s + e.tot.kcal, 0));
+  return `<button class="banner-diario" data-ir="diario"><div class="ic">📒</div>
+    <div><b>Meu diário</b><span>${hoje.length ? `Hoje: ${hoje.length} ${hoje.length > 1 ? 'registros' : 'registro'} · ≈ ${kcal.toLocaleString('pt-BR')} kcal` : 'Registre o que comeu hoje'}</span></div><div class="seta">›</div></button>`;
+}
+
+let diarioAba = 'dia', diarioData = diaISO();
+const dataLonga = iso => { const [a, m, d] = iso.split('-').map(Number); const dt = new Date(a, m - 1, d);
+  return iso === diaISO() ? 'Hoje' : dt.toLocaleDateString('pt-BR', {weekday: 'long', day: '2-digit', month: '2-digit'}); };
+const somarDias = (iso, n) => { const [a, m, d] = iso.split('-').map(Number); return diaISO(new Date(a, m - 1, d + n)); };
+
+function telaDiario() {
+  modoAtual = null; voltarPara = telaInicio;
+  document.querySelector('.app').classList.add('sem-entrada');
+  $('btnVoltar').hidden = false; $('btnMenu').hidden = true;
+  const r = n => Math.round(n);
+  const todos = lerDiario();
+  const abas = `<div class="abas"><button class="${diarioAba === 'dia' ? 'on' : ''}" data-aba="dia">Resumo do dia</button><button class="${diarioAba === 'semana' ? 'on' : ''}" data-aba="semana">Resumo da semana</button></div>`;
+  let corpo;
+  if (diarioAba === 'dia') {
+    const doDia = todos.filter(e => e.data === diarioData), tot = somaRegistro(doDia.map(e => e.tot));
+    corpo = `<div class="dia-nav"><button data-dia="-1" aria-label="Dia anterior">‹</button><b>${esc(dataLonga(diarioData))}</b><button data-dia="1" aria-label="Próximo dia"${diarioData >= diaISO() ? ' disabled' : ''}>›</button></div>
+      <div class="tot-dia"><div class="kcal">≈ ${r(tot.kcal).toLocaleString('pt-BR')} <small>kcal no dia</small></div>
+        <div class="macros"><div><b>${r(tot.prot)} g</b>proteína</div><div><b>${r(tot.carbo)} g</b>carbo</div><div><b>${r(tot.gord)} g</b>gordura</div></div></div>
+      ${REFEICOES.map((nome, i) => {
+        const regs = doDia.filter(e => e.refeicao === i), t = somaRegistro(regs.map(e => e.tot));
+        return `<div class="ref-bloco"><h3>${nome}<span>${regs.length ? `≈ ${r(t.kcal)} kcal` : ''}</span></h3>
+          ${regs.length ? regs.map(e => `<div class="reg"><div>${esc(e.titulo || 'Refeição')}<small>${e.hora} · ${e.itens.map(i => esc(i.nome.split(',')[0]) + (i.qtd ? ` (${esc(i.qtd)})` : '')).join(', ')}</small></div>
+            <span class="k">${r(e.tot.kcal)} kcal</span><button data-apagar-reg="${e.id}" aria-label="Apagar registro">✕</button></div>`).join('')
+          : `<div class="ref-vazia">Nada registrado.</div>`}</div>`;
+      }).join('')}
+      <button class="btn-diario" data-modo="duvidas" style="width:100%;margin:4px 0 10px">📸 Registrar uma refeição</button>`;
+  } else {
+    const dias = Array.from({length: 7}, (_, k) => somarDias(diaISO(), k - 6));
+    const porDia = dias.map(d => ({d, regs: todos.filter(e => e.data === d)})).map(x => ({...x, tot: somaRegistro(x.regs.map(e => e.tot))}));
+    const comReg = porDia.filter(x => x.regs.length), n = comReg.length || 1;
+    const med = somaRegistro(comReg.map(x => x.tot)), max = Math.max(1, ...porDia.map(x => x.tot.kcal));
+    const kcalMacros = med.prot * 4 + med.carbo * 4 + med.gord * 9 || 1, pct = v => Math.round(v * 100 / kcalMacros);
+    const nomeDia = d => { const [a, m, dd] = d.split('-').map(Number); return new Date(a, m - 1, dd).toLocaleDateString('pt-BR', {weekday: 'short'}).replace('.', ''); };
+    corpo = `<div class="semana-graf" role="img" aria-label="Calorias registradas por dia nos últimos 7 dias">
+        <div class="barras">${porDia.map(x => `<button class="col${x.d === diaISO() ? ' hoje' : ''}" data-info="${esc(dataLonga(x.d))}: ${x.regs.length ? `≈ ${r(x.tot.kcal).toLocaleString('pt-BR')} kcal · ${x.regs.length} ${x.regs.length > 1 ? 'registros' : 'registro'}` : 'sem registro'}" title="${r(x.tot.kcal)} kcal"><div class="bar" style="height:${x.tot.kcal ? Math.max(2, x.tot.kcal * 100 / max) : 0}%"></div></button>`).join('')}</div>
+        <div class="dias">${porDia.map(x => `<span>${nomeDia(x.d)}</span>`).join('')}</div>
+        <div class="graf-info" id="grafInfo">Toque numa barra pra ver o dia</div></div>
+      <div class="tiles">
+        <div class="tile"><small>Média por dia registrado</small><b>${comReg.length ? `≈ ${r(med.kcal / n).toLocaleString('pt-BR')}` : '–'}</b> <span>kcal</span></div>
+        <div class="tile"><small>Dias com registro</small><b>${comReg.length}</b> <span>de 7</span></div>
+        <div class="tile"><small>Proteína (média)</small><b>${r(med.prot / n)} g</b> <span>${comReg.length ? pct(med.prot * 4) + '% das kcal' : ''}</span></div>
+        <div class="tile"><small>Carboidrato (média)</small><b>${r(med.carbo / n)} g</b> <span>${comReg.length ? pct(med.carbo * 4) + '% das kcal' : ''}</span></div>
+        <div class="tile"><small>Gordura (média)</small><b>${r(med.gord / n)} g</b> <span>${comReg.length ? pct(med.gord * 9) + '% das kcal' : ''}</span></div>
+        <div class="tile"><small>Refeições registradas</small><b>${comReg.reduce((s, x) => s + x.regs.length, 0)}</b> <span>na semana</span></div>
+      </div>
+      <details><summary class="mini">Ver em tabela</summary>
+        <table class="tabela-semana"><tr><th>Dia</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr>
+        ${porDia.map(x => `<tr><td>${nomeDia(x.d)}</td><td>${x.regs.length ? r(x.tot.kcal) : '–'}</td><td>${x.regs.length ? r(x.tot.prot) : '–'}</td><td>${x.regs.length ? r(x.tot.carbo) : '–'}</td><td>${x.regs.length ? r(x.tot.gord) : '–'}</td></tr>`).join('')}</table></details>`;
+  }
+  conteudo.innerHTML = `<div class="livro-topo"><h2>📒 Meu diário</h2><p>Tudo que você salvar no "Meu prato" ou no Restaurante aparece aqui.</p></div>${abas}${corpo}
+    <div class="comparacao"><b>📋 Comparando com o seu plano</b><p>Quando a Layane cadastrar o seu plano, este resumo mostra quanto falta ou passou de cada refeição.</p></div>
+    <p class="mini">Valores estimados pela TACO e pelas outras tabelas do app. O diário fica salvo só neste celular: se apagar os dados do navegador ou trocar de celular, ele não vem junto.</p>`;
+  conteudo.scrollTop = 0;
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-aba]'); if (a) { diarioAba = a.dataset.aba; telaDiario(); return; }
+  const dn = e.target.closest('[data-dia]'); if (dn) { diarioData = somarDias(diarioData, +dn.dataset.dia); if (diarioData > diaISO()) diarioData = diaISO(); telaDiario(); return; }
+  const ap = e.target.closest('[data-apagar-reg]');
+  if (ap && confirm('Apagar este registro do diário?')) { gravarDiario(lerDiario().filter(x => x.id !== +ap.dataset.apagarReg)); telaDiario(); return; }
+  const col = e.target.closest('.barras .col');
+  if (col) { document.querySelectorAll('.barras .col').forEach(c => c.classList.toggle('sel', c === col)); $('grafInfo').textContent = col.dataset.info; }
+});
+
 // ====== Navegação ======
 document.addEventListener('click', e => {
   const m = e.target.closest('[data-modo]');
   if (m) abrirModo(m.dataset.modo);
   if (e.target.closest('[data-ir="inicio"]')) { telaInicio(); fecharMenu(); }
   if (e.target.closest('[data-ir="receitas"]')) { telaReceitas(); fecharMenu(); }
+  if (e.target.closest('[data-ir="diario"]')) { telaDiario(); fecharMenu(); }
   const r = e.target.closest('[data-receita]');
   if (r) telaReceita(+r.dataset.receita);
   const c = e.target.closest('[data-cat]');

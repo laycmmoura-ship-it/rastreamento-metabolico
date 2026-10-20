@@ -25,6 +25,8 @@ const Nutricao = (() => {
     'tapioca': 650151699, 'goma de tapioca': 650151699, 'tapioca de goma': 650151699, 'farinha de tapioca': 650151099,
     'vinagrete': 707920299, 'pirao': 850660199, 'beiju': 690450299,
     // sorvete/gelato/sorbet: a TACO não tem; IBGE "sorvete de qualquer sabor" (aproximação para gelato e sorbet)
+    'agua': 999001, 'agua mineral': 999001, 'agua com gas': 999001, 'agua sem gas': 999001,
+    'coca cola zero': 820080199, 'coca zero': 820080199, 'refrigerante zero': 820080199, 'coca cola sem acucar': 820080199,
     'sorvete': 690050199, 'sorvete de massa': 690050199, 'gelato': 690050199, 'sorbet': 690050199, 'picole': 690050299,
     'tambaqui': 740010104, 'tambaqui assado': 740010104, 'pirarucu': 740010104, 'peixe de agua doce': 740010199,
     'whey': null, 'whey protein': null, 'farinha de aveia': null,
@@ -71,6 +73,9 @@ const Nutricao = (() => {
     for (const [id, nome, kcal, prot, carbo, gord, fibra] of ib.alimentos || [])
       taco.push({id, nome, kcal, prot, carbo, gord, fibra: fibra ?? 0, chave: norm(nome), ibge: true, fonte: 'IBGE, POF 2008-2009'});
     for (const [id, medida, gramas] of ib.medidas || []) medidas.push({taco_id: id, medida, gramas, livro: 'ibge'});
+    // Água: não tem caloria (a TACO não lista); medidas só pra registrar a quantidade
+    taco.push({id: 999001, nome: 'Água', kcal: 0, prot: 0, carbo: 0, gord: 0, fibra: 0, chave: 'agua'});
+    for (const [med, g] of [['copo', 200], ['copo americano', 190], ['garrafa', 500], ['garrafinha', 300], ['lata', 350]]) medidas.push({taco_id: 999001, medida: med, gramas: g, padrao: med === 'copo'});
     // Produtos de marca (tabelas nutricionais públicas de restaurantes); a medida "unidade" é a porção do produto
     (mc.itens || []).forEach((x, k) => {
       const id = 3000000 + k, apelido = x.marca === 'bk' ? ' bk burger king' : x.marca === 'borelli' ? ' borelli sorvete' : '';
@@ -140,7 +145,7 @@ const Nutricao = (() => {
     const raiz = w => w.length >= 5 ? w.replace(/[aoe]$/, '') : w;
     const bate = (t, w) => { w = sing(w); return w === t || raiz(w) === raiz(t); };
     const querCru = termos.includes('cru') || termos.includes('crua');
-    let melhor = null, pts = 0, melhorTaco = null, ptsTaco = 0;
+    let melhor = null, pts = 0, melhorTaco = null, ptsTaco = 0, melhorSemMarca = null, ptsSemMarca = 0;
     for (const a of taco) {
       const palavras = a.chave.split(' ');
       // O alimento principal (1ª palavra importante) precisa estar no nome: tilápia ≠ merluza.
@@ -161,6 +166,7 @@ const Nutricao = (() => {
       if (!querCru && /\bcrua?\b/.test(a.chave) && temVersaoPronta.has(principal)) p -= 1.5;
       if (!querCru && PREPARADO.test(a.chave)) p += 0.5;
       if (PROCESSADO.test(a.chave) && !termos.some(t => PROCESSADO.test(t))) p -= 1;
+      if (/\b(light|diet|zero|organico)\b/.test(a.chave) && !termos.some(t => /^(light|diet|zero|organico)$/.test(t))) p -= 1;   // versão light/diet só se pedir
       if (/\b(concentrad|envasad)/.test(a.chave) && !termos.some(t => /^(concentrad|envasad|caixinha)/.test(t))) p -= 0.6;
       const todasBatem = termos.every(t => GENERICAS.has(t) || palavras.some(w => bate(t, w)));
       if ((a.ibge || a.marca) && !todasBatem) continue;                  // IBGE e marcas são complemento: só entram quando batem por inteiro
@@ -170,10 +176,13 @@ const Nutricao = (() => {
       p -= a.nome.length / 1000;                                         // desempate: nome mais simples
       if (p > pts) { pts = p; melhor = a; }
       // (suco "concentrado, envasado" da TACO não vale por suco natural)
+      if (todasBatem && !a.marca && p > ptsSemMarca) { ptsSemMarca = p; melhorSemMarca = a; }
       if (todasBatem && !a.ibge && !a.marca && p > ptsTaco && !(/\b(concentrad|envasad)/.test(a.chave) && !termos.some(t => /^(concentrad|envasad|caixinha)/.test(t)))) { ptsTaco = p; melhorTaco = a; }
     }
     // a TACO é a fonte principal: se ela tem um alimento com todas as palavras, ele vence o do IBGE
     if ((melhor?.ibge || melhor?.marca) && melhorTaco && ptsTaco > 0.5) { melhor = melhorTaco; pts = ptsTaco; }
+    // produto de marca só quando a marca foi citada ou nenhuma tabela tem o alimento ("suco de maracujá" ≠ suco do BK)
+    else if (melhor?.marca && melhorSemMarca && ptsSemMarca > 0.5 && !termos.some(t => /^(bk|burger|king|borelli)$/.test(t))) { melhor = melhorSemMarca; pts = ptsSemMarca; }
     if (!(pts > 0.5)) return nada;   // o alimento principal já é obrigatório acima
     const ws = melhor.chave.split(' ');
     // numa preparação cadastrada, o modo de preparo ("assado") não precisa estar no nome
@@ -266,7 +275,7 @@ const Nutricao = (() => {
   const NUM = {'um': 1, 'uma': 1, 'meia': 0.5, 'meio': 0.5, 'dois': 2, 'duas': 2, 'tres': 3, 'quatro': 4, 'cinco': 5};
   const RX_GRAMAS = /(\d+(?:[.,]\d+)?)\s*(g|gr|gramas?|ml)\b/;
   const RX_CONTAGEM = /^(\d+(?:[.,]\d+)?|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s+(?=[a-z])/;
-  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa|cafe|servir))?|escumadeiras?|folhas?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?(?:\s+americanos?)?|dosador(?:es)?|scoops?|porcao|porcoes|tigelas?|postas?|canecas?|cumbucas?|pires|tacas?|potes?|garfadas?|pegador(?:es)?|pratos?(?:\s+(?:fundos?|rasos?|de sobremesa))?|pontas? de faca|bolas?|casquinhas?)\b/;
+  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa|cafe|servir))?|escumadeiras?|folhas?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?(?:\s+americanos?)?|dosador(?:es)?|scoops?|porcao|porcoes|tigelas?|postas?|canecas?|cumbucas?|pires|tacas?|potes?|garfadas?|pegador(?:es)?|pratos?(?:\s+(?:fundos?|rasos?|de sobremesa))?|pontas? de faca|bolas?|casquinhas?|latas?|garrafas?|latinhas?)\b/;
 
   // "pão com manteiga" e "arroz com feijão" são dois alimentos; "frango com pele" é um só (existe assim na TACO).
   function separarCom(parte) {
@@ -285,7 +294,7 @@ const Nutricao = (() => {
   function lerPrato(texto) {
     const t = texto.replace(/½/g, ' meia ').replace(/^\s*(caf[eé] da manh[aã]|almo[cç]o|jantar|lanche|ceia)\s*:?/i, '');
     const QTD = '(?=\\d|um |uma |dois |duas |tr[eê]s |quatro |cinco |meia |meio )';
-    const MED = '(?:col|colher|concha|fil[eé]|bife|fatia|unidade|peda[cç]o|x[ií]cara|copo|escumadeira|folha|dosador|scoop|por[cç]|tigela|posta|caneca|cumbuca|pires|ta[cç]a|pote|garfada|pegador|prato|ponta|bola|casquinha)';
+    const MED = '(?:col|colher|concha|fil[eé]|bife|fatia|unidade|peda[cç]o|x[ií]cara|copo|escumadeira|folha|dosador|scoop|por[cç]|tigela|posta|caneca|cumbuca|pires|ta[cç]a|pote|garfada|pegador|prato|ponta|bola|casquinha|lata|latinha|garrafa)';
     const NOVA_QTD = `(?<!\\bde)\\s+(?=(?:\\d+(?:[.,]\\d+)?|um|uma|dois|duas|tr[eê]s|quatro|cinco|meia|meio)\\s+${MED})`;
     const NOVO_NUM = `(?<!\\bde)\\s+(?=\\d+(?:[.,]\\d+)?\\s+(?!g\\b|gr\\b|gramas?\\b|ml\\b)[a-zà-ú])`;  // "2 ovos 1 banana"
     const partes = t.split(new RegExp(`\\s+e\\s+|,|;|\\+|\\n|\\s+(?:com|mais)\\s+${QTD}|${NOVA_QTD}|${NOVO_NUM}`, 'i')).map(norm).filter(Boolean)
