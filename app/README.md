@@ -68,6 +68,11 @@ depois o livro de Pinheiro et al. e por último a tabela do IBGE.
   caseiras do mesmo alimento na Tabela de Medidas Referidas. Quem já tem equivalente conferido na TACO fica de
   fora, e na busca a TACO vence o IBGE quando as duas têm o alimento. O "açaí" do IBGE (fruto, 262 kcal) não
   entra: vale o açaí polpa da TACO. Ferramentas `ibge_4_ler_composicao.py` e `ibge_5_juntar_composicao.py`.
+- **Produtos de redes** (`app/dados/marcas.json`, ids 3000000+): Burger King Brasil, tabela nutricional pública
+  da ZAMP S.A. (versão jun/2026), ~100 produtos com kcal e macros convertidos para 100 g/ml e a medida "unidade" =
+  porção do produto (`ferramentas/marcas_1_ler_bk.py`, `marcas_2_juntar.py`). Conferido por Atwater; "Molho Grogu"
+  (603 kcal em 26 g) ficou de fora por erro evidente na tabela. Só entram quando todas as palavras batem, e não passam
+  na frente da TACO para alimentos genéricos ("batata frita" continua TACO; "batata frita do bk" usa o BK).
 - **Alimentos que a TACO não tem** (`app/dados/complementar.json`, campo `novos`, ids 9001+): 74 alimentos
   comuns e sem marca (macarrão cozido, pão de forma, peixes, ovo mexido, grão-de-bico, purê, strogonoff,
   lasanha, pizzas, bolos, biscoitos, sopas…), com kcal e macros por 100 g de Pinheiro et al. (4ª ed.) e a

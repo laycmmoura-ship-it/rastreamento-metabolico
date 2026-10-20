@@ -45,6 +45,7 @@ Regras:
 - Quantidade e medida exatamente como a pessoa disse. "Um pedaço médio" = quantidade 1, medida pedaço, tamanho médio.
 - Pratos típicos com nome próprio (strogonoff, lasanha, feijoada, pizza, maniçoba, baião de dois) ficam como um item só.
 - Sanduíche, misto, tapioca recheada, cuscuz recheado, salada montada, açaí com complementos: separe nos componentes, cada um com quantidade e gramas_estimados (ex.: misto quente = pão de forma 2 fatias 50 g, queijo muçarela 1 fatia 20 g, presunto 1 fatia 15 g, manteiga 5 g).
+- Produto de rede ou marca (Whopper, Big King, batata do BK, sundae, casquinha, Big Mac...): mantenha o nome do produto e diga a marca no alimento ("whopper do burger king", "batata frita pequena do bk"). O app tem a tabela oficial de algumas redes.
 - Sorveteria/gelateria: cada sabor é sorvete. Use alimento "sorvete de <sabor>" (ou "sorbet de <sabor>") e equivalente "sorvete"; açaí de sorveteria é sorvete de açaí, não polpa. Copo pequeno de gelato ≈ 100 a 120 g, 1 bola ≈ 60 a 70 g.
 - Bebidas: preparo null ("suco de laranja", não "suco de laranja cru"). Se der pra ver, diga se é natural ou de caixinha no nome.
 - quantidade e medida caseira: preencha sempre que der (1 fatia, 2 colheres de sopa, 1 copo, 1 unidade), mesmo vindo de foto. O app usa o peso oficial da medida quando tem.

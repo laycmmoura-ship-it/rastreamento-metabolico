@@ -687,7 +687,7 @@ function desenharPrato(id) {
       <b>📋 Comparando com o seu plano</b>
       <p>Seu plano ainda não está cadastrado no app. Quando a Layane cadastrar, eu comparo automaticamente com o que está previsto para essa refeição.</p>
     </div>` : ''}
-    <p class="mini">Valores da ${Nutricao.fonte}${itens.some(i => i.alimento?.id >= 9000 && i.alimento.id < 100000) ? '; itens que a TACO não tem, da tabela de Pinheiro et al. (4ª ed.)' : ''}${itens.some(i => i.alimento?.ibge) ? '; itens que a TACO não tem, da POF 2008-2009 (IBGE)' : ''}${itens.some(i => i.alimento?.prep) ? '; preparações cadastradas pela nutricionista' : ''}. Medidas caseiras do Web Diet, de Pinheiro et al. e do IBGE. Óleo do preparo e molhos só entram se você escrever.</p>
+    <p class="mini">Valores da ${Nutricao.fonte}${itens.some(i => i.alimento?.id >= 9000 && i.alimento.id < 100000) ? '; itens que a TACO não tem, da tabela de Pinheiro et al. (4ª ed.)' : ''}${itens.some(i => i.alimento?.ibge) ? '; itens que a TACO não tem, da POF 2008-2009 (IBGE)' : ''}${itens.some(i => i.alimento?.marca) ? '; produtos de marca pela tabela nutricional do próprio restaurante' : ''}${itens.some(i => i.alimento?.prep) ? '; preparações cadastradas pela nutricionista' : ''}. Medidas caseiras do Web Diet, de Pinheiro et al. e do IBGE. Óleo do preparo e molhos só entram se você escrever.</p>
     ${iaLigada() ? `<p class="mini">${viaIA ? '✨ Alimentos identificados pela Lay IA.' : semIA ? '✓ Entendi direto pela tabela, sem precisar da IA.' : `Leitor local${erroIA ? ` (IA indisponível: ${esc(erroIA)})` : ''}.`}</p>` : ''}`;
 }
 

@@ -56,11 +56,12 @@ const Nutricao = (() => {
 
   async function carregar() {
     if (taco) return;
-    const [t, m, c, ib] = await Promise.all([
+    const [t, m, c, ib, mc] = await Promise.all([
       fetch('dados/taco.json').then(r => r.json()),
       fetch('dados/medidas.json').then(r => r.ok ? r.json() : {medidas: []}).catch(() => ({medidas: []})),
       fetch('dados/complementar.json').then(r => r.ok ? r.json() : {alimentos: []}).catch(() => ({alimentos: []})),
-      fetch('dados/ibge.json').then(r => r.ok ? r.json() : {alimentos: []}).catch(() => ({alimentos: []}))
+      fetch('dados/ibge.json').then(r => r.ok ? r.json() : {alimentos: []}).catch(() => ({alimentos: []})),
+      fetch('dados/marcas.json').then(r => r.ok ? r.json() : {itens: []}).catch(() => ({itens: []}))
     ]);
     taco = t.alimentos.map(a => ({id: a[0], nome: a[1], kcal: a[3], prot: a[4], carbo: a[5], gord: a[6], fibra: a[7], chave: norm(a[1])}));
     medidas = m.medidas || [];
@@ -70,6 +71,12 @@ const Nutricao = (() => {
     for (const [id, nome, kcal, prot, carbo, gord, fibra] of ib.alimentos || [])
       taco.push({id, nome, kcal, prot, carbo, gord, fibra: fibra ?? 0, chave: norm(nome), ibge: true, fonte: 'IBGE, POF 2008-2009'});
     for (const [id, medida, gramas] of ib.medidas || []) medidas.push({taco_id: id, medida, gramas, livro: 'ibge'});
+    // Produtos de marca (tabelas nutricionais públicas de restaurantes); a medida "unidade" é a porção do produto
+    (mc.itens || []).forEach((x, k) => {
+      const id = 3000000 + k, apelido = x.marca === 'bk' ? ' bk burger king' : '';
+      taco.push({id, nome: x.nome, kcal: x.kcal, prot: x.prot, carbo: x.carbo, gord: x.gord, fibra: x.fibra ?? 0, chave: norm(x.nome + apelido), marca: x.marca, fonte: (mc.fontes || {})[x.marca]});
+      for (const med of ['unidade', 'porcao']) medidas.push({taco_id: id, medida: med, gramas: x.porcao, livro: x.marca, padrao: med === 'unidade'});
+    });
     // Alimentos que a TACO deixou sem valores ("*"), completados com outra fonte citada
     for (const x of c.alimentos || []) {
       const a = taco.find(a => a.id === x.taco_id);
@@ -156,17 +163,17 @@ const Nutricao = (() => {
       if (PROCESSADO.test(a.chave) && !termos.some(t => PROCESSADO.test(t))) p -= 1;
       if (/\b(concentrad|envasad)/.test(a.chave) && !termos.some(t => /^(concentrad|envasad|caixinha)/.test(t))) p -= 0.6;
       const todasBatem = termos.every(t => GENERICAS.has(t) || palavras.some(w => bate(t, w)));
-      if (a.ibge && !todasBatem) continue;                               // IBGE é complemento: só entra quando bate por inteiro
+      if ((a.ibge || a.marca) && !todasBatem) continue;                  // IBGE e marcas são complemento: só entram quando batem por inteiro
       if (todasBatem && a.prep) p += 0.5;                                // preparação da Layane ganha da TACO genérica
       if (a.ibge) p -= 0.2;                                              // no empate, a TACO (fonte principal) vence o IBGE
       if (todasBatem && tipoPadrao.length && tipoPadrao.every(w => palavras.map(sing).includes(w))) p += 0.5;
       p -= a.nome.length / 1000;                                         // desempate: nome mais simples
       if (p > pts) { pts = p; melhor = a; }
       // (suco "concentrado, envasado" da TACO não vale por suco natural)
-      if (todasBatem && !a.ibge && p > ptsTaco && !(/\b(concentrad|envasad)/.test(a.chave) && !termos.some(t => /^(concentrad|envasad|caixinha)/.test(t)))) { ptsTaco = p; melhorTaco = a; }
+      if (todasBatem && !a.ibge && !a.marca && p > ptsTaco && !(/\b(concentrad|envasad)/.test(a.chave) && !termos.some(t => /^(concentrad|envasad|caixinha)/.test(t)))) { ptsTaco = p; melhorTaco = a; }
     }
     // a TACO é a fonte principal: se ela tem um alimento com todas as palavras, ele vence o do IBGE
-    if (melhor?.ibge && melhorTaco && ptsTaco > 0.5) { melhor = melhorTaco; pts = ptsTaco; }
+    if ((melhor?.ibge || melhor?.marca) && melhorTaco && ptsTaco > 0.5) { melhor = melhorTaco; pts = ptsTaco; }
     if (!(pts > 0.5)) return nada;   // o alimento principal já é obrigatório acima
     const ws = melhor.chave.split(' ');
     // numa preparação cadastrada, o modo de preparo ("assado") não precisa estar no nome
@@ -309,11 +316,16 @@ const Nutricao = (() => {
         const porMedida = gramasDaMedida(alimento, medida, tam);
         if (porMedida) gramas = porMedida * qtd;
       }
-      const qtdTexto = g ? porUnidade + g[0] : m ? (m[2] === 'unidade' && !/unidade/.test(m[0]) ? `${String(qtd).replace('.', ',')} ${qtd > 1 ? 'unidades' : 'unidade'}` : m[0] + (tam ? ' ' + tam : '')) : '';
+      let qtdTexto = g ? porUnidade + g[0] : m ? (m[2] === 'unidade' && !/unidade/.test(m[0]) ? `${String(qtd).replace('.', ',')} ${qtd > 1 ? 'unidades' : 'unidade'}` : m[0] + (tam ? ' ' + tam : '')) : '';
       const unidade = (g && /ml/.test(g[2])) || (medida && /^(copo|xicara)/.test(medida)) ? 'ml' : 'g';
       // texto do alimento sem sobras da quantidade ("rasa de farinha" -> "farinha")
       const sobra = x => PALAVRAS_VAZIAS.has(x) || TAMANHOS.includes(x) || /^(rasa|cheia|medi[oa]s?|grandes?|pequen[oa]s?)$/.test(x);
       const busca = resto.trim().split(/\s+/).filter((w, k, arr) => !arr.slice(0, k + 1).every(sobra)).join(' ') || resto.trim();
+      // produto de marca sem medida conhecida ("1 casquinha", "um whopper"): vale a porção do próprio produto
+      if (alimento?.marca && gramas == null) {
+        const por = medidas.find(x => x.taco_id === alimento.id && x.medida === 'unidade');
+        if (por) { gramas = por.gramas * (qtd || 1); qtdTexto = qtdTexto || `${String(qtd || 1).replace('.', ',')} unidade`; }
+      }
       return {texto: parte, busca, qtd, exato, foraDaTaco: !!foraDaTaco, alimento, gramas, unidade, qtdTexto, semDado: !!(alimento && alimento.kcal == null),
               semMedida: !!(alimento && alimento.kcal != null && !g && gramas == null)};
     }).filter(i => i.alimento || i.qtdTexto || i.texto.length > 2);
