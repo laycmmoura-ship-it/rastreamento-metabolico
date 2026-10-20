@@ -34,6 +34,8 @@ for r in comp:
     i = int(r['cod']) * 100 + r['prep_cod']
     alimentos.append([i, n, r['kcal'], r['prot'], r['carbo'], r['gord'], r['fibra']])
     for m, g in (medidas_de.get((r['cod'], r['prep_cod'])) or medidas_de.get((r['cod'], 99)) or {}).items():
+        # sorvete: copo/caneca/tigela do IBGE são de bebida (240-300 g) e superestimam o copinho de sorveteria
+        if 'sorvete' in norm(n) and re.match(r'(copo|caneca|caneco|xicara|tigela|cumbuca|prato|taca)', norm(m)): continue
         medidas.append([i, m, g])
 saida = {'fonte': 'IBGE. Pesquisa de Orçamentos Familiares 2008-2009: Tabelas de Composição Nutricional dos Alimentos Consumidos no Brasil (Tabela 1) e Tabela de Medidas Referidas para os Alimentos Consumidos no Brasil. Rio de Janeiro: IBGE, 2011',
          'colunas': ['id', 'nome', 'kcal', 'prot', 'carbo', 'gord', 'fibra'], 'alimentos': alimentos, 'medidas': medidas}

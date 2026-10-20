@@ -1,5 +1,5 @@
 // Cache simples para o app abrir rápido e funcionar sem internet (só a interface).
-const CACHE = 'lay-ia-v31';
+const CACHE = 'lay-ia-v32';
 const ARQUIVOS = ['./', './index.html', './manifest.webmanifest', './apple-touch-icon.png', './icon-192.png', './icon-512.png', './config.js', './nutricao.js', './dados/taco.json', './dados/medidas.json', './dados/complementar.json', './dados/ibge.json', './marca/simbolo.png', './marca/logo-horizontal.jpg', './fontes/fontes.css', './fontes/GreatVibes-400.woff2', './fontes/Poppins-300.woff2', './fontes/Poppins-400.woff2', './fontes/Poppins-500.woff2', './fontes/Poppins-600.woff2'];
 
 self.addEventListener('install', e => {

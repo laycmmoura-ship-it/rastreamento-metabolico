@@ -598,7 +598,9 @@ async function estimativasRestaurante(lista) {
   const cards = lista.map(p => {
     const itens = itensDaIA(p.itens || []), tot = Nutricao.calcular(itens);
     const fora = itens.filter(i => !i.calc).map(i => i.texto);
-    return `<div class="est-rest"><div class="topo-est"><b>${esc(p.nome)}</b><span class="kcal">≈ ${r(tot.kcal)} kcal</span></div>
+    const calc = itens.filter(i => i.calc).length;
+    const kcalTxt = !calc ? 'sem cálculo' : `≈ ${r(tot.kcal)} kcal${fora.length ? ' (parcial)' : ''}`;
+    return `<div class="est-rest"><div class="topo-est"><b>${esc(p.nome)}</b><span class="kcal">${kcalTxt}</span></div>
       <small>${esc(p.porcao || 'por pessoa')} · P ${r(tot.prot)} g · C ${r(tot.carbo)} g · G ${r(tot.gord)} g${fora.length ? ` · sem cálculo: ${esc(fora.join(', '))}` : ''}</small>
       <details><summary>Como calculei</summary><ul>${itens.map(i => `<li>${esc(i.alimento?.nome || i.texto)}${i.exato ? '' : ' (aproximação)'}: ${i.gramas != null ? r(i.gramas) + ' g' : 'sem peso'}${i.calc ? ` · ${r(i.calc.kcal)} kcal` : ''}</li>`).join('')}</ul></details></div>`;
   }).join('');

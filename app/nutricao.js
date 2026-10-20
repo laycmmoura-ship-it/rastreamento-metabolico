@@ -24,13 +24,15 @@ const Nutricao = (() => {
     // POF 2008-2009 (IBGE), alimentos que a TACO não tem (ids = código IBGE × 100 + preparo)
     'tapioca': 650151699, 'goma de tapioca': 650151699, 'tapioca de goma': 650151699, 'farinha de tapioca': 650151099,
     'vinagrete': 707920299, 'pirao': 850660199, 'beiju': 690450299,
+    // sorvete/gelato/sorbet: a TACO não tem; IBGE "sorvete de qualquer sabor" (aproximação para gelato e sorbet)
+    'sorvete': 690050199, 'sorvete de massa': 690050199, 'gelato': 690050199, 'sorbet': 690050199, 'picole': 690050299,
     'tambaqui': 740010104, 'tambaqui assado': 740010104, 'pirarucu': 740010104, 'peixe de agua doce': 740010199,
     'whey': null, 'whey protein': null, 'farinha de aveia': null,
     'pao de sal': 53, 'pao careca': 53, 'peixe assado': 740010104, 'peixe grelhado': 740010103, 'acai': 168, 'acai na tigela': 168,
     // grafias comuns que a TACO escreve diferente
     'mussarela': 463, 'mucarela': 463, 'muzzarela': 463, 'queijo mussarela': 463, 'queijo mucarela': 463
   };
-  const APROX = new Set(['tambaqui', 'tambaqui assado', 'pirarucu', 'peixe assado', 'peixe grelhado', 'tilapia', 'file de tilapia', 'pescada', 'bife', 'bife grelhado', 'carne grelhada', 'bife de carne', 'carne']);
+  const APROX = new Set(['gelato', 'sorbet', 'tambaqui', 'tambaqui assado', 'pirarucu', 'peixe assado', 'peixe grelhado', 'tilapia', 'file de tilapia', 'pescada', 'bife', 'bife grelhado', 'carne grelhada', 'bife de carne', 'carne']);
   const PREPARADO = /\b(cozid|grelhad|assad|refogad)/;
   const PROCESSADO = /\b(calda|doce|industrializad|enlatad|frit|instantane|polpa|suco|geleia|sorvete|cristalizad|desidratad)/;
   let temVersaoPronta = new Set();   // nomes principais que têm versão cozida/grelhada (ex.: batata)
@@ -114,6 +116,9 @@ const Nutricao = (() => {
     const termos = q.split(' ').filter(t => t.length > 1 && !PALAVRAS_VAZIAS.has(t) && !(t in NUM) && !/^\d/.test(t)).map(sing);
     if (!termos.length) return nada;
     const qs = termos.join(' ');
+    // sorvete de qualquer sabor: a tabela só tem o sorvete genérico (IBGE), então o sabor vira aproximação
+    const sorv = /^(sorvete|gelato|sorbet|picole)$/.test(termos[0]) && termos.length > 1 && PADRAO[termos[0]];
+    if (sorv) return {alimento: taco.find(a => a.id === sorv) || null, exato: false};
     // 1) nome comum conhecido, só quando o texto não traz outro detalhe (ex.: "batata frita" não é "batata")
     const sk = k => k.split(' ').filter(w => !PALAVRAS_VAZIAS.has(w)).map(sing).join(' ');
     const chave = Object.keys(PADRAO).filter(k => (' ' + qs + ' ').includes(' ' + sk(k) + ' ')).sort((a, b) => b.length - a.length)[0];
@@ -254,7 +259,7 @@ const Nutricao = (() => {
   const NUM = {'um': 1, 'uma': 1, 'meia': 0.5, 'meio': 0.5, 'dois': 2, 'duas': 2, 'tres': 3, 'quatro': 4, 'cinco': 5};
   const RX_GRAMAS = /(\d+(?:[.,]\d+)?)\s*(g|gr|gramas?|ml)\b/;
   const RX_CONTAGEM = /^(\d+(?:[.,]\d+)?|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s+(?=[a-z])/;
-  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa|cafe|servir))?|escumadeiras?|folhas?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?(?:\s+americanos?)?|dosador(?:es)?|scoops?|porcao|porcoes|tigelas?|postas?|canecas?|cumbucas?|pires|tacas?|potes?|garfadas?|pegador(?:es)?|pratos?(?:\s+(?:fundos?|rasos?|de sobremesa))?|pontas? de faca)\b/;
+  const RX_MEDIDA = /(\d+(?:[.,]\d+)?|½|um|uma|meia|meio|dois|duas|tres|quatro|cinco)\s*(col(?:her(?:es)?)?\.?(?:\s*(?:de\s*)?(?:sopa|cha|sobremesa|cafe|servir))?|escumadeiras?|folhas?|conchas?|files?|bifes?|fatias?|unidades?|pedacos?|xicaras?|copos?(?:\s+americanos?)?|dosador(?:es)?|scoops?|porcao|porcoes|tigelas?|postas?|canecas?|cumbucas?|pires|tacas?|potes?|garfadas?|pegador(?:es)?|pratos?(?:\s+(?:fundos?|rasos?|de sobremesa))?|pontas? de faca|bolas?|casquinhas?)\b/;
 
   // "pão com manteiga" e "arroz com feijão" são dois alimentos; "frango com pele" é um só (existe assim na TACO).
   function separarCom(parte) {
@@ -273,7 +278,7 @@ const Nutricao = (() => {
   function lerPrato(texto) {
     const t = texto.replace(/½/g, ' meia ').replace(/^\s*(caf[eé] da manh[aã]|almo[cç]o|jantar|lanche|ceia)\s*:?/i, '');
     const QTD = '(?=\\d|um |uma |dois |duas |tr[eê]s |quatro |cinco |meia |meio )';
-    const MED = '(?:col|colher|concha|fil[eé]|bife|fatia|unidade|peda[cç]o|x[ií]cara|copo|escumadeira|folha|dosador|scoop|por[cç]|tigela|posta|caneca|cumbuca|pires|ta[cç]a|pote|garfada|pegador|prato|ponta)';
+    const MED = '(?:col|colher|concha|fil[eé]|bife|fatia|unidade|peda[cç]o|x[ií]cara|copo|escumadeira|folha|dosador|scoop|por[cç]|tigela|posta|caneca|cumbuca|pires|ta[cç]a|pote|garfada|pegador|prato|ponta|bola|casquinha)';
     const NOVA_QTD = `(?<!\\bde)\\s+(?=(?:\\d+(?:[.,]\\d+)?|um|uma|dois|duas|tr[eê]s|quatro|cinco|meia|meio)\\s+${MED})`;
     const NOVO_NUM = `(?<!\\bde)\\s+(?=\\d+(?:[.,]\\d+)?\\s+(?!g\\b|gr\\b|gramas?\\b|ml\\b)[a-zà-ú])`;  // "2 ovos 1 banana"
     const partes = t.split(new RegExp(`\\s+e\\s+|,|;|\\+|\\n|\\s+(?:com|mais)\\s+${QTD}|${NOVA_QTD}|${NOVO_NUM}`, 'i')).map(norm).filter(Boolean)
